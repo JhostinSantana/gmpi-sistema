@@ -1,0 +1,25 @@
+{
+  "name": "gmpi-sistema",
+  "version": "1.0.0",
+  "description": "Sistema de Gestión de Mantenimiento Preventivo de Infraestructuras",
+  "main": "BACKEND/server.js",
+  "scripts": {
+    "start": "node BACKEND/server.js",
+    "dev": "node BACKEND/server.js",
+    "build": "echo 'No build step required'",
+    "postinstall": "cd BACKEND && npm install"
+  },
+  "keywords": [
+    "gmpi",
+    "mantenimiento",
+    "infraestructuras",
+    "node.js",
+    "express"
+  ],
+  "author": "JhostinSantana",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

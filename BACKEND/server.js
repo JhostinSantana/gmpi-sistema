@@ -5,7 +5,13 @@ const morgan = require('morgan');
 const compression = require('compression');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
-require('dotenv').config();
+
+// Cargar dotenv solo si está disponible (para desarrollo local)
+try {
+  require('dotenv').config();
+} catch (err) {
+  console.log('dotenv not available, using environment variables from system');
+}
 
 const app = express();
 const PORT = process.env.PORT || 3000;

@@ -1,5 +1,5 @@
 {
-  "name": "gmpi-sistema",
+  "name": "gmpisistema",
   "version": "1.0.0",
   "description": "Sistema de Gestión de Mantenimiento Preventivo de Infraestructuras",
   "main": "BACKEND/server.js",

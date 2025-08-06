@@ -59,10 +59,5 @@
       "src": "/(.*)",
       "dest": "/FRONTEND/html/index.html"
     }
-  ],
-  "functions": {
-    "BACKEND/server.js": {
-      "maxDuration": 30
-    }
-  }
+  ]
 }

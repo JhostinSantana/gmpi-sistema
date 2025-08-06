@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agregar Institución - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/infraestructuras.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+    <style>
+      .form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .form-header {
+        background: linear-gradient(135deg, #e67e22, #f39c12);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+      .form-body {
+        padding: 2rem;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+      .form-input:focus {
+        outline: none;
+        border-color: #e67e22;
+      }
+      .form-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        background: white;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid #f0f0f0;
+      }
+      .btn-save {
+        background: #27ae60;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .btn-save:hover {
+        background: #219a52;
+      }
+      .btn-cancel {
+        background: #95a5a6;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .btn-cancel:hover {
+        background: #7f8c8d;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+      <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+          <!-- Logo -->
+          <div class="nav-logo">
+            <a
+              href="dashboard.html"
+              class="logo-link"
+              aria-label="Ir al inicio"
+            >
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle">Mantenimiento Escolar</span>
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <ul class="nav-menu" role="menubar">
+            <li class="nav-item">
+              <a href="infraestructuras.html" class="nav-link">
+                <span class="icon">🏢</span>
+                <span>Volver a Infraestructuras</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Action Buttons -->
+          <div class="nav-actions">
+            <span class="user-welcome">Bienvenido, Administrador</span>
+            <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <div class="container">
+        <div class="form-container">
+          <div class="form-header">
+            <h1>🏫 Agregar Nueva Institución</h1>
+            <p>Complete la información de la institución educativa</p>
+          </div>
+
+          <div class="form-body">
+            <form id="addInstitutionForm">
+              <div class="form-group">
+                <label class="form-label" for="institutionName"
+                  >Nombre de la Institución *</label
+                >
+                <input
+                  type="text"
+                  id="institutionName"
+                  class="form-input"
+                  required
+                  placeholder="Ej: Universidad Técnica de Manabí"
+                />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="institutionType"
+                    >Tipo de Institución *</label
+                  >
+                  <select id="institutionType" class="form-select" required>
+                    <option value="">Seleccionar tipo</option>
+                    <option value="universidad">Universidad</option>
+                    <option value="colegio">Colegio</option>
+                    <option value="escuela">Escuela</option>
+                    <option value="instituto">Instituto</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="institutionAcronym"
+                    >Siglas</label
+                  >
+                  <input
+                    type="text"
+                    id="institutionAcronym"
+                    class="form-input"
+                    placeholder="Ej: UTM"
+                    maxlength="5"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="institutionLocation"
+                  >Ubicación *</label
+                >
+                <input
+                  type="text"
+                  id="institutionLocation"
+                  class="form-input"
+                  required
+                  placeholder="Ej: Portoviejo, Manabí, Ecuador"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="authorityEmail"
+                  >Email de la Autoridad *</label
+                >
+                <input
+                  type="email"
+                  id="authorityEmail"
+                  class="form-input"
+                  required
+                  placeholder="Ej: rector@universidad.edu"
+                />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="buildingsCount"
+                    >Número de Edificios</label
+                  >
+                  <input
+                    type="number"
+                    id="buildingsCount"
+                    class="form-input"
+                    min="1"
+                    value="1"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="classroomsCount"
+                    >Número de Aulas</label
+                  >
+                  <input
+                    type="number"
+                    id="classroomsCount"
+                    class="form-input"
+                    min="1"
+                    value="1"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="laboratoriesCount"
+                    >Número de Laboratorios</label
+                  >
+                  <input
+                    type="number"
+                    id="laboratoriesCount"
+                    class="form-input"
+                    min="0"
+                    value="0"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="lastMaintenance"
+                    >Último Mantenimiento</label
+                  >
+                  <input type="date" id="lastMaintenance" class="form-input" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="nextMaintenance"
+                  >Próximo Mantenimiento</label
+                >
+                <input type="date" id="nextMaintenance" class="form-input" />
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn-save">
+                  💾 Guardar Institución
+                </button>
+                <button
+                  type="button"
+                  class="btn-cancel"
+                  onclick="window.location.href='infraestructuras.html'"
+                >
+                  ❌ Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("addInstitutionForm");
+        const acronymInput = document.getElementById("institutionAcronym");
+        const nameInput = document.getElementById("institutionName");
+
+        // Auto-generar siglas basadas en el nombre
+        nameInput.addEventListener("input", function () {
+          if (!acronymInput.value) {
+            const words = this.value.split(" ");
+            const acronym = words
+              .map((word) => word.charAt(0))
+              .join("")
+              .toUpperCase()
+              .slice(0, 5);
+            acronymInput.value = acronym;
+          }
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Obtener datos del formulario
+          const formData = {
+            name: document.getElementById("institutionName").value,
+            type: document.getElementById("institutionType").value,
+            acronym:
+              document.getElementById("institutionAcronym").value || "NI",
+            location: document.getElementById("institutionLocation").value,
+            authorityEmail: document.getElementById("authorityEmail").value,
+            buildings: document.getElementById("buildingsCount").value || 1,
+            classrooms: document.getElementById("classroomsCount").value || 1,
+            laboratories:
+              document.getElementById("laboratoriesCount").value || 0,
+            lastMaintenance: document.getElementById("lastMaintenance").value,
+            nextMaintenance: document.getElementById("nextMaintenance").value,
+          };
+
+          // Validar campos requeridos
+          if (
+            !formData.name ||
+            !formData.type ||
+            !formData.location ||
+            !formData.authorityEmail
+          ) {
+            alert(
+              "❌ Por favor, complete todos los campos obligatorios marcados con *"
+            );
+            return;
+          }
+
+          // Simular guardado
+          const loadingMsg = document.createElement("div");
+          loadingMsg.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                    z-index: 10000; text-align: center; font-size: 1.1rem;
+                `;
+          loadingMsg.innerHTML = "⏳ Guardando institución...";
+          document.body.appendChild(loadingMsg);
+
+          setTimeout(() => {
+            document.body.removeChild(loadingMsg);
+
+            // Preparar datos para agregar a la página principal
+            const newInstitutionCard = {
+              id: Date.now(),
+              name: formData.name,
+              type: formData.type,
+              acronym: formData.acronym,
+              location: formData.location,
+              authorityEmail: formData.authorityEmail,
+              buildings: formData.buildings,
+              classrooms: formData.classrooms,
+              laboratories: formData.laboratories,
+              lastMaintenance: formData.lastMaintenance || "Sin registro",
+              nextMaintenance: formData.nextMaintenance || "Por programar",
+              dateAdded: new Date().toISOString(),
+              infrastructure: [], // Para almacenar facultades y sus aulas/laboratorios
+            };
+
+            // Guardar en localStorage
+            const existingInstitutions = JSON.parse(
+              localStorage.getItem("institutions") || "[]"
+            );
+            existingInstitutions.push(newInstitutionCard);
+            localStorage.setItem(
+              "institutions",
+              JSON.stringify(existingInstitutions)
+            );
+
+            alert(
+              "✅ ¡Institución agregada exitosamente!\n\nLa nueva institución aparecerá en la lista de infraestructuras."
+            );
+            window.location.href = "infraestructuras.html";
+          }, 1500);
+        });
+      });
+    </script>
+
+    <script src="../javascript/universal-init.js"></script>
+    <script src="../javascript/settings.js"></script>
+  </body>
+</html>

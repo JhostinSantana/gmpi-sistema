@@ -1,0 +1,2427 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infraestructuras - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/infraestructuras.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+    <style>
+      /* Estilos para búsqueda mejorada */
+      .search-section {
+        background: #ffffff;
+        padding: 24px 0;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .search-container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        max-width: 600px;
+        margin: 0 auto 1rem auto;
+        position: relative;
+        background: white;
+        border: 2px solid #e9ecef;
+        border-radius: 50px;
+        padding: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .search-box:focus-within {
+        border-color: #e67e22;
+        box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+      }
+
+      .search-input {
+        flex: 1;
+        border: none;
+        outline: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        background: transparent;
+        color: #333;
+      }
+
+      .search-input::placeholder {
+        color: #6c757d;
+        font-style: italic;
+      }
+
+      .search-btn,
+      .clear-btn {
+        border: none;
+        padding: 12px 16px;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+      }
+
+      .search-btn {
+        background: #e67e22;
+        color: white;
+      }
+
+      .search-btn:hover {
+        background: #d35400;
+        transform: scale(1.05);
+      }
+
+      .clear-btn {
+        background: #6c757d;
+        color: white;
+        margin-right: 8px;
+      }
+
+      .clear-btn:hover {
+        background: #5a6268;
+        transform: scale(1.05);
+      }
+
+      /* Dropdown de autocompletado */
+      .autocomplete-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 2px solid #e9ecef;
+        border-top: none;
+        border-radius: 0 0 12px 12px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .autocomplete-item {
+        padding: 12px 20px;
+        cursor: pointer;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .autocomplete-item:hover,
+      .autocomplete-item.active {
+        background: #f8f9fa;
+        color: #e67e22;
+      }
+
+      .autocomplete-item:last-child {
+        border-bottom: none;
+      }
+
+      /* Filtros */
+      .search-filters {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .filter-group label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #333;
+        white-space: nowrap;
+      }
+
+      .filter-select {
+        padding: 8px 12px;
+        border: 2px solid #e9ecef;
+        border-radius: 8px;
+        font-size: 14px;
+        background: white;
+        color: #333;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        min-width: 150px;
+      }
+
+      .filter-select:focus {
+        outline: none;
+        border-color: #e67e22;
+        box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+      }
+
+      .reset-filters-btn {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .reset-filters-btn:hover {
+        background: #7f8c8d;
+        transform: translateY(-2px);
+      }
+
+      /* Contador de resultados */
+      .search-results-count {
+        text-align: center;
+        margin-top: 12px;
+        font-size: 14px;
+        color: #6c757d;
+        font-weight: 500;
+      }
+
+      .search-highlight {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #856404;
+      }
+
+      /* Estados de las tarjetas */
+      .institution-card.hidden {
+        display: none !important;
+      }
+
+      .institution-card.search-match {
+        animation: searchMatch 0.4s ease;
+        border: 2px solid #e67e22;
+        box-shadow: 0 8px 24px rgba(230, 126, 34, 0.2);
+      }
+
+      @keyframes searchMatch {
+        0% {
+          transform: scale(0.95);
+          opacity: 0.7;
+        }
+        50% {
+          transform: scale(1.02);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .search-filters {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .filter-group {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .filter-select {
+          min-width: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+      <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+          <!-- Logo -->
+          <div class="nav-logo">
+            <a
+              href="dashboard.html"
+              class="logo-link"
+              aria-label="Ir al inicio"
+            >
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle">Mantenimiento Escolar</span>
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <ul class="nav-menu" role="menubar">
+            <li class="nav-item dropdown" role="none">
+              <a href="#" class="nav-link" role="menuitem">
+                <span class="icon">📊</span>
+                <span>Gestión</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content" role="menu">
+                <a href="dashboard.html" role="menuitem">
+                  <span class="icon">🏠</span>
+                  <span>Dashboard</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a href="#" class="nav-link" role="menuitem">
+                <span class="icon">📋</span>
+                <span>Planificación</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content" role="menu">
+                <a href="calendario.html" role="menuitem">
+                  <span class="icon">📅</span>
+                  <span>Calendario</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a href="#" class="nav-link" role="menuitem">
+                <span class="icon">⚙️</span>
+                <span>Configuración</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content" role="menu">
+                <a href="#" role="menuitem" id="languageToggle">
+                  <span class="icon">🌐</span>
+                  <span>Idioma</span>
+                </a>
+                <a href="#" role="menuitem" id="themeToggle">
+                  <span class="icon">🌓</span>
+                  <span>Tema</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Action Buttons -->
+          <div class="nav-actions">
+            <span class="user-welcome">Bienvenido, Inspector</span>
+            <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="container">
+          <div class="header-content">
+            <h1 class="page-title">Infraestructuras Registradas</h1>
+            <p class="page-subtitle">
+              Gestiona y supervisa todas las instituciones educativas del
+              sistema
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Barra de Búsqueda Mejorada -->
+      <section class="search-section">
+        <div class="container">
+          <div class="search-container">
+            <div class="search-box">
+              <input
+                type="text"
+                id="searchInfrastructures"
+                class="search-input"
+                placeholder="Buscar instituciones... (escribe para autocompletar)"
+                autocomplete="off"
+                aria-label="Buscar infraestructuras"
+              />
+              <button class="search-btn" id="searchBtn" aria-label="Buscar">
+                <span class="search-icon">🔍</span>
+              </button>
+              <button
+                class="clear-btn"
+                id="clearSearch"
+                aria-label="Limpiar búsqueda"
+                style="display: none"
+              >
+                <span class="clear-icon">✕</span>
+              </button>
+            </div>
+
+            <!-- Dropdown de autocompletado -->
+            <div
+              class="autocomplete-dropdown"
+              id="autocompleteDropdown"
+              style="display: none"
+            ></div>
+
+            <div class="search-results-count" id="searchResultsCount"></div>
+
+            <!-- Filtros de búsqueda -->
+            <div class="search-filters">
+              <div class="filter-group">
+                <label for="typeFilter">Filtrar por tipo:</label>
+                <select id="typeFilter" class="filter-select">
+                  <option value="">Todos los tipos</option>
+                  <option value="universidad">🎓 Universidad</option>
+                  <option value="colegio">🏫 Colegio</option>
+                  <option value="escuela">🏠 Escuela</option>
+                  <option value="instituto">🏢 Instituto</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <label for="locationFilter">Filtrar por ubicación:</label>
+                <select id="locationFilter" class="filter-select">
+                  <option value="">Todas las ubicaciones</option>
+                  <option value="manta">📍 Manta</option>
+                  <option value="quito">📍 Quito</option>
+                  <option value="guayaquil">📍 Guayaquil</option>
+                  <option value="manabi">📍 Manabí</option>
+                  <option value="pichincha">📍 Pichincha</option>
+                  <option value="guayas">📍 Guayas</option>
+                </select>
+              </div>
+
+              <div class="filter-group">
+                <button id="resetFilters" class="reset-filters-btn">
+                  🔄 Limpiar Filtros
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- Institutions Section -->
+        <div class="institutions-section">
+          <div class="section-header">
+            <h2>Instituciones Educativas</h2>
+            <button class="btn btn-primary add-institution-btn">
+              + Agregar Institución
+            </button>
+          </div>
+
+          <div class="institutions-grid">
+            <!-- ULAEM Institution -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo">
+                  <span class="logo-text">ULAEM</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">
+                  Universidad Laica Eloy Alfaro de Manabí
+                </h3>
+                <p class="institution-location">📍 Manta, Manabí, Ecuador</p>
+                <p class="institution-type">🎓 Universidad</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">8</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">45</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">12</span>
+                  <span class="stat-name">Laboratorios</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">15 Dic 2024</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date upcoming">20 Feb 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small add-infrastructure-btn"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button class="btn btn-outline btn-small view-details-btn">
+                  Ver Detalles
+                </button>
+                <button class="btn btn-secondary btn-small edit-btn">
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small delete-btn">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+
+            <!-- Colegio Amazonas Institution -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo secondary">
+                  <span class="logo-text">CAQ</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">Colegio Amazonas de Quito</h3>
+                <p class="institution-location">📍 Quito, Pichincha, Ecuador</p>
+                <p class="institution-type">🏫 Colegio</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">3</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">24</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">6</span>
+                  <span class="stat-name">Laboratorios</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">28 Nov 2024</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date pending">05 Ene 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small add-infrastructure-btn"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button class="btn btn-outline btn-small view-details-btn">
+                  Ver Detalles
+                </button>
+                <button class="btn btn-secondary btn-small edit-btn">
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small delete-btn">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+
+            <!-- Escuela Primaria Example -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo tertiary">
+                  <span class="logo-text">EPB</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">Escuela Primaria Benito Juárez</h3>
+                <p class="institution-location">
+                  📍 Guayaquil, Guayas, Ecuador
+                </p>
+                <p class="institution-type">🏠 Escuela</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">2</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">12</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">1</span>
+                  <span class="stat-name">Laboratorio</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">10 Dic 2024</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date upcoming">15 Mar 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small add-infrastructure-btn"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button class="btn btn-outline btn-small view-details-btn">
+                  Ver Detalles
+                </button>
+                <button class="btn btn-secondary btn-small edit-btn">
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small delete-btn">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JavaScript unificado y funcional -->
+    <script>
+      // Todas las funciones en un solo DOMContentLoaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("✅ Página cargada correctamente");
+
+        // Inicializar búsqueda avanzada
+        initializeAdvancedSearch();
+
+        // Inicializar botones principales
+        initializeMainButtons();
+
+        // Inicializar botones de instituciones
+        initializeInstitutionButtons();
+
+        // Ocultar instituciones estáticas que han sido actualizadas
+        hideUpdatedStaticInstitutions();
+
+        // Cargar instituciones dinámicas
+        loadDynamicInstitutions();
+
+        console.log("✅ Inicialización completada");
+      });
+
+      // Función para inicializar búsqueda avanzada
+      function initializeAdvancedSearch() {
+        const searchInput = document.getElementById("searchInfrastructures");
+        const typeFilter = document.getElementById("typeFilter");
+        const locationFilter = document.getElementById("locationFilter");
+        const clearBtn = document.getElementById("clearSearch");
+        const resetFiltersBtn = document.getElementById("resetFilters");
+        const searchResultsCount =
+          document.getElementById("searchResultsCount");
+        const autocompleteDropdown = document.getElementById(
+          "autocompleteDropdown"
+        );
+
+        let currentSearchTerm = "";
+        let currentTypeFilter = "";
+        let currentLocationFilter = "";
+        let autocompleteData = [];
+        let selectedAutocompleteIndex = -1;
+
+        // Generar datos para autocompletado
+        function generateAutocompleteData() {
+          const cards = document.querySelectorAll(".institution-card");
+          autocompleteData = [];
+
+          cards.forEach((card) => {
+            const name =
+              card.querySelector(".institution-name")?.textContent || "";
+            const location =
+              card.querySelector(".institution-location")?.textContent || "";
+            const type =
+              card.querySelector(".institution-type")?.textContent || "";
+
+            if (name) {
+              autocompleteData.push({
+                text: name,
+                type: "name",
+                icon: "🏢",
+              });
+            }
+
+            // Extraer ubicación sin el emoji
+            const cleanLocation = location.replace(/📍\s*/, "").trim();
+            if (
+              cleanLocation &&
+              !autocompleteData.some((item) => item.text === cleanLocation)
+            ) {
+              autocompleteData.push({
+                text: cleanLocation,
+                type: "location",
+                icon: "📍",
+              });
+            }
+
+            // Extraer tipo sin emoji
+            const cleanType = type.replace(/[🎓🏫🏠🏢]\s*/, "").trim();
+            if (
+              cleanType &&
+              !autocompleteData.some((item) => item.text === cleanType)
+            ) {
+              autocompleteData.push({
+                text: cleanType,
+                type: "type",
+                icon: getTypeIcon(cleanType.toLowerCase()),
+              });
+            }
+          });
+        }
+
+        function getTypeIcon(type) {
+          const icons = {
+            universidad: "🎓",
+            colegio: "🏫",
+            escuela: "🏠",
+            instituto: "🏢",
+          };
+          return icons[type] || "🏢";
+        }
+
+        // Búsqueda con autocompletado
+        searchInput.addEventListener("input", function () {
+          const query = this.value.trim();
+          currentSearchTerm = query;
+
+          if (query.length >= 2) {
+            showAutocomplete(query);
+          } else {
+            hideAutocomplete();
+          }
+
+          performSearch();
+        });
+
+        // Navegación con teclado en autocompletado
+        searchInput.addEventListener("keydown", function (e) {
+          const items =
+            autocompleteDropdown.querySelectorAll(".autocomplete-item");
+
+          if (e.key === "ArrowDown") {
+            e.preventDefault();
+            selectedAutocompleteIndex = Math.min(
+              selectedAutocompleteIndex + 1,
+              items.length - 1
+            );
+            updateAutocompleteSelection(items);
+          } else if (e.key === "ArrowUp") {
+            e.preventDefault();
+            selectedAutocompleteIndex = Math.max(
+              selectedAutocompleteIndex - 1,
+              -1
+            );
+            updateAutocompleteSelection(items);
+          } else if (e.key === "Enter") {
+            e.preventDefault();
+            if (
+              selectedAutocompleteIndex >= 0 &&
+              items[selectedAutocompleteIndex]
+            ) {
+              selectAutocompleteItem(items[selectedAutocompleteIndex]);
+            } else {
+              hideAutocomplete();
+              this.blur();
+            }
+          } else if (e.key === "Escape") {
+            hideAutocomplete();
+            this.blur();
+          }
+        });
+
+        function showAutocomplete(query) {
+          generateAutocompleteData();
+          const filteredData = autocompleteData
+            .filter((item) =>
+              item.text.toLowerCase().includes(query.toLowerCase())
+            )
+            .slice(0, 6); // Máximo 6 sugerencias
+
+          if (filteredData.length > 0) {
+            autocompleteDropdown.innerHTML = filteredData
+              .map(
+                (item, index) => `
+                        <div class="autocomplete-item" data-text="${
+                          item.text
+                        }" data-index="${index}">
+                            <span>${item.icon}</span>
+                            <span>${highlightMatch(item.text, query)}</span>
+                            <small style="margin-left: auto; color: #6c757d;">${
+                              item.type
+                            }</small>
+                        </div>
+                    `
+              )
+              .join("");
+
+            // Agregar event listeners a los items
+            autocompleteDropdown
+              .querySelectorAll(".autocomplete-item")
+              .forEach((item) => {
+                item.addEventListener("click", function () {
+                  selectAutocompleteItem(this);
+                });
+              });
+
+            autocompleteDropdown.style.display = "block";
+            selectedAutocompleteIndex = -1;
+          } else {
+            hideAutocomplete();
+          }
+        }
+
+        function hideAutocomplete() {
+          autocompleteDropdown.style.display = "none";
+          selectedAutocompleteIndex = -1;
+        }
+
+        function updateAutocompleteSelection(items) {
+          items.forEach((item, index) => {
+            if (index === selectedAutocompleteIndex) {
+              item.classList.add("active");
+            } else {
+              item.classList.remove("active");
+            }
+          });
+        }
+
+        function selectAutocompleteItem(item) {
+          const text = item.getAttribute("data-text");
+          searchInput.value = text;
+          currentSearchTerm = text;
+          hideAutocomplete();
+          performSearch();
+
+          // Efecto visual de selección
+          setTimeout(() => {
+            searchInput.value = "";
+            currentSearchTerm = "";
+            performSearch();
+          }, 2000);
+        }
+
+        function highlightMatch(text, query) {
+          const regex = new RegExp(`(${query})`, "gi");
+          return text.replace(
+            regex,
+            '<span class="search-highlight">$1</span>'
+          );
+        }
+
+        // Filtros
+        typeFilter.addEventListener("change", function () {
+          currentTypeFilter = this.value;
+          performSearch();
+        });
+
+        locationFilter.addEventListener("change", function () {
+          currentLocationFilter = this.value;
+          performSearch();
+        });
+
+        // Botón limpiar búsqueda
+        clearBtn.addEventListener("click", function () {
+          searchInput.value = "";
+          currentSearchTerm = "";
+          hideAutocomplete();
+          performSearch();
+          searchInput.focus();
+        });
+
+        // Botón reset filtros
+        resetFiltersBtn.addEventListener("click", function () {
+          searchInput.value = "";
+          typeFilter.value = "";
+          locationFilter.value = "";
+          currentSearchTerm = "";
+          currentTypeFilter = "";
+          currentLocationFilter = "";
+          hideAutocomplete();
+          performSearch();
+
+          // Animación de reset
+          this.style.transform = "scale(0.9)";
+          setTimeout(() => {
+            this.style.transform = "scale(1)";
+          }, 150);
+        });
+
+        // Función principal de búsqueda
+        function performSearch() {
+          const cards = document.querySelectorAll(".institution-card");
+          let visibleCount = 0;
+          const query = currentSearchTerm.toLowerCase().trim();
+
+          cards.forEach((card) => {
+            const name =
+              card
+                .querySelector(".institution-name")
+                ?.textContent.toLowerCase() || "";
+            const location =
+              card
+                .querySelector(".institution-location")
+                ?.textContent.toLowerCase() || "";
+            const type =
+              card
+                .querySelector(".institution-type")
+                ?.textContent.toLowerCase() || "";
+
+            // Criterios de búsqueda
+            const matchesSearch =
+              query === "" ||
+              name.includes(query) ||
+              location.includes(query) ||
+              type.includes(query);
+
+            const matchesTypeFilter =
+              currentTypeFilter === "" ||
+              type.includes(currentTypeFilter.toLowerCase());
+
+            const matchesLocationFilter =
+              currentLocationFilter === "" ||
+              location.includes(currentLocationFilter.toLowerCase());
+
+            if (matchesSearch && matchesTypeFilter && matchesLocationFilter) {
+              card.classList.remove("hidden");
+              card.classList.add("search-match");
+              visibleCount++;
+
+              // Remover animación después de un tiempo
+              setTimeout(() => {
+                card.classList.remove("search-match");
+              }, 400);
+            } else {
+              card.classList.add("hidden");
+              card.classList.remove("search-match");
+            }
+          });
+
+          // Actualizar contador y mostrar/ocultar botón limpiar
+          updateSearchResults(
+            query,
+            currentTypeFilter,
+            currentLocationFilter,
+            visibleCount
+          );
+          clearBtn.style.display =
+            query || currentTypeFilter || currentLocationFilter
+              ? "flex"
+              : "none";
+        }
+
+        function updateSearchResults(query, typeFilter, locationFilter, count) {
+          const totalCards =
+            document.querySelectorAll(".institution-card").length;
+          let message = "";
+
+          if (!query && !typeFilter && !locationFilter) {
+            message = `Mostrando ${totalCards} instituciones`;
+          } else {
+            const plural = count === 1 ? "institución" : "instituciones";
+            let searchInfo = [];
+
+            if (query) searchInfo.push(`"${query}"`);
+            if (typeFilter) searchInfo.push(`tipo "${typeFilter}"`);
+            if (locationFilter)
+              searchInfo.push(`ubicación "${locationFilter}"`);
+
+            message = `${count} ${plural} encontradas para ${searchInfo.join(
+              " y "
+            )}`;
+          }
+
+          searchResultsCount.textContent = message;
+          searchResultsCount.style.color = count === 0 ? "#e74c3c" : "#6c757d";
+        }
+
+        // Inicializar contador
+        const totalCards =
+          document.querySelectorAll(".institution-card").length;
+        updateSearchResults("", "", "", totalCards);
+
+        // Ocultar autocompletado al hacer click fuera
+        document.addEventListener("click", function (e) {
+          if (
+            !searchInput.contains(e.target) &&
+            !autocompleteDropdown.contains(e.target)
+          ) {
+            hideAutocomplete();
+          }
+        });
+
+        // Atajo de teclado Ctrl+K para enfocar búsqueda
+        document.addEventListener("keydown", function (e) {
+          if (e.ctrlKey && e.key === "k") {
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+          }
+        });
+
+        console.log("✅ Búsqueda avanzada inicializada");
+      }
+
+      // Función para inicializar botones principales
+      function initializeMainButtons() {
+        const addInstitutionBtn = document.querySelector(
+          ".add-institution-btn"
+        );
+        if (addInstitutionBtn) {
+          addInstitutionBtn.addEventListener("click", function () {
+            window.location.href = "add-institution.html";
+          });
+          console.log('✅ Botón "Agregar Institución" configurado');
+        }
+      }
+
+      // Función para inicializar botones de instituciones
+      function initializeInstitutionButtons() {
+        // Botones de agregar infraestructura
+        const addInfraButtons = document.querySelectorAll(
+          ".add-infrastructure-btn"
+        );
+        addInfraButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            showAddInfrastructureModal(institutionName, card);
+          });
+        });
+
+        // Botones de editar
+        const editButtons = document.querySelectorAll(".edit-btn");
+        editButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            window.location.href = `edit-institution.html?name=${encodeURIComponent(
+              institutionName
+            )}`;
+          });
+        });
+
+        // Botones de ver detalles
+        const detailButtons = document.querySelectorAll(".view-details-btn");
+        detailButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            showInstitutionDetails(card);
+          });
+        });
+
+        // Botones de eliminar
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            deleteInstitution(institutionName, card);
+          });
+        });
+
+        console.log(
+          `✅ ${
+            addInfraButtons.length +
+            editButtons.length +
+            detailButtons.length +
+            deleteButtons.length
+          } botones de instituciones configurados`
+        );
+      }
+
+      // Función para ocultar instituciones estáticas que han sido actualizadas
+      function hideUpdatedStaticInstitutions() {
+        const hiddenStatic = JSON.parse(
+          localStorage.getItem("hiddenStaticInstitutions") || "[]"
+        );
+
+        const staticCards = document.querySelectorAll(".institution-card");
+        staticCards.forEach((card) => {
+          const institutionName =
+            card.querySelector(".institution-name")?.textContent;
+          if (hiddenStatic.includes(institutionName)) {
+            card.style.display = "none";
+            console.log(`🔒 Institución estática oculta: ${institutionName}`);
+          }
+        });
+
+        if (hiddenStatic.length > 0) {
+          console.log(
+            `✅ ${hiddenStatic.length} instituciones estáticas ocultas por actualizaciones`
+          );
+        }
+      }
+
+      // Función para cargar instituciones dinámicas
+      function loadDynamicInstitutions() {
+        const institutionsGrid = document.querySelector(".institutions-grid");
+        const savedInstitutions = JSON.parse(
+          localStorage.getItem("institutions") || "[]"
+        );
+
+        savedInstitutions.forEach((institution) => {
+          const card = createInstitutionCard(institution);
+          institutionsGrid.appendChild(card);
+
+          // Configurar eventos para la nueva tarjeta
+          setupCardEvents(card);
+        });
+
+        console.log(
+          `✅ ${savedInstitutions.length} instituciones dinámicas cargadas`
+        );
+      }
+
+      // Función para crear tarjeta de institución
+      function createInstitutionCard(institution) {
+        const card = document.createElement("div");
+        card.className = "institution-card";
+
+        const typeEmoji = {
+          universidad: "🎓",
+          colegio: "🏫",
+          escuela: "🏠",
+          instituto: "🏢",
+        };
+
+        card.innerHTML = `
+                <div class="institution-header">
+                    <div class="institution-logo ${institution.type}">
+                        <span class="logo-text">${
+                          institution.acronym || "NI"
+                        }</span>
+                    </div>
+                </div>
+                
+                <div class="institution-info">
+                    <h3 class="institution-name">${institution.name}</h3>
+                    <p class="institution-location">📍 ${
+                      institution.location
+                    }</p>
+                    <p class="institution-type">${
+                      typeEmoji[institution.type] || "🏢"
+                    } ${
+          institution.type.charAt(0).toUpperCase() + institution.type.slice(1)
+        }</p>
+                </div>
+
+                <div class="institution-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">${
+                          institution.buildings || 1
+                        }</span>
+                        <span class="stat-name">Edificios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${
+                          institution.classrooms || 1
+                        }</span>
+                        <span class="stat-name">Aulas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${
+                          institution.laboratories || 0
+                        }</span>
+                        <span class="stat-name">Laboratorios</span>
+                    </div>
+                </div>
+
+                <div class="institution-maintenance">
+                    <div class="maintenance-item">
+                        <span class="maintenance-label">Último Mantenimiento:</span>
+                        <span class="maintenance-date">${
+                          institution.lastMaintenance || "Sin registro"
+                        }</span>
+                    </div>
+                    <div class="maintenance-item">
+                        <span class="maintenance-label">Próximo Mantenimiento:</span>
+                        <span class="maintenance-date upcoming">${
+                          institution.nextMaintenance || "Por programar"
+                        }</span>
+                    </div>
+                </div>
+
+                <div class="institution-actions">
+                    <button class="btn btn-primary btn-small add-infrastructure-btn">🏗️ Agregar Infraestructura</button>
+                    <button class="btn btn-outline btn-small view-details-btn">Ver Detalles</button>
+                    <button class="btn btn-secondary btn-small edit-btn">✏️ Editar</button>
+                    <button class="btn btn-danger btn-small delete-btn">🗑️ Eliminar</button>
+                </div>
+            `;
+
+        return card;
+      }
+
+      // Función para configurar eventos de tarjeta
+      function setupCardEvents(card) {
+        const addInfraBtn = card.querySelector(".add-infrastructure-btn");
+        const editBtn = card.querySelector(".edit-btn");
+        const detailBtn = card.querySelector(".view-details-btn");
+        const deleteBtn = card.querySelector(".delete-btn");
+
+        if (addInfraBtn) {
+          addInfraBtn.addEventListener("click", function () {
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            showAddInfrastructureModal(institutionName, card);
+          });
+        }
+
+        if (editBtn) {
+          editBtn.addEventListener("click", function () {
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            window.location.href = `edit-institution.html?name=${encodeURIComponent(
+              institutionName
+            )}`;
+          });
+        }
+
+        if (detailBtn) {
+          detailBtn.addEventListener("click", function () {
+            showInstitutionDetails(card);
+          });
+        }
+
+        if (deleteBtn) {
+          deleteBtn.addEventListener("click", function () {
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            deleteInstitution(institutionName, card);
+          });
+        }
+      }
+
+      // Función para mostrar modal de agregar infraestructura
+      function showAddInfrastructureModal(institutionName, card) {
+        const modal = document.createElement("div");
+        modal.className = "infrastructure-modal";
+        modal.innerHTML = `
+                <div class="infrastructure-modal-content">
+                    <div class="infrastructure-header">
+                        <h2>🏗️ Agregar Infraestructura a ${institutionName}</h2>
+                        <button class="close-infrastructure">&times;</button>
+                    </div>
+                    <div class="infrastructure-body">
+                        <div class="infrastructure-info">
+                            <h4>📚 ¿Qué son las facultades?</h4>
+                            <p>Una facultad es una división académica dentro de una institución educativa que agrupa carreras o programas relacionados. Por ejemplo:</p>
+                            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Facultad de Ingeniería:</strong> Incluye aulas de matemáticas, laboratorios de computación, etc.</li>
+                                <li><strong>Facultad de Medicina:</strong> Incluye laboratorios de anatomía, aulas de teoría, etc.</li>
+                                <li><strong>Facultad de Derecho:</strong> Principalmente aulas de clases y biblioteca.</li>
+                            </ul>
+                            <p><strong>💡 Instrucciones:</strong> Agregue cada facultad con el número de aulas y laboratorios que le pertenecen.</p>
+                        </div>
+                        
+                        <div class="faculty-list" id="facultyList">
+                            <div style="text-align: center; padding: 2rem; color: #7f8c8d; font-style: italic;">
+                                📚 No hay facultades agregadas aún.<br>
+                                Comience agregando la primera facultad usando el formulario de abajo.
+                            </div>
+                        </div>
+                        
+                        <div class="add-faculty-section">
+                            <h3>➕ Agregar Nueva Facultad</h3>
+                            <div class="faculty-form">
+                                <div class="input-group">
+                                    <label for="facultyName">Nombre de la Facultad *</label>
+                                    <input type="text" id="facultyName" placeholder="Ej: Facultad de Ingeniería Civil" class="faculty-input">
+                                    <small>Incluya "Facultad de" en el nombre para mayor claridad</small>
+                                </div>
+                                <div class="input-group">
+                                    <label for="facultyClassrooms">Número de Aulas *</label>
+                                    <input type="number" id="facultyClassrooms" placeholder="Cantidad de aulas" min="1" value="1" class="faculty-input">
+                                    <small>Aulas teóricas, salones de clase, auditorios</small>
+                                </div>
+                                <div class="input-group">
+                                    <label for="facultyLaboratories">Número de Laboratorios</label>
+                                    <input type="number" id="facultyLaboratories" placeholder="Cantidad de labs" min="0" value="0" class="faculty-input">
+                                    <small>Labs de computación, química, física, etc.</small>
+                                </div>
+                                <button class="btn-add-faculty">➕ Agregar Facultad</button>
+                            </div>
+                        </div>
+                        
+                        <div class="infrastructure-actions">
+                            <button class="btn-save-infrastructure">💾 Guardar Infraestructura</button>
+                            <button class="btn-close-infrastructure">❌ Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        // Agregar estilos del modal
+        const style = document.createElement("style");
+        style.textContent = `
+                .infrastructure-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.7);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                    animation: modalFadeIn 0.3s ease;
+                }
+                @keyframes modalFadeIn {
+                    from { opacity: 0; }
+                    to { opacity: 1; }
+                }
+                .infrastructure-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 0;
+                    max-width: 800px;
+                    width: 90%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                    animation: modalSlideIn 0.3s ease;
+                }
+                @keyframes modalSlideIn {
+                    from { transform: translateY(-50px); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
+                }
+                .infrastructure-header {
+                    background: linear-gradient(135deg, #e67e22, #f39c12);
+                    color: white;
+                    padding: 1.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .close-infrastructure {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: white;
+                    padding: 5px;
+                    border-radius: 50%;
+                    width: 35px;
+                    height: 35px;
+                    transition: background 0.3s;
+                }
+                .close-infrastructure:hover {
+                    background: rgba(255,255,255,0.2);
+                    transform: scale(1.1);
+                }
+                .infrastructure-body {
+                    padding: 2rem;
+                }
+                .infrastructure-info {
+                    background: #e8f5e8;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    margin-bottom: 1.5rem;
+                    border-left: 4px solid #27ae60;
+                }
+                .infrastructure-info h4 {
+                    color: #27ae60;
+                    margin: 0 0 1rem 0;
+                    font-size: 1.1rem;
+                }
+                .infrastructure-info ul {
+                    margin: 0.5rem 0;
+                    padding-left: 1.5rem;
+                    color: #2c3e50;
+                }
+                .infrastructure-info li {
+                    margin-bottom: 0.5rem;
+                }
+                .faculty-form {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                    margin-top: 1rem;
+                }
+                .input-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .input-group label {
+                    font-weight: 600;
+                    color: #2c3e50;
+                    margin-bottom: 0.5rem;
+                    font-size: 0.9rem;
+                }
+                .input-group small {
+                    color: #7f8c8d;
+                    font-size: 0.8rem;
+                    margin-top: 0.3rem;
+                    font-style: italic;
+                }
+                .faculty-input {
+                    padding: 0.75rem;
+                    border: 2px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    transition: border-color 0.3s ease;
+                }
+                .faculty-input:focus {
+                    outline: none;
+                    border-color: #e67e22;
+                    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+                }
+                .faculty-list {
+                    margin-bottom: 2rem;
+                }
+                .faculty-item {
+                    background: #f8f9fa;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                    border-left: 4px solid #3498db;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    animation: fadeIn 0.3s ease;
+                }
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateX(-20px); }
+                    to { opacity: 1; transform: translateX(0); }
+                }
+                .faculty-info h4 {
+                    margin: 0 0 0.5rem 0;
+                    color: #2c3e50;
+                }
+                .faculty-stats {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: 0.9rem;
+                    color: #7f8c8d;
+                }
+                .remove-faculty {
+                    background: #e74c3c;
+                    color: white;
+                    border: none;
+                    padding: 0.5rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 0.8rem;
+                    transition: background 0.3s;
+                }
+                .remove-faculty:hover {
+                    background: #c0392b;
+                    transform: scale(1.05);
+                }
+                .add-faculty-section {
+                    background: #fff5f5;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    border-left: 4px solid #e67e22;
+                    margin-bottom: 2rem;
+                }
+                .btn-add-faculty {
+                    background: #e67e22;
+                    color: white;
+                    border: none;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    margin-top: 1rem;
+                    transition: all 0.3s ease;
+                }
+                .btn-add-faculty:hover {
+                    background: #d35400;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+                }
+                .infrastructure-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                    margin-top: 2rem;
+                    padding-top: 2rem;
+                    border-top: 2px solid #f0f0f0;
+                }
+                .btn-save-infrastructure, .btn-close-infrastructure {
+                    padding: 0.75rem 1.5rem;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: all 0.3s;
+                    font-weight: 600;
+                }
+                .btn-save-infrastructure {
+                    background: #27ae60;
+                    color: white;
+                }
+                .btn-save-infrastructure:hover {
+                    background: #219a52;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+                }
+                .btn-close-infrastructure {
+                    background: #95a5a6;
+                    color: white;
+                }
+                .btn-close-infrastructure:hover {
+                    background: #7f8c8d;
+                    transform: translateY(-2px);
+                }
+            `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(modal);
+
+        // Variables para el manejo de facultades
+        let faculties = [];
+
+        // Event listeners
+        modal
+          .querySelector(".close-infrastructure")
+          .addEventListener("click", () => closeModal());
+        modal
+          .querySelector(".btn-close-infrastructure")
+          .addEventListener("click", () => closeModal());
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) closeModal();
+        });
+
+        // Agregar facultad con validación mejorada
+        modal
+          .querySelector(".btn-add-faculty")
+          .addEventListener("click", () => {
+            const name = document.getElementById("facultyName").value.trim();
+            const classrooms =
+              parseInt(document.getElementById("facultyClassrooms").value) || 1;
+            const laboratories =
+              parseInt(document.getElementById("facultyLaboratories").value) ||
+              0;
+
+            // Validaciones mejoradas
+            if (!name) {
+              showAlert(
+                "❌ Por favor ingrese el nombre de la facultad",
+                "error"
+              );
+              document.getElementById("facultyName").focus();
+              return;
+            }
+
+            if (name.length < 5) {
+              showAlert(
+                "❌ El nombre de la facultad debe tener al menos 5 caracteres",
+                "error"
+              );
+              document.getElementById("facultyName").focus();
+              return;
+            }
+
+            if (classrooms < 1) {
+              showAlert("❌ Debe haber al menos 1 aula por facultad", "error");
+              document.getElementById("facultyClassrooms").focus();
+              return;
+            }
+
+            if (laboratories < 0) {
+              showAlert(
+                "❌ El número de laboratorios no puede ser negativo",
+                "error"
+              );
+              document.getElementById("facultyLaboratories").focus();
+              return;
+            }
+
+            // Verificar si ya existe una facultad con el mismo nombre
+            const existingFaculty = faculties.find(
+              (f) => f.name.toLowerCase() === name.toLowerCase()
+            );
+            if (existingFaculty) {
+              showAlert(
+                "❌ Ya existe una facultad con este nombre. Por favor, use un nombre diferente.",
+                "error"
+              );
+              document.getElementById("facultyName").focus();
+              return;
+            }
+
+            const faculty = {
+              id: Date.now(),
+              name,
+              classrooms,
+              laboratories,
+            };
+
+            faculties.push(faculty);
+            renderFaculties();
+
+            // Limpiar formulario
+            document.getElementById("facultyName").value = "";
+            document.getElementById("facultyClassrooms").value = "1";
+            document.getElementById("facultyLaboratories").value = "0";
+
+            showAlert(`✅ ${name} agregada exitosamente`, "success");
+            document.getElementById("facultyName").focus();
+          });
+
+        // Guardar infraestructura con confirmación
+        modal
+          .querySelector(".btn-save-infrastructure")
+          .addEventListener("click", () => {
+            if (faculties.length === 0) {
+              showAlert(
+                "❌ Debe agregar al menos una facultad antes de guardar.\n\nUna institución sin facultades no puede registrar su infraestructura.",
+                "error"
+              );
+              document.getElementById("facultyName").focus();
+              return;
+            }
+
+            const totalClassrooms = faculties.reduce(
+              (sum, f) => sum + f.classrooms,
+              0
+            );
+            const totalLaboratories = faculties.reduce(
+              (sum, f) => sum + f.laboratories,
+              0
+            );
+
+            const confirmMessage = `¿Confirma que desea guardar esta infraestructura para ${institutionName}?\n\n📊 Resumen:\n• ${
+              faculties.length
+            } ${
+              faculties.length === 1 ? "facultad" : "facultades"
+            }\n• ${totalClassrooms} ${
+              totalClassrooms === 1 ? "aula" : "aulas"
+            } en total\n• ${totalLaboratories} ${
+              totalLaboratories === 1 ? "laboratorio" : "laboratorios"
+            } en total\n\nEsta acción actualizará las estadísticas de la institución.`;
+
+            if (!confirm(confirmMessage)) {
+              return;
+            }
+
+            // Actualizar estadísticas de la institución
+            const statValues = card.querySelectorAll(".stat-value");
+            if (statValues.length >= 3) {
+              statValues[1].textContent = totalClassrooms;
+              statValues[2].textContent = totalLaboratories;
+            }
+
+            // Guardar en localStorage
+            const savedInstitutions = JSON.parse(
+              localStorage.getItem("institutions") || "[]"
+            );
+            let institutionIndex = savedInstitutions.findIndex(
+              (inst) => inst.name === institutionName
+            );
+
+            if (institutionIndex !== -1) {
+              savedInstitutions[institutionIndex].infrastructure = faculties;
+              savedInstitutions[institutionIndex].classrooms = totalClassrooms;
+              savedInstitutions[institutionIndex].laboratories =
+                totalLaboratories;
+              localStorage.setItem(
+                "institutions",
+                JSON.stringify(savedInstitutions)
+              );
+            } else {
+              // Si no existe en localStorage, crear nueva entrada
+              const newInstitution = {
+                name: institutionName,
+                infrastructure: faculties,
+                classrooms: totalClassrooms,
+                laboratories: totalLaboratories,
+                dateCreated: new Date().toISOString(),
+              };
+              savedInstitutions.push(newInstitution);
+              localStorage.setItem(
+                "institutions",
+                JSON.stringify(savedInstitutions)
+              );
+            }
+
+            // Efecto visual de éxito
+            card.style.transition = "all 0.3s ease";
+            card.style.border = "3px solid #27ae60";
+            card.style.boxShadow = "0 8px 24px rgba(39, 174, 96, 0.3)";
+            card.style.transform = "scale(1.02)";
+
+            setTimeout(() => {
+              card.style.border = "";
+              card.style.boxShadow = "";
+              card.style.transform = "";
+            }, 2000);
+
+            showAlert(
+              `✅ ¡Infraestructura guardada exitosamente!\n\n🏢 ${institutionName}\n📊 Estadísticas actualizadas:\n• ${
+                faculties.length
+              } ${
+                faculties.length === 1
+                  ? "facultad registrada"
+                  : "facultades registradas"
+              }\n• ${totalClassrooms} ${
+                totalClassrooms === 1 ? "aula" : "aulas"
+              } en total\n• ${totalLaboratories} ${
+                totalLaboratories === 1 ? "laboratorio" : "laboratorios"
+              } en total\n\n💾 Los datos han sido guardados en el sistema.`,
+              "success"
+            );
+            closeModal();
+          });
+
+        function renderFaculties() {
+          const facultyList = document.getElementById("facultyList");
+          if (faculties.length === 0) {
+            facultyList.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #7f8c8d; font-style: italic;">
+                            📚 No hay facultades agregadas aún.<br>
+                            Comience agregando la primera facultad usando el formulario de abajo.
+                        </div>
+                    `;
+          } else {
+            const totalFaculties = faculties.length;
+            const totalClassrooms = faculties.reduce(
+              (sum, f) => sum + f.classrooms,
+              0
+            );
+            const totalLabs = faculties.reduce(
+              (sum, f) => sum + f.laboratories,
+              0
+            );
+
+            facultyList.innerHTML = `
+                        <div style="background: #e8f4f8; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; border-left: 4px solid #3498db;">
+                            <strong>📊 Resumen actual:</strong><br>
+                            ${totalFaculties} ${
+              totalFaculties === 1 ? "facultad" : "facultades"
+            } • 
+                            ${totalClassrooms} ${
+              totalClassrooms === 1 ? "aula" : "aulas"
+            } • 
+                            ${totalLabs} ${
+              totalLabs === 1 ? "laboratorio" : "laboratorios"
+            }
+                        </div>
+                        ${faculties
+                          .map(
+                            (faculty, index) => `
+                            <div class="faculty-item">
+                                <div class="faculty-info">
+                                    <h4>${index + 1}. ${faculty.name}</h4>
+                                    <div class="faculty-stats">
+                                        <span>🏫 ${faculty.classrooms} ${
+                              faculty.classrooms === 1 ? "aula" : "aulas"
+                            }</span>
+                                        <span>🔬 ${faculty.laboratories} ${
+                              faculty.laboratories === 1
+                                ? "laboratorio"
+                                : "laboratorios"
+                            }</span>
+                                        <span style="color: #2c3e50; font-weight: 600;">
+                                            Total: ${
+                                              faculty.classrooms +
+                                              faculty.laboratories
+                                            } espacios
+                                        </span>
+                                    </div>
+                                </div>
+                                <button class="remove-faculty" onclick="removeFaculty(${
+                                  faculty.id
+                                })" title="Eliminar ${faculty.name}">
+                                    🗑️ Eliminar
+                                </button>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    `;
+          }
+        }
+
+        function closeModal() {
+          modal.style.animation = "modalFadeOut 0.3s ease";
+          setTimeout(() => {
+            document.body.removeChild(modal);
+            document.head.removeChild(style);
+          }, 300);
+        }
+
+        function showAlert(message, type = "info") {
+          const alertDiv = document.createElement("div");
+          alertDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${
+                      type === "success"
+                        ? "#27ae60"
+                        : type === "error"
+                        ? "#e74c3c"
+                        : "#3498db"
+                    };
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    z-index: 10001;
+                    font-weight: 600;
+                    max-width: 300px;
+                    animation: slideIn 0.3s ease;
+                `;
+          alertDiv.innerHTML = message;
+          document.body.appendChild(alertDiv);
+
+          setTimeout(() => {
+            alertDiv.style.animation = "slideOut 0.3s ease";
+            setTimeout(() => {
+              if (document.body.contains(alertDiv)) {
+                document.body.removeChild(alertDiv);
+              }
+            }, 300);
+          }, 3000);
+        }
+
+        // Función global para remover facultad
+        window.removeFaculty = function (facultyId) {
+          if (confirm("¿Está seguro de eliminar esta facultad?")) {
+            faculties = faculties.filter((f) => f.id !== facultyId);
+            renderFaculties();
+            showAlert("✅ Facultad eliminada", "success");
+          }
+        };
+
+        // Agregar animaciones CSS
+        const animationStyle = document.createElement("style");
+        animationStyle.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOut {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+                @keyframes modalFadeOut {
+                    from { opacity: 1; }
+                    to { opacity: 0; }
+                }
+            `;
+      }
+
+      // Función para mostrar detalles profesional
+      function showInstitutionDetails(card) {
+        const institutionName =
+          card.querySelector(".institution-name").textContent;
+        const location = card.querySelector(
+          ".institution-location"
+        ).textContent;
+        const type = card.querySelector(".institution-type").textContent;
+        const buildings = card.querySelectorAll(".stat-value")[0].textContent;
+        const classrooms = card.querySelectorAll(".stat-value")[1].textContent;
+        const laboratories =
+          card.querySelectorAll(".stat-value")[2].textContent;
+        const lastMaintenance =
+          card.querySelectorAll(".maintenance-date")[0]?.textContent ||
+          "Sin registro";
+        const nextMaintenance =
+          card.querySelectorAll(".maintenance-date")[1]?.textContent ||
+          "Por programar";
+
+        // Crear modal profesional
+        const modal = document.createElement("div");
+        modal.className = "details-modal";
+        modal.innerHTML = `
+              <div class="details-modal-content">
+                  <div class="details-header">
+                      <div class="header-info">
+                          <h2>📋 Detalles de la Institución</h2>
+                          <p>Información completa y estadísticas</p>
+                      </div>
+                      <button class="close-details">&times;</button>
+                  </div>
+                  <div class="details-body">
+                      <div class="institution-overview">
+                          <div class="overview-card">
+                              <div class="overview-icon">🏢</div>
+                              <div class="overview-info">
+                                  <h3>${institutionName}</h3>
+                                  <p class="overview-type">${type}</p>
+                                  <p class="overview-location">${location}</p>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="details-grid">
+                          <div class="detail-section infrastructure">
+                              <div class="section-header">
+                                  <h3>🏗️ Infraestructura</h3>
+                                  <span class="section-badge">Física</span>
+                              </div>
+                              <div class="stats-grid">
+                                  <div class="stat-card">
+                                      <div class="stat-icon">🏢</div>
+                                      <div class="stat-info">
+                                          <span class="stat-number">${buildings}</span>
+                                          <span class="stat-label">Edificios</span>
+                                      </div>
+                                  </div>
+                                  <div class="stat-card">
+                                      <div class="stat-icon">🏫</div>
+                                      <div class="stat-info">
+                                          <span class="stat-number">${classrooms}</span>
+                                          <span class="stat-label">Aulas</span>
+                                      </div>
+                                  </div>
+                                  <div class="stat-card">
+                                      <div class="stat-icon">🔬</div>
+                                      <div class="stat-info">
+                                          <span class="stat-number">${laboratories}</span>
+                                          <span class="stat-label">Laboratorios</span>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <div class="detail-section maintenance">
+                              <div class="section-header">
+                                  <h3>🔧 Mantenimiento</h3>
+                                  <span class="section-badge">Programación</span>
+                              </div>
+                              <div class="maintenance-timeline">
+                                  <div class="timeline-item past">
+                                      <div class="timeline-icon">✅</div>
+                                      <div class="timeline-content">
+                                          <h4>Último Mantenimiento</h4>
+                                          <p class="timeline-date">${lastMaintenance}</p>
+                                          <p class="timeline-status completed">Completado</p>
+                                      </div>
+                                  </div>
+                                  <div class="timeline-item future">
+                                      <div class="timeline-icon">⏰</div>
+                                      <div class="timeline-content">
+                                          <h4>Próximo Mantenimiento</h4>
+                                          <p class="timeline-date">${nextMaintenance}</p>
+                                          <p class="timeline-status pending">Programado</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          
+                          <div class="detail-section summary">
+                              <div class="section-header">
+                                  <h3>📊 Resumen General</h3>
+                                  <span class="section-badge">Estadísticas</span>
+                              </div>
+                              <div class="summary-content">
+                                  <div class="summary-item">
+                                      <span class="summary-label">Total de Espacios:</span>
+                                      <span class="summary-value">${
+                                        parseInt(classrooms) +
+                                        parseInt(laboratories)
+                                      } espacios</span>
+                                  </div>
+                                  <div class="summary-item">
+                                      <span class="summary-label">Capacidad Estimada:</span>
+                                      <span class="summary-value">${(
+                                        parseInt(classrooms) * 30 +
+                                        parseInt(laboratories) * 20
+                                      ).toLocaleString()} estudiantes</span>
+                                  </div>
+                                  <div class="summary-item">
+                                      <span class="summary-label">Estado del Sistema:</span>
+                                      <span class="summary-value status-active">🟢 Activo</span>
+                                  </div>
+                                  <div class="summary-item">
+                                      <span class="summary-label">Última Actualización:</span>
+                                      <span class="summary-value">${new Date().toLocaleDateString(
+                                        "es-ES"
+                                      )}</span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                      
+                      <div class="details-actions">
+                          <button class="btn-action primary" onclick="editFromDetails('${institutionName}')">
+                              ✏️ Editar Institución
+                          </button>
+                          <button class="btn-action secondary" onclick="addInfrastructureFromDetails('${institutionName}')">
+                              🏗️ Gestionar Infraestructura
+                          </button>
+                          <button class="btn-action outline" onclick="closeDetailsModal()">
+                              ✅ Cerrar
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          `;
+
+        // Agregar estilos del modal
+        const style = document.createElement("style");
+        style.textContent = `
+              .details-modal {
+                  position: fixed;
+                  top: 0;
+                  left: 0;
+                  width: 100%;
+                  height: 100%;
+                  background: rgba(0,0,0,0.8);
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  z-index: 10000;
+                  animation: fadeIn 0.3s ease;
+              }
+              .details-modal-content {
+                  background: white;
+                  border-radius: 20px;
+                  padding: 0;
+                  max-width: 900px;
+                  width: 95%;
+                  max-height: 90vh;
+                  overflow-y: auto;
+                  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                  animation: slideUp 0.4s ease;
+              }
+              @keyframes fadeIn {
+                  from { opacity: 0; }
+                  to { opacity: 1; }
+              }
+              @keyframes slideUp {
+                  from { transform: translateY(50px); opacity: 0; }
+                  to { transform: translateY(0); opacity: 1; }
+              }
+              .details-header {
+                  background: linear-gradient(135deg, #2c3e50, #3498db);
+                  color: white;
+                  padding: 2rem;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: flex-start;
+                  border-radius: 20px 20px 0 0;
+              }
+              .header-info h2 {
+                  margin: 0 0 0.5rem 0;
+                  font-size: 1.8rem;
+                  font-weight: 700;
+              }
+              .header-info p {
+                  margin: 0;
+                  opacity: 0.9;
+                  font-size: 1rem;
+              }
+              .close-details {
+                  background: rgba(255,255,255,0.2);
+                  border: none;
+                  color: white;
+                  font-size: 24px;
+                  cursor: pointer;
+                  padding: 10px;
+                  border-radius: 50%;
+                  width: 45px;
+                  height: 45px;
+                  transition: all 0.3s;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+              }
+              .close-details:hover {
+                  background: rgba(255,255,255,0.3);
+                  transform: rotate(90deg);
+              }
+              .details-body {
+                  padding: 2rem;
+              }
+              .institution-overview {
+                  margin-bottom: 2rem;
+              }
+              .overview-card {
+                  display: flex;
+                  align-items: center;
+                  gap: 1.5rem;
+                  padding: 1.5rem;
+                  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+                  border-radius: 15px;
+                  border-left: 5px solid #e67e22;
+              }
+              .overview-icon {
+                  font-size: 3rem;
+                  background: white;
+                  padding: 1rem;
+                  border-radius: 15px;
+                  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+              }
+              .overview-info h3 {
+                  margin: 0 0 0.5rem 0;
+                  color: #2c3e50;
+                  font-size: 1.4rem;
+                  font-weight: 700;
+              }
+              .overview-type {
+                  margin: 0 0 0.25rem 0;
+                  color: #e67e22;
+                  font-weight: 600;
+                  font-size: 1rem;
+              }
+              .overview-location {
+                  margin: 0;
+                  color: #7f8c8d;
+                  font-size: 0.95rem;
+              }
+              .details-grid {
+                  display: grid;
+                  gap: 2rem;
+                  grid-template-columns: 1fr;
+              }
+              .detail-section {
+                  background: white;
+                  border: 2px solid #f1f3f4;
+                  border-radius: 15px;
+                  padding: 1.5rem;
+                  transition: all 0.3s ease;
+              }
+              .detail-section:hover {
+                  border-color: #e67e22;
+                  box-shadow: 0 8px 25px rgba(230, 126, 34, 0.1);
+              }
+              .section-header {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 1.5rem;
+              }
+              .section-header h3 {
+                  margin: 0;
+                  color: #2c3e50;
+                  font-size: 1.2rem;
+                  font-weight: 700;
+              }
+              .section-badge {
+                  background: #e67e22;
+                  color: white;
+                  padding: 0.25rem 0.75rem;
+                  border-radius: 20px;
+                  font-size: 0.8rem;
+                  font-weight: 600;
+                  text-transform: uppercase;
+                  letter-spacing: 0.5px;
+              }
+              .stats-grid {
+                  display: grid;
+                  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                  gap: 1rem;
+              }
+              .stat-card {
+                  display: flex;
+                  align-items: center;
+                  gap: 1rem;
+                  padding: 1rem;
+                  background: #f8f9fa;
+                  border-radius: 10px;
+                  border-left: 4px solid #3498db;
+                  transition: all 0.3s ease;
+              }
+              .stat-card:hover {
+                  transform: translateY(-3px);
+                  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.2);
+              }
+              .stat-icon {
+                  font-size: 1.5rem;
+              }
+              .stat-number {
+                  display: block;
+                  font-size: 1.5rem;
+                  font-weight: 700;
+                  color: #2c3e50;
+                  line-height: 1;
+              }
+              .stat-label {
+                  font-size: 0.85rem;
+                  color: #7f8c8d;
+                  text-transform: uppercase;
+                  font-weight: 600;
+                  letter-spacing: 0.5px;
+              }
+              .maintenance-timeline {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 1rem;
+              }
+              .timeline-item {
+                  display: flex;
+                  align-items: flex-start;
+                  gap: 1rem;
+                  padding: 1rem;
+                  border-radius: 10px;
+                  transition: all 0.3s ease;
+              }
+              .timeline-item.past {
+                  background: linear-gradient(135deg, #d5f4e6, #e8f5e8);
+                  border-left: 4px solid #27ae60;
+              }
+              .timeline-item.future {
+                  background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+                  border-left: 4px solid #f39c12;
+              }
+              .timeline-item:hover {
+                  transform: translateX(5px);
+              }
+              .timeline-icon {
+                  font-size: 1.5rem;
+                  width: 40px;
+                  height: 40px;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  background: white;
+                  border-radius: 50%;
+                  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+              }
+              .timeline-content h4 {
+                  margin: 0 0 0.5rem 0;
+                  color: #2c3e50;
+                  font-size: 1rem;
+                  font-weight: 600;
+              }
+              .timeline-date {
+                  margin: 0 0 0.5rem 0;
+                  font-weight: 700;
+                  font-size: 1rem;
+              }
+              .timeline-status {
+                  margin: 0;
+                  font-size: 0.85rem;
+                  font-weight: 600;
+                  padding: 0.25rem 0.75rem;
+                  border-radius: 15px;
+                  display: inline-block;
+              }
+              .timeline-status.completed {
+                  background: #27ae60;
+                  color: white;
+              }
+              .timeline-status.pending {
+                  background: #f39c12;
+                  color: white;
+              }
+              .summary-content {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 1rem;
+              }
+              .summary-item {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  padding: 0.75rem;
+                  background: #f8f9fa;
+                  border-radius: 8px;
+                  transition: all 0.3s ease;
+              }
+              .summary-item:hover {
+                  background: #e9ecef;
+                  transform: translateX(5px);
+              }
+              .summary-label {
+                  font-weight: 600;
+                  color: #555;
+              }
+              .summary-value {
+                  font-weight: 700;
+                  color: #2c3e50;
+              }
+              .summary-value.status-active {
+                  color: #27ae60;
+              }
+              .details-actions {
+                  display: flex;
+                  gap: 1rem;
+                  justify-content: center;
+                  margin-top: 2rem;
+                  padding-top: 2rem;
+                  border-top: 2px solid #f1f3f4;
+                  flex-wrap: wrap;
+              }
+              .btn-action {
+                  padding: 0.75rem 1.5rem;
+                  border: none;
+                  border-radius: 8px;
+                  font-size: 1rem;
+                  font-weight: 600;
+                  cursor: pointer;
+                  transition: all 0.3s ease;
+                  text-decoration: none;
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 0.5rem;
+              }
+              .btn-action.primary {
+                  background: #3498db;
+                  color: white;
+              }
+              .btn-action.primary:hover {
+                  background: #2980b9;
+                  transform: translateY(-2px);
+                  box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+              }
+              .btn-action.secondary {
+                  background: #e67e22;
+                  color: white;
+              }
+              .btn-action.secondary:hover {
+                  background: #d35400;
+                  transform: translateY(-2px);
+                  box-shadow: 0 6px 20px rgba(230, 126, 34, 0.3);
+              }
+              .btn-action.outline {
+                  background: white;
+                  color: #7f8c8d;
+                  border: 2px solid #e9ecef;
+              }
+              .btn-action.outline:hover {
+                  background: #f8f9fa;
+                  border-color: #3498db;
+                  color: #3498db;
+                  transform: translateY(-2px);
+              }
+              
+              /* Responsive */
+              @media (max-width: 768px) {
+                  .details-modal-content {
+                      width: 98%;
+                      margin: 1rem;
+                  }
+                  .details-header {
+                      padding: 1.5rem;
+                  }
+                  .details-body {
+                      padding: 1.5rem;
+                  }
+                  .overview-card {
+                      flex-direction: column;
+                      text-align: center;
+                  }
+                  .stats-grid {
+                      grid-template-columns: 1fr;
+                  }
+                  .details-actions {
+                      flex-direction: column;
+                  }
+                  .btn-action {
+                      width: 100%;
+                      justify-content: center;
+                  }
+              }
+          `;
+        document.head.appendChild(style);
+
+        document.body.appendChild(modal);
+
+        // Event listeners
+        modal
+          .querySelector(".close-details")
+          .addEventListener("click", () => closeDetailsModal());
+
+        modal.addEventListener("click", (e) => {
+          if (e.target === modal) closeDetailsModal();
+        });
+
+        // Funciones globales para los botones
+        window.closeDetailsModal = function () {
+          modal.style.animation = "fadeOut 0.3s ease";
+          setTimeout(() => {
+            document.body.removeChild(modal);
+            document.head.removeChild(style);
+          }, 300);
+        };
+
+        window.editFromDetails = function (institutionName) {
+          closeDetailsModal();
+          window.location.href = `edit-institution.html?name=${encodeURIComponent(
+            institutionName
+          )}`;
+        };
+
+        window.addInfrastructureFromDetails = function (institutionName) {
+          closeDetailsModal();
+          // Buscar la tarjeta y ejecutar la función
+          const cards = document.querySelectorAll(".institution-card");
+          const targetCard = Array.from(cards).find(
+            (card) =>
+              card.querySelector(".institution-name").textContent ===
+              institutionName
+          );
+          if (targetCard) {
+            showAddInfrastructureModal(institutionName, targetCard);
+          }
+        };
+
+        // Agregar animación de salida
+        const fadeOutStyle = document.createElement("style");
+        fadeOutStyle.textContent = `
+              @keyframes fadeOut {
+                  from { opacity: 1; }
+                  to { opacity: 0; }
+              }
+          `;
+        document.head.appendChild(fadeOutStyle);
+      }
+
+      // Función para eliminar institución
+      function deleteInstitution(institutionName, card) {
+        if (
+          confirm(
+            `❌ ¿Está seguro de que desea eliminar "${institutionName}"?\n\nEsta acción no se puede deshacer.`
+          )
+        ) {
+          // Animar eliminación
+          card.style.transition = "all 0.5s ease";
+          card.style.transform = "scale(0.8)";
+          card.style.opacity = "0.3";
+
+          setTimeout(() => {
+            card.remove();
+
+            // Remover de localStorage si es necesario
+            const savedInstitutions = JSON.parse(
+              localStorage.getItem("institutions") || "[]"
+            );
+            const updatedInstitutions = savedInstitutions.filter(
+              (inst) => inst.name !== institutionName
+            );
+            localStorage.setItem(
+              "institutions",
+              JSON.stringify(updatedInstitutions)
+            );
+
+            alert("✅ Institución eliminada exitosamente");
+          }, 500);
+        }
+      }
+    </script>
+
+    <!-- Scripts adicionales -->
+    <script src="../javascript/universal-init.js"></script>
+    <script src="../javascript/settings.js"></script>
+  </body>
+</html>

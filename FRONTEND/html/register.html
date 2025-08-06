@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="register_title">Registro de Usuario - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/register.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+</head>
+<body>
+    <div class="register-container">
+        <!-- Back to Login -->
+        <div class="back-to-login">
+            <a href="index.html" class="back-link" aria-label="Regresar al inicio de sesión" data-translate="back_to_login">
+                <span aria-hidden="true">←</span> Regresar al inicio de sesión
+            </a>
+            <!-- Quick Settings for Register Page -->
+            <div class="page-settings">
+                <button class="quick-setting-btn" id="quickLanguageToggle" aria-label="Cambiar idioma">
+                    <span class="setting-icon">🌐</span>
+                    <span class="setting-text" id="quickLanguageText">ES</span>
+                </button>
+                <button class="quick-setting-btn" id="quickThemeToggle" aria-label="Cambiar tema">
+                    <span class="setting-icon">🌓</span>
+                    <span class="setting-text" id="quickThemeText">☀️</span>
+                </button>
+                <button class="quick-setting-btn" id="quickShortcuts" aria-label="Atajos de teclado">
+                    <span class="setting-icon">⌨️</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Register Form Section -->
+        <div class="register-form-section">
+            <div class="register-form-wrapper">
+                <!-- Logo -->
+                <div class="register-logo">
+                    <div class="logo-icon">
+                        <span class="logo-text">GMPI</span>
+                    </div>
+                    <h1 class="system-title" data-translate="system_title">Gestor de Mantenimiento Preventivo</h1>
+                    <p class="system-subtitle" data-translate="new_user_register">Registro de Nuevo Usuario</p>
+                </div>
+
+                <!-- Register Form -->
+                <form class="register-form" id="registerForm" novalidate aria-label="Formulario de registro de usuario">
+                    <div class="form-header">
+                        <h2 id="register-title" data-translate="create_account">Crear Cuenta</h2>
+                        <p data-translate="register_instruction">Completa todos los campos obligatorios (*) para registrarte</p>
+                    </div>
+
+                    <!-- Error/Success Messages -->
+                    <div class="message-container" id="messageContainer" role="alert" aria-live="polite" aria-atomic="true">
+                        <!-- Messages will be inserted here -->
+                    </div>
+
+                    <!-- Progress Indicator -->
+                    <div class="progress-indicator" role="progressbar" aria-label="Progreso del formulario" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                        <div class="progress-bar" id="progressBar"></div>
+                        <span class="progress-text" id="progressText" data-translate="progress_completed">0% completado</span>
+                    </div>
+
+                    <!-- SECCIÓN: DATOS PERSONALES -->
+                    <fieldset class="form-section" id="personalSection">
+                        <legend class="section-title" data-translate="personal_data">
+                            <span class="section-icon" aria-hidden="true">👤</span>
+                            Datos Personales
+                        </legend>
+                    <fieldset class="form-section" id="personalDataSection">
+                        <legend class="section-title">
+                            <span class="section-icon" aria-hidden="true">👤</span>
+                            Datos Personales
+                        </legend>
+
+                        <!-- Nombre -->
+                        <div class="input-group">
+                            <label for="firstName" class="input-label" id="firstName-label">
+                                Nombre(s)
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="firstName" 
+                                    name="firstName" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: Juan Carlos"
+                                    required
+                                    autocomplete="given-name"
+                                    aria-labelledby="firstName-label"
+                                    aria-describedby="firstName-error firstName-help"
+                                    aria-invalid="false"
+                                    autofocus
+                                    minlength="2"
+                                    maxlength="50"
+                                >
+                                <span class="input-icon" aria-hidden="true">👤</span>
+                                <span class="input-status" id="firstName-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="firstName-help">Ingresa tu(s) nombre(s) completo(s)</div>
+                            <div class="field-error" id="firstName-error" role="alert"></div>
+                        </div>
+
+                        <!-- Apellidos -->
+                        <div class="input-group">
+                            <label for="lastName" class="input-label" id="lastName-label">
+                                Apellidos
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="lastName" 
+                                    name="lastName" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: Pérez González"
+                                    required
+                                    autocomplete="family-name"
+                                    aria-labelledby="lastName-label"
+                                    aria-describedby="lastName-error lastName-help"
+                                    aria-invalid="false"
+                                    minlength="2"
+                                    maxlength="50"
+                                >
+                                <span class="input-icon" aria-hidden="true">👥</span>
+                                <span class="input-status" id="lastName-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="lastName-help">Ingresa tus apellidos completos</div>
+                            <div class="field-error" id="lastName-error" role="alert"></div>
+                        </div>
+
+                        <!-- Tipo de Documento -->
+                        <div class="input-group">
+                            <label for="documentType" class="input-label" id="documentType-label">
+                                Tipo de Documento
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <select 
+                                    id="documentType" 
+                                    name="documentType" 
+                                    class="form-input form-select" 
+                                    required
+                                    aria-labelledby="documentType-label"
+                                    aria-describedby="documentType-error documentType-help"
+                                    aria-invalid="false"
+                                >
+                                    <option value="">Selecciona un tipo</option>
+                                    <option value="cedula">Cédula de Ciudadanía</option>
+                                    <option value="pasaporte">Pasaporte</option>
+                                    <option value="extranjeria">Cédula de Extranjería</option>
+                                    <option value="nit">NIT</option>
+                                </select>
+                                <span class="input-icon" aria-hidden="true">📄</span>
+                                <span class="input-status" id="documentType-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="documentType-help">Selecciona el tipo de documento de identidad</div>
+                            <div class="field-error" id="documentType-error" role="alert"></div>
+                        </div>
+
+                        <!-- Número de Documento -->
+                        <div class="input-group">
+                            <label for="documentNumber" class="input-label" id="documentNumber-label">
+                                Número de Documento
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="documentNumber" 
+                                    name="documentNumber" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: 1234567890"
+                                    required
+                                    aria-labelledby="documentNumber-label"
+                                    aria-describedby="documentNumber-error documentNumber-help"
+                                    aria-invalid="false"
+                                    minlength="6"
+                                    maxlength="20"
+                                >
+                                <span class="input-icon" aria-hidden="true">🔢</span>
+                                <span class="input-status" id="documentNumber-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="documentNumber-help">Ingresa solo números, sin puntos ni espacios</div>
+                            <div class="field-error" id="documentNumber-error" role="alert"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SECCIÓN: INFORMACIÓN DE CONTACTO -->
+                    <fieldset class="form-section" id="contactSection">
+                        <legend class="section-title">
+                            <span class="section-icon" aria-hidden="true">📞</span>
+                            Información de Contacto
+                        </legend>
+
+                        <!-- Email -->
+                        <div class="input-group">
+                            <label for="email" class="input-label" id="email-label">
+                                Correo Electrónico
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: usuario@colegio.edu"
+                                    required
+                                    autocomplete="email"
+                                    aria-labelledby="email-label"
+                                    aria-describedby="email-error email-help"
+                                    aria-invalid="false"
+                                >
+                                <span class="input-icon" aria-hidden="true">📧</span>
+                                <span class="input-status" id="email-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="email-help">Ingresa un correo electrónico válido</div>
+                            <div class="field-error" id="email-error" role="alert"></div>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="input-group">
+                            <label for="phone" class="input-label" id="phone-label">
+                                Teléfono
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="tel" 
+                                    id="phone" 
+                                    name="phone" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: 3001234567"
+                                    required
+                                    autocomplete="tel"
+                                    aria-labelledby="phone-label"
+                                    aria-describedby="phone-error phone-help"
+                                    aria-invalid="false"
+                                    minlength="10"
+                                    maxlength="10"
+                                >
+                                <span class="input-icon" aria-hidden="true">📱</span>
+                                <span class="input-status" id="phone-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="phone-help">Ingresa 10 dígitos sin espacios ni guiones</div>
+                            <div class="field-error" id="phone-error" role="alert"></div>
+                        </div>
+
+                        <!-- Cargo -->
+                        <div class="input-group">
+                            <label for="position" class="input-label" id="position-label">
+                                Cargo o Función
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <select 
+                                    id="position" 
+                                    name="position" 
+                                    class="form-input form-select" 
+                                    required
+                                    aria-labelledby="position-label"
+                                    aria-describedby="position-error position-help"
+                                    aria-invalid="false"
+                                >
+                                    <option value="">Selecciona tu cargo</option>
+                                    <option value="inspector" selected>Inspector de Mantenimiento</option>
+                                </select>
+                                <span class="input-icon" aria-hidden="true">�</span>
+                                <span class="input-status" id="position-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="position-help">El sistema solo permite registrar inspectores de mantenimiento</div>
+                            <div class="field-error" id="position-error" role="alert"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SECCIÓN: CREDENCIALES DE ACCESO -->
+                    <fieldset class="form-section" id="credentialsSection">
+                        <legend class="section-title">
+                            <span class="section-icon" aria-hidden="true">🔐</span>
+                            Credenciales de Acceso
+                        </legend>
+
+                        <!-- Contraseña -->
+                        <div class="input-group">
+                            <label for="password" class="input-label" id="password-label">
+                                Contraseña
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-input" 
+                                    placeholder="Crea una contraseña segura"
+                                    required
+                                    autocomplete="new-password"
+                                    aria-labelledby="password-label"
+                                    aria-describedby="password-error password-help password-toggle"
+                                    aria-invalid="false"
+                                    minlength="8"
+                                    maxlength="50"
+                                >
+                                <span class="input-icon" aria-hidden="true">🔒</span>
+                                <button 
+                                    type="button" 
+                                    class="toggle-password" 
+                                    id="togglePassword"
+                                    aria-label="Mostrar contraseña"
+                                    aria-describedby="password-toggle"
+                                    tabindex="0"
+                                >
+                                    <span class="toggle-icon" aria-hidden="true">👁️</span>
+                                </button>
+                                <span class="input-status" id="password-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="password-help">Mínimo 8 caracteres, incluye mayúsculas, minúsculas y números</div>
+                            <div class="field-error" id="password-error" role="alert"></div>
+                            <div class="sr-only" id="password-toggle">Presiona para alternar la visibilidad de la contraseña</div>
+                            
+                            <!-- Barra de Fortaleza de Contraseña -->
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-label">Fortaleza de contraseña:</div>
+                                <div class="strength-bar">
+                                    <div class="strength-fill" id="strengthFill"></div>
+                                </div>
+                                <div class="strength-text" id="strengthText">Débil</div>
+                            </div>
+                        </div>
+
+                        <!-- Confirmar Contraseña -->
+                        <div class="input-group">
+                            <label for="confirmPassword" class="input-label" id="confirmPassword-label">
+                                Confirmar Contraseña
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="password" 
+                                    id="confirmPassword" 
+                                    name="confirmPassword" 
+                                    class="form-input" 
+                                    placeholder="Confirma tu contraseña"
+                                    required
+                                    autocomplete="new-password"
+                                    aria-labelledby="confirmPassword-label"
+                                    aria-describedby="confirmPassword-error confirmPassword-help confirmPassword-toggle"
+                                    aria-invalid="false"
+                                    minlength="8"
+                                    maxlength="50"
+                                >
+                                <span class="input-icon" aria-hidden="true">🔒</span>
+                                <button 
+                                    type="button" 
+                                    class="toggle-password" 
+                                    id="toggleConfirmPassword"
+                                    aria-label="Mostrar confirmación de contraseña"
+                                    aria-describedby="confirmPassword-toggle"
+                                    tabindex="0"
+                                >
+                                    <span class="toggle-icon" aria-hidden="true">👁️</span>
+                                </button>
+                                <span class="input-status" id="confirmPassword-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="confirmPassword-help">Repite la contraseña para confirmarla</div>
+                            <div class="field-error" id="confirmPassword-error" role="alert"></div>
+                            <div class="sr-only" id="confirmPassword-toggle">Presiona para alternar la visibilidad de la confirmación de contraseña</div>
+                        </div>
+                    </fieldset>
+
+                    <!-- SECCIÓN: TÉRMINOS Y CONDICIONES -->
+                    <fieldset class="form-section" id="termsSection">
+                        <legend class="section-title">
+                            <span class="section-icon" aria-hidden="true">📋</span>
+                            Términos y Condiciones
+                        </legend>
+
+                        <!-- Acepto términos -->
+                        <div class="input-group">
+                            <label class="checkbox-label">
+                                <input 
+                                    type="checkbox" 
+                                    id="acceptTerms" 
+                                    name="acceptTerms" 
+                                    required
+                                    aria-describedby="acceptTerms-error acceptTerms-help"
+                                    aria-invalid="false"
+                                >
+                                <span class="checkmark" aria-hidden="true"></span>
+                                <span class="checkbox-text">
+                                    Acepto los <a href="#" class="terms-link">términos y condiciones</a> de uso
+                                    <span class="required-indicator" aria-hidden="true">*</span>
+                                </span>
+                            </label>
+                            <div class="field-help" id="acceptTerms-help">Es obligatorio aceptar los términos para registrarte</div>
+                            <div class="field-error" id="acceptTerms-error" role="alert"></div>
+                        </div>
+
+                        <!-- Acepto políticas -->
+                        <div class="input-group">
+                            <label class="checkbox-label">
+                                <input 
+                                    type="checkbox" 
+                                    id="acceptPrivacy" 
+                                    name="acceptPrivacy" 
+                                    required
+                                    aria-describedby="acceptPrivacy-error acceptPrivacy-help"
+                                    aria-invalid="false"
+                                >
+                                <span class="checkmark" aria-hidden="true"></span>
+                                <span class="checkbox-text">
+                                    Acepto las <a href="#" class="privacy-link">políticas de privacidad</a>
+                                    <span class="required-indicator" aria-hidden="true">*</span>
+                                </span>
+                            </label>
+                            <div class="field-help" id="acceptPrivacy-help">Necesario para proteger tus datos personales</div>
+                            <div class="field-error" id="acceptPrivacy-error" role="alert"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- Form Actions -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancelButton" aria-label="Cancelar registro y regresar">
+                            <span class="btn-icon" aria-hidden="true">❌</span>
+                            <span class="btn-text">Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="registerButton" aria-describedby="register-help">
+                            <span class="btn-icon" aria-hidden="true">✅</span>
+                            <span class="btn-text">Registrarse</span>
+                            <span class="btn-loader" id="btnLoader" aria-hidden="true">⟳</span>
+                        </button>
+                    </div>
+                    <div class="field-help" id="register-help">Al registrarte, se creará tu cuenta en el sistema</div>
+
+                    <!-- Accessibility Info -->
+                    <div class="accessibility-info sr-only">
+                        <p data-translate="accessibility_info_1">Este formulario es compatible con lectores de pantalla y navegación por teclado.</p>
+                        <p data-translate="accessibility_info_2">Use Tab para navegar, Enter para enviar, y Space para activar controles.</p>
+                        <p data-translate="accessibility_info_3">Los campos obligatorios están marcados con asterisco (*).</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../javascript/register-validation.js"></script>
+    <script src="../javascript/settings.js"></script>
+    <script>
+        // Initialize settings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof SettingsManager !== 'undefined') {
+                const settingsManager = new SettingsManager();
+                settingsManager.init();
+                
+                // Connect quick settings buttons
+                const quickLanguageToggle = document.getElementById('quickLanguageToggle');
+                const quickThemeToggle = document.getElementById('quickThemeToggle');
+                const quickShortcuts = document.getElementById('quickShortcuts');
+                
+                if (quickLanguageToggle) {
+                    quickLanguageToggle.addEventListener('click', function() {
+                        settingsManager.toggleLanguage();
+                    });
+                }
+                
+                if (quickThemeToggle) {
+                    quickThemeToggle.addEventListener('click', function() {
+                        settingsManager.toggleTheme();
+                    });
+                }
+                
+                if (quickShortcuts) {
+                    quickShortcuts.addEventListener('click', function() {
+                        settingsManager.showShortcuts();
+                    });
+                }
+            }
+        });
+    </script>
+    <script src="../js/register.js"></script>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GMPI - Portal de Acceso</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .portal-container {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        max-width: 800px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 3rem;
+        font-weight: bold;
+        color: #e67e22;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        color: #666;
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+      }
+
+      .pages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+
+      .page-card {
+        background: #f8f9fa;
+        border-radius: 12px;
+        padding: 30px 20px;
+        text-decoration: none;
+        color: inherit;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .page-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        border-color: #e67e22;
+      }
+
+      .page-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+      }
+
+      .page-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .page-description {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.4;
+      }
+
+      .system-info {
+        background: #e8f5e8;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 30px;
+        border-left: 4px solid #27ae60;
+      }
+
+      .system-info h3 {
+        color: #27ae60;
+        margin-bottom: 10px;
+      }
+
+      .system-info p {
+        color: #2c3e50;
+        line-height: 1.6;
+      }
+
+      .quick-access {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .quick-btn {
+        padding: 10px 20px;
+        background: #3498db;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .quick-btn:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+      }
+
+      .quick-btn.primary {
+        background: #e67e22;
+      }
+
+      .quick-btn.primary:hover {
+        background: #d35400;
+      }
+
+      @media (max-width: 600px) {
+        .portal-container {
+          padding: 20px;
+        }
+
+        .logo {
+          font-size: 2rem;
+        }
+
+        .pages-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="portal-container">
+      <div class="logo">GMPI</div>
+      <div class="subtitle">
+        Gestor de Mantenimiento Preventivo de Infraestructuras
+      </div>
+
+      <div class="pages-grid">
+        <a href="FRONTEND/html/index.html" class="page-card">
+          <span class="page-icon">🏠</span>
+          <div class="page-title">Página Principal</div>
+          <div class="page-description">
+            Inicio del sistema y página de bienvenida
+          </div>
+        </a>
+
+        <a href="FRONTEND/html/register.html" class="page-card">
+          <span class="page-icon">📝</span>
+          <div class="page-title">Registro</div>
+          <div class="page-description">
+            Registro de nuevos inspectores (solo inspectores)
+          </div>
+        </a>
+
+        <a href="FRONTEND/html/infraestructuras.html" class="page-card">
+          <span class="page-icon">🏢</span>
+          <div class="page-title">Infraestructuras</div>
+          <div class="page-description">
+            Gestión de instituciones educativas y sus infraestructuras
+          </div>
+        </a>
+
+        <a href="FRONTEND/html/calendario.html" class="page-card">
+          <span class="page-icon">📅</span>
+          <div class="page-title">Calendario</div>
+          <div class="page-description">
+            Programación de mantenimientos y citas de inspección
+          </div>
+        </a>
+
+        <a href="FRONTEND/html/add-institution.html" class="page-card">
+          <span class="page-icon">➕</span>
+          <div class="page-title">Agregar Institución</div>
+          <div class="page-description">
+            Formulario para registrar nuevas instituciones
+          </div>
+        </a>
+
+        <a href="FRONTEND/html/dashboard.html" class="page-card">
+          <span class="page-icon">📊</span>
+          <div class="page-title">Dashboard</div>
+          <div class="page-description">
+            Panel de control y estadísticas generales
+          </div>
+        </a>
+      </div>
+
+      <div class="quick-access">
+        <a href="FRONTEND/html/infraestructuras.html" class="quick-btn primary"
+          >🚀 Acceso Rápido - Infraestructuras</a
+        >
+        <a href="FRONTEND/html/calendario.html" class="quick-btn"
+          >📅 Ir al Calendario</a
+        >
+      </div>
+
+      <div class="system-info">
+        <h3>ℹ️ Información del Sistema</h3>
+        <p>
+          <strong
+            >GMPI (Gestor de Mantenimiento Preventivo de
+            Infraestructuras)</strong
+          >
+          es un sistema web completo para la gestión de mantenimiento de
+          instituciones educativas. Incluye funcionalidades de registro de
+          instituciones, programación de mantenimientos, gestión de
+          infraestructuras por facultades, y un sistema de calendario avanzado.
+        </p>
+        <p style="margin-top: 10px">
+          <strong>🔧 Características:</strong> Búsqueda avanzada,
+          autocompletado, filtros inteligentes, tema claro/oscuro, soporte
+          multiidioma, y persistencia de datos con localStorage.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Mostrar mensaje de bienvenida
+      console.log("🚀 GMPI - Portal de Acceso cargado correctamente");
+      console.log("📁 Ubicación del sistema:", window.location.href);
+
+      // Agregar efectos de hover mejorados
+      document.querySelectorAll(".page-card").forEach((card) => {
+        card.addEventListener("mouseenter", function () {
+          this.style.background = "linear-gradient(135deg, #f8f9fa, #e9ecef)";
+        });
+
+        card.addEventListener("mouseleave", function () {
+          this.style.background = "#f8f9fa";
+        });
+      });
+
+      // Mensaje de bienvenida
+      setTimeout(() => {
+        const welcomeMsg = document.createElement("div");
+        welcomeMsg.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #27ae60;
+                color: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                font-weight: bold;
+                z-index: 1000;
+                box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+            `;
+        welcomeMsg.innerHTML = "✅ Sistema GMPI cargado correctamente";
+        document.body.appendChild(welcomeMsg);
+
+        setTimeout(() => {
+          document.body.removeChild(welcomeMsg);
+        }, 3000);
+      }, 500);
+    </script>
+  </body>
+</html>

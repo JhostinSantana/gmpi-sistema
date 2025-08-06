@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendario de Mantenimiento - GMPI</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+    <style>
+      .calendar-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .calendar-header {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+      .calendar-controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        background: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
+      }
+      .month-navigation {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .nav-btn {
+        background: #6c757d;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+      .nav-btn:hover {
+        background: #5a6268;
+      }
+      .current-month {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #495057;
+        min-width: 200px;
+        text-align: center;
+      }
+      .add-event-btn {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+      }
+      .add-event-btn:hover {
+        background: #218838;
+      }
+      .calendar-grid {
+        border: 1px solid #dee2e6;
+      }
+      .calendar-weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        background: #e9ecef;
+      }
+      .weekday {
+        padding: 1rem;
+        text-align: center;
+        font-weight: 600;
+        color: #495057;
+        border-right: 1px solid #dee2e6;
+      }
+      .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+      }
+      .calendar-day {
+        min-height: 120px;
+        padding: 0.5rem;
+        border-right: 1px solid #dee2e6;
+        border-bottom: 1px solid #dee2e6;
+        cursor: pointer;
+        transition: background 0.2s;
+        position: relative;
+      }
+      .calendar-day:hover {
+        background: #f8f9fa;
+      }
+      .calendar-day.other-month {
+        background: #f8f9fa;
+        color: #adb5bd;
+      }
+      .calendar-day.today {
+        background: #e7f3ff;
+        border: 2px solid #007bff;
+      }
+      .day-number {
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+      }
+      .day-events {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+      }
+      .event-item {
+        background: #007bff;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        cursor: pointer;
+      }
+      .event-maintenance {
+        background: #dc3545;
+      }
+      .event-inspection {
+        background: #ffc107;
+        color: #212529;
+      }
+      .event-meeting {
+        background: #17a2b8;
+      }
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000;
+      }
+      .modal-content {
+        background: white;
+        border-radius: 12px;
+        padding: 0;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .modal-header {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .modal-body {
+        padding: 2rem;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+      .form-input,
+      .form-select,
+      .form-textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+      .form-textarea {
+        min-height: 100px;
+        resize: vertical;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .modal-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid #f0f0f0;
+      }
+      .btn-save,
+      .btn-cancel,
+      .close-modal {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .btn-save {
+        background: #28a745;
+        color: white;
+      }
+      .btn-save:hover {
+        background: #218838;
+      }
+      .btn-cancel {
+        background: #6c757d;
+        color: white;
+      }
+      .btn-cancel:hover {
+        background: #5a6268;
+      }
+      .close-modal {
+        background: none;
+        color: white;
+        font-size: 24px;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
+      .close-modal:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .legend {
+        display: flex;
+        gap: 2rem;
+        margin: 1rem 0;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+      <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+          <!-- Logo -->
+          <div class="nav-logo">
+            <a
+              href="dashboard.html"
+              class="logo-link"
+              aria-label="Ir al inicio"
+            >
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle">Mantenimiento Escolar</span>
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <ul class="nav-menu" role="menubar">
+            <li class="nav-item">
+              <a href="dashboard.html" class="nav-link">
+                <span class="icon">🏠</span>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="infraestructuras.html" class="nav-link">
+                <span class="icon">🏢</span>
+                <span>Infraestructuras</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                href="#"
+                class="nav-link"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                <span class="icon">⚙️</span>
+                <span>Configuración</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content">
+                <a href="#" id="languageToggle">
+                  <span class="icon">🌐</span>
+                  <span>Idioma</span>
+                  <span class="setting-value" id="currentLanguage">ES</span>
+                </a>
+                <a href="#" id="themeToggle">
+                  <span class="icon">🌓</span>
+                  <span>Tema</span>
+                  <span class="setting-value" id="currentTheme">☀️</span>
+                </a>
+                <a href="#" id="keyboardShortcuts">
+                  <span class="icon">⌨️</span>
+                  <span>Atajos</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Action Buttons -->
+          <div class="nav-actions">
+            <span class="user-welcome">Bienvenido, Inspector</span>
+            <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <div class="container">
+        <div class="calendar-container">
+          <div class="calendar-header">
+            <h1>📅 Calendario de Mantenimiento</h1>
+            <p>
+              Gestiona y programa el mantenimiento de las instituciones
+              educativas
+            </p>
+          </div>
+
+          <div class="calendar-controls">
+            <div class="month-navigation">
+              <button class="nav-btn" id="prevMonth">‹ Anterior</button>
+              <h2 class="current-month" id="currentMonth">Enero 2025</h2>
+              <button class="nav-btn" id="nextMonth">Siguiente ›</button>
+            </div>
+            <button class="add-event-btn" id="addEventBtn">
+              ➕ Agregar Cita
+            </button>
+          </div>
+
+          <div class="legend">
+            <div class="legend-item">
+              <div class="legend-color" style="background: #dc3545"></div>
+              <span>Mantenimiento</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #ffc107"></div>
+              <span>Inspección</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #17a2b8"></div>
+              <span>Reunión</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color" style="background: #007bff"></div>
+              <span>Otros</span>
+            </div>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="calendar-weekdays">
+              <div class="weekday">Domingo</div>
+              <div class="weekday">Lunes</div>
+              <div class="weekday">Martes</div>
+              <div class="weekday">Miércoles</div>
+              <div class="weekday">Jueves</div>
+              <div class="weekday">Viernes</div>
+              <div class="weekday">Sábado</div>
+            </div>
+            <div class="calendar-days" id="calendarDays">
+              <!-- Días generados dinámicamente -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Modal para agregar eventos -->
+    <div class="modal" id="eventModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 id="modalTitle">➕ Agregar Nueva Cita</h2>
+          <button class="close-modal" id="closeModal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="eventForm">
+            <div class="form-group">
+              <label class="form-label" for="eventTitle"
+                >Título de la Cita *</label
+              >
+              <input
+                type="text"
+                id="eventTitle"
+                class="form-input"
+                required
+                placeholder="Ej: Mantenimiento de techos"
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eventInstitution"
+                >Institución *</label
+              >
+              <select id="eventInstitution" class="form-select" required>
+                <option value="">Seleccionar institución...</option>
+                <option value="ulaem">
+                  Universidad Laica Eloy Alfaro de Manabí
+                </option>
+                <option value="colegio_amazonas">
+                  Colegio Amazonas de Quito
+                </option>
+                <option value="escuela_benito">
+                  Escuela Primaria Benito Juárez
+                </option>
+                <!-- Las instituciones dinámicas se cargarán aquí -->
+              </select>
+            </div>
+
+            <div class="form-group" id="facultyGroup" style="display: none">
+              <label class="form-label" for="eventFaculty"
+                >Facultad/Área *</label
+              >
+              <select id="eventFaculty" class="form-select">
+                <option value="">Seleccionar facultad...</option>
+                <!-- Las facultades se cargarán dinámicamente -->
+              </select>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="eventDate">Fecha *</label>
+                <input type="date" id="eventDate" class="form-input" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="eventTime">Hora</label>
+                <input
+                  type="time"
+                  id="eventTime"
+                  class="form-input"
+                  value="09:00"
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eventType">Tipo de Evento *</label>
+              <select id="eventType" class="form-select" required>
+                <option value="">Seleccionar tipo...</option>
+                <option value="maintenance">Mantenimiento</option>
+                <option value="inspection">Inspección</option>
+                <option value="meeting">Reunión</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="eventDescription"
+                >Descripción</label
+              >
+              <textarea
+                id="eventDescription"
+                class="form-textarea"
+                placeholder="Describe los detalles de la cita..."
+              ></textarea>
+            </div>
+
+            <div class="modal-actions">
+              <button type="submit" class="btn-save">💾 Guardar Cita</button>
+              <button type="button" class="btn-cancel" id="cancelEvent">
+                ❌ Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      class CalendarManager {
+        constructor() {
+          this.currentDate = new Date();
+          this.events = JSON.parse(
+            localStorage.getItem("calendarEvents") || "[]"
+          );
+          this.selectedDate = null;
+          this.monthNames = [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Diciembre",
+          ];
+          this.init();
+        }
+
+        init() {
+          this.renderCalendar();
+          this.setupEventListeners();
+          this.loadSampleEvents();
+          this.loadDynamicInstitutions();
+        }
+
+        setupEventListeners() {
+          document
+            .getElementById("prevMonth")
+            .addEventListener("click", () => this.prevMonth());
+          document
+            .getElementById("nextMonth")
+            .addEventListener("click", () => this.nextMonth());
+          document
+            .getElementById("addEventBtn")
+            .addEventListener("click", () => this.openEventModal());
+          document
+            .getElementById("closeModal")
+            .addEventListener("click", () => this.closeEventModal());
+          document
+            .getElementById("cancelEvent")
+            .addEventListener("click", () => this.closeEventModal());
+          document
+            .getElementById("eventForm")
+            .addEventListener("submit", (e) => this.saveEvent(e));
+
+          // Manejar cambio de institución para cargar facultades
+          document
+            .getElementById("eventInstitution")
+            .addEventListener("change", (e) =>
+              this.loadFaculties(e.target.value)
+            );
+
+          // Cerrar modal al hacer clic fuera
+          document
+            .getElementById("eventModal")
+            .addEventListener("click", (e) => {
+              if (e.target === document.getElementById("eventModal")) {
+                this.closeEventModal();
+              }
+            });
+        }
+
+        loadFaculties(institutionId) {
+          const facultyGroup = document.getElementById("facultyGroup");
+          const facultySelect = document.getElementById("eventFaculty");
+
+          if (!institutionId) {
+            facultyGroup.style.display = "none";
+            facultySelect.innerHTML =
+              '<option value="">Seleccionar facultad...</option>';
+            return;
+          }
+
+          // Obtener las instituciones guardadas
+          const savedInstitutions = JSON.parse(
+            localStorage.getItem("institutions") || "[]"
+          );
+          const selectedInstitution = savedInstitutions.find(
+            (inst) => inst.id == institutionId
+          );
+
+          if (
+            selectedInstitution &&
+            selectedInstitution.infrastructure &&
+            selectedInstitution.infrastructure.length > 0
+          ) {
+            // Mostrar el selector de facultades
+            facultyGroup.style.display = "block";
+
+            // Llenar el selector con las facultades disponibles
+            facultySelect.innerHTML =
+              '<option value="">Seleccionar facultad...</option>' +
+              selectedInstitution.infrastructure
+                .map(
+                  (faculty) =>
+                    `<option value="${faculty.id}">${faculty.name} (${faculty.classrooms} aulas, ${faculty.laboratories} labs)</option>`
+                )
+                .join("");
+          } else {
+            facultyGroup.style.display = "none";
+            facultySelect.innerHTML =
+              '<option value="">No hay facultades registradas</option>';
+          }
+        }
+
+        loadSampleEvents() {
+          if (this.events.length === 0) {
+            const sampleEvents = [
+              {
+                id: 1,
+                title: "Mantenimiento ULAEM",
+                institution: "ulaem",
+                date: "2025-08-15",
+                time: "09:00",
+                type: "maintenance",
+                description: "Mantenimiento preventivo de techos y ventanas",
+              },
+              {
+                id: 2,
+                title: "Inspección CAQ",
+                institution: "colegio_amazonas",
+                date: "2025-08-20",
+                time: "14:00",
+                type: "inspection",
+                description: "Inspección general de instalaciones",
+              },
+            ];
+            this.events = sampleEvents;
+            localStorage.setItem("calendarEvents", JSON.stringify(this.events));
+          }
+        }
+
+        renderCalendar() {
+          const year = this.currentDate.getFullYear();
+          const month = this.currentDate.getMonth();
+
+          document.getElementById(
+            "currentMonth"
+          ).textContent = `${this.monthNames[month]} ${year}`;
+
+          const firstDay = new Date(year, month, 1);
+          const lastDay = new Date(year, month + 1, 0);
+          const startDate = new Date(firstDay);
+          startDate.setDate(startDate.getDate() - firstDay.getDay());
+
+          const calendarDays = document.getElementById("calendarDays");
+          calendarDays.innerHTML = "";
+
+          for (let i = 0; i < 42; i++) {
+            const day = new Date(startDate);
+            day.setDate(startDate.getDate() + i);
+
+            const dayElement = this.createDayElement(day, month);
+            calendarDays.appendChild(dayElement);
+          }
+        }
+
+        createDayElement(date, currentMonth) {
+          const dayElement = document.createElement("div");
+          dayElement.className = "calendar-day";
+
+          if (date.getMonth() !== currentMonth) {
+            dayElement.classList.add("other-month");
+          }
+
+          const today = new Date();
+          if (date.toDateString() === today.toDateString()) {
+            dayElement.classList.add("today");
+          }
+
+          const dayNumber = document.createElement("div");
+          dayNumber.className = "day-number";
+          dayNumber.textContent = date.getDate();
+
+          const dayEvents = document.createElement("div");
+          dayEvents.className = "day-events";
+
+          // Buscar eventos para este día
+          const dateStr = date.toISOString().split("T")[0];
+          const dayEventsList = this.events.filter(
+            (event) => event.date === dateStr
+          );
+
+          dayEventsList.forEach((event) => {
+            const eventElement = document.createElement("div");
+            eventElement.className = `event-item event-${event.type}`;
+            eventElement.textContent = event.title;
+            eventElement.title = `${event.title} - ${event.time}`;
+            dayEvents.appendChild(eventElement);
+          });
+
+          dayElement.appendChild(dayNumber);
+          dayElement.appendChild(dayEvents);
+
+          // Agregar evento de clic para agregar nueva cita
+          dayElement.addEventListener("click", () => {
+            this.selectedDate = dateStr;
+            this.openEventModal(dateStr);
+          });
+
+          return dayElement;
+        }
+
+        prevMonth() {
+          this.currentDate.setMonth(this.currentDate.getMonth() - 1);
+          this.renderCalendar();
+        }
+
+        nextMonth() {
+          this.currentDate.setMonth(this.currentDate.getMonth() + 1);
+          this.renderCalendar();
+        }
+
+        openEventModal(selectedDate = null) {
+          const modal = document.getElementById("eventModal");
+          const form = document.getElementById("eventForm");
+
+          // Limpiar formulario
+          form.reset();
+
+          // Ocultar selector de facultades
+          document.getElementById("facultyGroup").style.display = "none";
+
+          // Si se seleccionó una fecha específica, pre-llenar el campo
+          if (selectedDate) {
+            document.getElementById("eventDate").value = selectedDate;
+          }
+
+          modal.style.display = "flex";
+        }
+
+        closeEventModal() {
+          const modal = document.getElementById("eventModal");
+          modal.style.display = "none";
+          this.selectedDate = null;
+        }
+
+        saveEvent(e) {
+          e.preventDefault();
+
+          const institutionId =
+            document.getElementById("eventInstitution").value;
+          const facultyId = document.getElementById("eventFaculty").value;
+          const eventType = document.getElementById("eventType").value;
+
+          // Obtener información de la institución y facultad
+          const savedInstitutions = JSON.parse(
+            localStorage.getItem("institutions") || "[]"
+          );
+          const selectedInstitution = savedInstitutions.find(
+            (inst) => inst.id == institutionId
+          );
+
+          let selectedFaculty = null;
+          if (
+            selectedInstitution &&
+            selectedInstitution.infrastructure &&
+            facultyId
+          ) {
+            selectedFaculty = selectedInstitution.infrastructure.find(
+              (f) => f.id == facultyId
+            );
+          }
+
+          // Determinar email de autoridad
+          let authorityEmail = "";
+          if (selectedInstitution && selectedInstitution.authorityEmail) {
+            authorityEmail = selectedInstitution.authorityEmail;
+          } else {
+            // Fallback para instituciones predefinidas
+            const emailMap = {
+              ulaem: "rector@uleam.edu.ec",
+              colegio_amazonas: "direccion@colegioamazonas.edu.ec",
+              escuela_benito: "director@escuelabenito.edu.ec",
+            };
+            authorityEmail =
+              emailMap[institutionId] || "autoridad@institucion.edu.ec";
+          }
+
+          const formData = {
+            id: Date.now(),
+            title: document.getElementById("eventTitle").value,
+            institution: institutionId,
+            institutionName: selectedInstitution
+              ? selectedInstitution.name
+              : this.getInstitutionName(institutionId),
+            faculty: facultyId,
+            facultyName: selectedFaculty ? selectedFaculty.name : "",
+            date: document.getElementById("eventDate").value,
+            time: document.getElementById("eventTime").value,
+            type: eventType,
+            description: document.getElementById("eventDescription").value,
+            authorityEmail: authorityEmail,
+          };
+
+          // Validar campos requeridos
+          if (
+            !formData.title ||
+            !formData.institution ||
+            !formData.date ||
+            !formData.type
+          ) {
+            alert(
+              "❌ Por favor, complete todos los campos obligatorios marcados con *"
+            );
+            return;
+          }
+
+          // Si hay facultades disponibles pero no se seleccionó una para inspección
+          if (
+            eventType === "inspection" &&
+            selectedInstitution &&
+            selectedInstitution.infrastructure &&
+            selectedInstitution.infrastructure.length > 0 &&
+            !facultyId
+          ) {
+            alert(
+              "❌ Para inspecciones, debe seleccionar una facultad específica"
+            );
+            return;
+          }
+
+          // Agregar evento a la lista
+          this.events.push(formData);
+          localStorage.setItem("calendarEvents", JSON.stringify(this.events));
+
+          // Construir mensaje de éxito
+          let successMessage = "✅ ¡Cita agregada exitosamente!";
+          let emailMessage = "";
+
+          if (eventType === "inspection" && authorityEmail) {
+            let facultyInfo = selectedFaculty
+              ? ` en ${selectedFaculty.name}`
+              : "";
+            emailMessage =
+              `\n\n📧 SIMULACIÓN DE CORREO ENVIADO:\n` +
+              `Para: ${authorityEmail}\n` +
+              `Asunto: Inspección Programada - ${formData.institutionName}\n` +
+              `Fecha: ${formData.date} a las ${formData.time}\n` +
+              `Detalle: ${formData.title}${facultyInfo}\n` +
+              `Descripción: ${formData.description || "Inspección de rutina"}`;
+          }
+
+          alert(successMessage + emailMessage);
+
+          // Cerrar modal y re-renderizar calendario
+          this.closeEventModal();
+          this.renderCalendar();
+        }
+
+        getInstitutionName(institutionId) {
+          const nameMap = {
+            ulaem: "Universidad Laica Eloy Alfaro de Manabí",
+            colegio_amazonas: "Colegio Amazonas de Quito",
+            escuela_benito: "Escuela Primaria Benito Juárez",
+          };
+          return nameMap[institutionId] || "Institución Desconocida";
+        }
+
+        // Cargar instituciones dinámicas desde localStorage
+        loadDynamicInstitutions() {
+          const institutionSelect = document.getElementById("eventInstitution");
+          const savedInstitutions = JSON.parse(
+            localStorage.getItem("institutions") || "[]"
+          );
+
+          savedInstitutions.forEach((institution) => {
+            const option = document.createElement("option");
+            option.value = institution.id;
+            option.textContent = institution.name;
+            institutionSelect.appendChild(option);
+          });
+        }
+      }
+
+      // Inicializar calendario cuando se carga la página
+      document.addEventListener("DOMContentLoaded", function () {
+        new CalendarManager();
+      });
+    </script>
+
+    <script src="../javascript/universal-init.js"></script>
+    <script src="../javascript/settings.js"></script>
+  </body>
+</html>

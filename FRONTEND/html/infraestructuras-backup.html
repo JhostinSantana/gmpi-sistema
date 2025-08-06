@@ -1,0 +1,1746 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="infrastructures_title">Infraestructuras - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/infraestructuras.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+        <nav class="navbar" role="navigation" aria-label="Navegación principal">
+            <div class="nav-container">
+                <!-- Logo -->
+                <div class="nav-logo">
+                    <a href="dashboard.html" class="logo-link" aria-label="Ir al inicio">
+                        <span class="logo-text">GMPI</span>
+                        <span class="logo-subtitle" data-translate="school_maintenance">Mantenimiento Escolar</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Menu -->
+                <ul class="nav-menu" role="menubar">
+                    <li class="nav-item dropdown" role="none">
+                        <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">
+                            <span class="icon">📊</span>
+                            <span data-translate="management">Gestión</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <div class="dropdown-content" role="menu" aria-label="Opciones de Gestión">
+                            <a href="dashboard.html" role="menuitem" tabindex="-1">
+                                <span class="icon">🏠</span>
+                                <span data-translate="dashboard">Dashboard</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" role="none">
+                        <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">
+                            <span class="icon">📋</span>
+                            <span data-translate="planning">Planificación</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <div class="dropdown-content" role="menu" aria-label="Opciones de Planificación">
+                            <a href="#" id="calendarLink" role="menuitem" tabindex="-1">
+                                <span class="icon">📅</span>
+                                <span data-translate="calendar">Calendario</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" role="none">
+                        <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">
+                            <span class="icon">⚙️</span>
+                            <span data-translate="configuration">Configuración</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <div class="dropdown-content" role="menu" aria-label="Opciones de Configuración">
+                            <a href="#" role="menuitem" tabindex="-1" id="languageToggle">
+                                <span class="icon">🌐</span>
+                                <span data-translate="language">Idioma</span>
+                                <span class="setting-value" id="currentLanguage">ES</span>
+                            </a>
+                            <a href="#" role="menuitem" tabindex="-1" id="themeToggle">
+                                <span class="icon">🌓</span>
+                                <span data-translate="theme">Tema</span>
+                                <span class="setting-value" id="currentTheme">☀️</span>
+                            </a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" role="none">
+                        <a href="#" class="nav-link" role="menuitem" aria-haspopup="true" aria-expanded="false" tabindex="0">
+                            <span class="icon">❓</span>
+                            <span data-translate="help">Ayuda</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </a>
+                        <div class="dropdown-content" role="menu" aria-label="Opciones de Ayuda">
+                            <a href="contact.html" role="menuitem" tabindex="-1">
+                                <span class="icon">📧</span>
+                                <span data-translate="contact">Contacto</span>
+                            </a>
+                            <a href="#" role="menuitem" tabindex="-1" id="keyboardShortcuts">
+                                <span class="icon">⌨️</span>
+                                <span data-translate="shortcuts">Atajos de Teclado</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+                <!-- Action Buttons -->
+                <div class="nav-actions">
+                    <span class="user-welcome" data-translate="welcome">Bienvenido, Inspector</span>
+                    <a href="index.html" class="btn btn-secondary" data-translate="logout">Cerrar Sesión</a>
+                </div>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+        <!-- Page Header -->
+        <section class="page-header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="page-title" data-translate="registered_infrastructures">Infraestructuras Registradas</h1>
+                <p class="page-subtitle" data-translate="infrastructure_subtitle">Gestiona y supervisa todas las instituciones educativas del sistema</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Barra de Búsqueda Rápida -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <input type="text" 
+                           id="searchInfrastructures" 
+                           class="search-input" 
+                           placeholder="Buscar infraestructuras..." 
+                           aria-label="Buscar infraestructuras">
+                    <button class="search-btn" id="searchBtn" aria-label="Buscar">
+                        <span class="search-icon">🔍</span>
+                    </button>
+                    <button class="clear-btn" id="clearSearch" aria-label="Limpiar búsqueda" style="display: none;">
+                        <span class="clear-icon">✕</span>
+                    </button>
+                </div>
+                <div class="search-results-count" id="searchResultsCount"></div>
+                
+                <!-- Filtros de búsqueda -->
+                <div class="search-filters">
+                    <label for="typeFilter">Filtrar por tipo:</label>
+                    <select id="typeFilter" class="filter-select">
+                        <option value="">Todos los tipos</option>
+                        <option value="escuela">Escuela</option>
+                        <option value="colegio">Colegio</option>
+                        <option value="universidad">Universidad</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+            <!-- Institutions Grid -->
+            <div class="institutions-section">
+                <div class="section-header">
+                    <h2 data-translate="educational_institutions">Instituciones Educativas</h2>
+                    <button class="btn btn-primary add-institution-btn">
+                        <span data-translate="add_institution">+ Agregar Institución</span>
+                    </button>
+                </div>
+
+                <div class="institutions-grid">
+                    <!-- ULAEM Institution -->
+                    <div class="institution-card">
+                        <div class="institution-header">
+                            <div class="institution-logo">
+                                <span class="logo-text">ULAEM</span>
+                            </div>
+                        </div>
+                        
+                        <div class="institution-info">
+                            <h3 class="institution-name">Universidad Laica Eloy Alfaro de Manabí</h3>
+                            <p class="institution-location" data-translate="manta_manabi">📍 Manta, Manabí, Ecuador</p>
+                            <p class="institution-type" data-translate="public_university">🎓 Universidad</p>
+                        </div>
+
+                        <div class="institution-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">8</span>
+                                <span class="stat-name" data-translate="buildings">Edificios</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">45</span>
+                                <span class="stat-name" data-translate="classrooms">Aulas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">12</span>
+                                <span class="stat-name" data-translate="laboratories">Laboratorios</span>
+                            </div>
+                        </div>
+
+                        <div class="institution-maintenance">
+                            <div class="maintenance-item">
+                                <span class="maintenance-label" data-translate="last_maintenance">Último Mantenimiento:</span>
+                                <span class="maintenance-date">15 Dic 2024</span>
+                            </div>
+                            <div class="maintenance-item">
+                                <span class="maintenance-label" data-translate="next_maintenance">Próximo Mantenimiento:</span>
+                                <span class="maintenance-date upcoming">20 Feb 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="institution-actions">
+                            <button class="btn btn-primary btn-small add-infrastructure-btn" data-translate="add_infrastructure">🏗️ Agregar Infraestructura</button>
+                            <button class="btn btn-outline btn-small view-details-btn" data-translate="view_details">Ver Detalles</button>
+                            <button class="btn btn-secondary btn-small edit-btn" data-translate="edit">✏️ Editar</button>
+                            <button class="btn btn-danger btn-small delete-btn" data-translate="delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
+
+                    <!-- Colegio Amazonas Institution -->
+                    <div class="institution-card">
+                        <div class="institution-header">
+                            <div class="institution-logo secondary">
+                                <span class="logo-text">CAQ</span>
+                            </div>
+
+                        </div>
+                        
+                        <div class="institution-info">
+                            <h3 class="institution-name">Colegio Amazonas de Quito</h3>
+                            <p class="institution-location" data-translate="quito_pichincha">📍 Quito, Pichincha, Ecuador</p>
+                            <p class="institution-type" data-translate="public_school">🏫 Colegio</p>
+                        </div>
+
+                        <div class="institution-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">3</span>
+                                <span class="stat-name" data-translate="buildings">Edificios</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">24</span>
+                                <span class="stat-name" data-translate="classrooms">Aulas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">6</span>
+                                <span class="stat-name" data-translate="laboratories">Laboratorios</span>
+                            </div>
+                        </div>
+
+                        <div class="institution-maintenance">
+                            <div class="maintenance-item">
+                                <span class="maintenance-label" data-translate="last_maintenance">Último Mantenimiento:</span>
+                                <span class="maintenance-date">28 Nov 2024</span>
+                            </div>
+                            <div class="maintenance-item">
+                                <span class="maintenance-label" data-translate="next_maintenance">Próximo Mantenimiento:</span>
+                                <span class="maintenance-date pending">05 Ene 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="institution-actions">
+                            <button class="btn btn-primary btn-small add-infrastructure-btn" data-translate="add_infrastructure">🏗️ Agregar Infraestructura</button>
+                            <button class="btn btn-outline btn-small view-details-btn" data-translate="view_details">Ver Detalles</button>
+                            <button class="btn btn-secondary btn-small edit-btn" data-translate="edit">✏️ Editar</button>
+                            <button class="btn btn-danger btn-small delete-btn" data-translate="delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
+
+                    <!-- Escuela Primaria Example -->
+                    <div class="institution-card">
+                        <div class="institution-header">
+                            <div class="institution-logo tertiary">
+                                <span class="logo-text">EPB</span>
+                            </div>
+                        </div>
+                        
+                        <div class="institution-info">
+                            <h3 class="institution-name">Escuela Primaria Benito Juárez</h3>
+                            <p class="institution-location" data-translate="guayaquil_guayas">📍 Guayaquil, Guayas, Ecuador</p>
+                            <p class="institution-type" data-translate="public_school">🏠 Escuela</p>
+                        </div>
+
+                        <div class="institution-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">2</span>
+                                <span class="stat-name" data-translate="buildings">Edificios</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">12</span>
+                                <span class="stat-name" data-translate="classrooms">Aulas</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">1</span>
+                                <span class="stat-name" data-translate="laboratories">Laboratorio</span>
+                            </div>
+                        </div>
+
+                        <div class="institution-maintenance">
+                            <div class="maintenance-item">
+                                <span class="maintenance-label" data-translate="last_maintenance">Último Mantenimiento:</span>
+                                <span class="maintenance-date">10 Dic 2024</span>
+                            </div>
+                            <div class="maintenance-item">
+                                <span class="maintenance-label" data-translate="next_maintenance">Próximo Mantenimiento:</span>
+                                <span class="maintenance-date upcoming">15 Mar 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="institution-actions">
+                            <button class="btn btn-primary btn-small add-infrastructure-btn" data-translate="add_infrastructure">🏗️ Agregar Infraestructura</button>
+                            <button class="btn btn-outline btn-small view-details-btn" data-translate="view_details">Ver Detalles</button>
+                            <button class="btn btn-secondary btn-small edit-btn" data-translate="edit">✏️ Editar</button>
+                            <button class="btn btn-danger btn-small delete-btn" data-translate="delete">🗑️ Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Simple interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar instituciones dinámicas
+            loadDynamicInstitutions();
+            
+            // Verificar y aplicar cambios de edición
+            checkForEditChanges();
+            
+            // Add hover effects to institution cards
+            const cards = document.querySelectorAll('.institution-card');
+            cards.forEach(card => {
+                addCardEventListeners(card);
+            });
+
+            // Configurar eventos para botones de instituciones existentes
+            setupButtonEvents();
+
+            const addButton = document.querySelector('.add-institution-btn');
+            addButton.addEventListener('click', function() {
+                window.location.href = 'add-institution.html';
+            });
+        });
+        
+        // Función para verificar cambios de edición
+        function checkForEditChanges() {
+            const changes = localStorage.getItem('institutionChanges');
+            if (changes) {
+                const changeData = JSON.parse(changes);
+                applyInstitutionChanges(changeData.institutionId, changeData.changes);
+                localStorage.removeItem('institutionChanges'); // Limpiar después de aplicar
+            }
+        }
+        
+        // Función para aplicar cambios a una institución específica
+        function applyInstitutionChanges(institutionId, changes) {
+            const institutionMapping = {
+                'ulaem': 'Universidad Laica Eloy Alfaro de Manabí',
+                'colegio_amazonas': 'Colegio Amazonas de Quito',
+                'escuela_benito': 'Escuela Primaria Benito Juárez'
+            };
+            
+            const institutionName = institutionMapping[institutionId];
+            if (!institutionName) return;
+            
+            // Buscar la tarjeta de la institución en el DOM
+            const cards = document.querySelectorAll('.institution-card');
+            cards.forEach(card => {
+                const nameElement = card.querySelector('.institution-name');
+                if (nameElement && nameElement.textContent.trim() === institutionName) {
+                    // Actualizar la información en la tarjeta
+                    nameElement.textContent = changes.name;
+                    
+                    const locationElement = card.querySelector('.institution-location');
+                    if (locationElement) {
+                        locationElement.innerHTML = `📍 ${changes.location}`;
+                    }
+                    
+                    const typeElement = card.querySelector('.institution-type');
+                    if (typeElement) {
+                        const typeEmoji = {
+                            'universidad': '🎓',
+                            'colegio': '🏫',
+                            'escuela': '🏠',
+                            'instituto': '🏢'
+                        };
+                        typeElement.innerHTML = `${typeEmoji[changes.type]} ${changes.type.charAt(0).toUpperCase() + changes.type.slice(1)}`;
+                    }
+                    
+                    // Actualizar estadísticas
+                    const statValues = card.querySelectorAll('.stat-value');
+                    if (statValues.length >= 3) {
+                        statValues[0].textContent = changes.buildings;
+                        statValues[1].textContent = changes.classrooms;
+                        statValues[2].textContent = changes.laboratories;
+                    }
+                    
+                    // Actualizar fechas de mantenimiento
+                    const maintenanceDates = card.querySelectorAll('.maintenance-date');
+                    if (maintenanceDates.length >= 2) {
+                        maintenanceDates[0].textContent = changes.lastMaintenance || 'Sin registro';
+                        maintenanceDates[1].textContent = changes.nextMaintenance || 'Por programar';
+                    }
+                    
+                    // Actualizar siglas en el logo
+                    const logoElement = card.querySelector('.logo-text');
+                    if (logoElement) {
+                        logoElement.textContent = changes.acronym;
+                    }
+                    
+                    // Efecto visual para mostrar que se actualizó
+                    card.style.border = '3px solid #28a745';
+                    card.style.boxShadow = '0 4px 20px rgba(40, 167, 69, 0.3)';
+                    
+                    setTimeout(() => {
+                        card.style.border = '';
+                        card.style.boxShadow = '';
+                    }, 3000);
+                }
+            });
+        }
+        
+        // Función para cargar instituciones dinámicas desde localStorage
+        function loadDynamicInstitutions() {
+            const institutionsGrid = document.querySelector('.institutions-grid');
+            const savedInstitutions = JSON.parse(localStorage.getItem('institutions') || '[]');
+            
+            savedInstitutions.forEach(institution => {
+                const institutionCard = createInstitutionCard(institution);
+                institutionsGrid.appendChild(institutionCard);
+            });
+        }
+        
+        // Función para crear una tarjeta de institución
+        function createInstitutionCard(institution) {
+            const card = document.createElement('div');
+            card.className = 'institution-card';
+            
+            const typeEmoji = {
+                'universidad': '🎓',
+                'colegio': '🏫',
+                'escuela': '🏠',
+                'instituto': '🏢'
+            };
+            
+            card.innerHTML = `
+                <div class="institution-header">
+                    <div class="institution-logo ${institution.type}">
+                        <span class="logo-text">${institution.acronym}</span>
+                    </div>
+                </div>
+                
+                <div class="institution-info">
+                    <h3 class="institution-name">${institution.name}</h3>
+                    <p class="institution-location">📍 ${institution.location}</p>
+                    <p class="institution-type">${typeEmoji[institution.type]} ${institution.type.charAt(0).toUpperCase() + institution.type.slice(1)}</p>
+                </div>
+
+                <div class="institution-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">${institution.buildings}</span>
+                        <span class="stat-name">Edificios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${institution.classrooms}</span>
+                        <span class="stat-name">Aulas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${institution.laboratories}</span>
+                        <span class="stat-name">Laboratorios</span>
+                    </div>
+                </div>
+
+                <div class="institution-maintenance">
+                    <div class="maintenance-item">
+                        <span class="maintenance-label">Último Mantenimiento:</span>
+                        <span class="maintenance-date">${institution.lastMaintenance}</span>
+                    </div>
+                    <div class="maintenance-item">
+                        <span class="maintenance-label">Próximo Mantenimiento:</span>
+                        <span class="maintenance-date upcoming">${institution.nextMaintenance}</span>
+                    </div>
+                </div>
+
+                <div class="institution-actions">
+                    <button class="btn btn-primary btn-small add-infrastructure-btn">🏗️ Agregar Infraestructura</button>
+                    <button class="btn btn-outline btn-small view-details-btn">Ver Detalles</button>
+                    <button class="btn btn-secondary btn-small edit-btn">✏️ Modificar</button>
+                    <button class="btn btn-danger btn-small delete-btn">🗑️ Eliminar</button>
+                </div>
+            `;
+            
+            // Agregar eventos a la nueva tarjeta
+            addCardEventListeners(card);
+            
+            return card;
+        }
+        
+        // Función para agregar eventos a una tarjeta
+        function addCardEventListeners(card) {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+            
+            // Eventos para botones
+            const addInfraBtn = card.querySelector('.add-infrastructure-btn');
+            const detailBtn = card.querySelector('.view-details-btn');
+            const editBtn = card.querySelector('.edit-btn');
+            const deleteBtn = card.querySelector('.delete-btn');
+            
+            if (addInfraBtn) {
+                addInfraBtn.addEventListener('click', function() {
+                    const institutionName = card.querySelector('.institution-name').textContent;
+                    showAddInfrastructureModal(institutionName, card);
+                });
+            }
+            
+            if (detailBtn) {
+                detailBtn.addEventListener('click', function() {
+                    const institutionName = card.querySelector('.institution-name').textContent;
+                    const institutionLocation = card.querySelector('.institution-location').textContent;
+                    const institutionType = card.querySelector('.institution-type').textContent;
+                    const buildings = card.querySelectorAll('.stat-value')[0].textContent;
+                    const classrooms = card.querySelectorAll('.stat-value')[1].textContent;
+                    const laboratories = card.querySelectorAll('.stat-value')[2].textContent;
+                    const lastMaintenance = card.querySelectorAll('.maintenance-date')[0].textContent;
+                    const nextMaintenance = card.querySelectorAll('.maintenance-date')[1].textContent;
+                    
+                    showInstitutionDetails({
+                        name: institutionName,
+                        location: institutionLocation,
+                        type: institutionType,
+                        buildings: buildings,
+                        classrooms: classrooms,
+                        laboratories: laboratories,
+                        lastMaintenance: lastMaintenance,
+                        nextMaintenance: nextMaintenance
+                    });
+                });
+            }
+            
+            if (editBtn) {
+                editBtn.addEventListener('click', function() {
+                    const institutionName = card.querySelector('.institution-name').textContent;
+                    window.location.href = `edit-institution.html?name=${encodeURIComponent(institutionName)}`;
+                });
+            }
+            
+            if (deleteBtn) {
+                deleteBtn.addEventListener('click', function() {
+                    const institutionName = card.querySelector('.institution-name').textContent;
+                    
+                    if (confirm(`❌ ¿Está seguro de que desea eliminar "${institutionName}"?\n\nEsta acción no se puede deshacer.`)) {
+                        // Efecto de eliminación
+                        card.style.transform = 'scale(0.8)';
+                        card.style.opacity = '0.3';
+                        
+                        setTimeout(() => {
+                            // Remover de localStorage si es una institución dinámica
+                            const savedInstitutions = JSON.parse(localStorage.getItem('institutions') || '[]');
+                            const updatedInstitutions = savedInstitutions.filter(inst => inst.name !== institutionName);
+                            localStorage.setItem('institutions', JSON.stringify(updatedInstitutions));
+                            
+                            card.remove();
+                            alert('✅ Institución eliminada exitosamente');
+                        }, 500);
+                    }
+                });
+            }
+        }
+        
+        // Configurar eventos para instituciones existentes
+        function setupButtonEvents() {
+            // Add infrastructure buttons
+            const addInfraButtons = document.querySelectorAll('.add-infrastructure-btn');
+            addInfraButtons.forEach(btn => {
+                if (!btn.hasAttribute('data-event-added')) {
+                    btn.setAttribute('data-event-added', 'true');
+                    btn.addEventListener('click', function() {
+                        const card = this.closest('.institution-card');
+                        const institutionName = card.querySelector('.institution-name').textContent;
+                        showAddInfrastructureModal(institutionName, card);
+                    });
+                }
+            });
+
+            // Add click functionality to buttons
+            const detailButtons = document.querySelectorAll('.view-details-btn');
+            detailButtons.forEach(btn => {
+                if (!btn.hasAttribute('data-event-added')) {
+                    btn.setAttribute('data-event-added', 'true');
+                    btn.addEventListener('click', function() {
+                        const card = this.closest('.institution-card');
+                        const institutionName = card.querySelector('.institution-name').textContent;
+                        const institutionLocation = card.querySelector('.institution-location').textContent;
+                        const institutionType = card.querySelector('.institution-type').textContent;
+                        const buildings = card.querySelectorAll('.stat-value')[0].textContent;
+                        const classrooms = card.querySelectorAll('.stat-value')[1].textContent;
+                        const laboratories = card.querySelectorAll('.stat-value')[2].textContent;
+                        const lastMaintenance = card.querySelectorAll('.maintenance-date')[0].textContent;
+                        const nextMaintenance = card.querySelectorAll('.maintenance-date')[1].textContent;
+                        
+                        showInstitutionDetails({
+                            name: institutionName,
+                            location: institutionLocation,
+                            type: institutionType,
+                            buildings: buildings,
+                            classrooms: classrooms,
+                            laboratories: laboratories,
+                            lastMaintenance: lastMaintenance,
+                            nextMaintenance: nextMaintenance
+                        });
+                    });
+                }
+            });
+
+            // Delete buttons
+            const deleteButtons = document.querySelectorAll('.delete-btn');
+            deleteButtons.forEach(btn => {
+                if (!btn.hasAttribute('data-event-added')) {
+                    btn.setAttribute('data-event-added', 'true');
+                    btn.addEventListener('click', function() {
+                        const card = this.closest('.institution-card');
+                        const institutionName = card.querySelector('.institution-name').textContent;
+                        
+                        if (confirm(`❌ ¿Está seguro de que desea eliminar "${institutionName}"?\n\nEsta acción no se puede deshacer.`)) {
+                            // Efecto de eliminación
+                            card.style.transform = 'scale(0.8)';
+                            card.style.opacity = '0.3';
+                            
+                            setTimeout(() => {
+                                card.remove();
+                                alert('✅ Institución eliminada exitosamente');
+                            }, 500);
+                        }
+                    });
+                }
+            });
+
+            // Edit buttons - redirect to edit form
+            const editButtons = document.querySelectorAll('.edit-btn');
+            editButtons.forEach(btn => {
+                if (!btn.hasAttribute('data-event-added')) {
+                    btn.setAttribute('data-event-added', 'true');
+                    btn.addEventListener('click', function() {
+                        const card = this.closest('.institution-card');
+                        const institutionName = card.querySelector('.institution-name').textContent;
+                        window.location.href = `edit-institution.html?name=${encodeURIComponent(institutionName)}`;
+                    });
+                }
+            });
+        }
+        
+        // Función para mostrar detalles de institución
+        function showInstitutionDetails(institution) {
+            const modal = document.createElement('div');
+            modal.className = 'details-modal';
+            modal.innerHTML = `
+                <div class="details-modal-content">
+                    <div class="details-header">
+                        <h2>📋 Detalles de la Institución</h2>
+                        <button class="close-details">&times;</button>
+                    </div>
+                    <div class="details-body">
+                        <div class="detail-section">
+                            <h3>📚 Información General</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Nombre:</span>
+                                    <span class="detail-value">${institution.name}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Tipo:</span>
+                                    <span class="detail-value">${institution.type}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Ubicación:</span>
+                                    <span class="detail-value">${institution.location}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>🏢 Infraestructura</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Edificios:</span>
+                                    <span class="detail-value">${institution.buildings}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Aulas:</span>
+                                    <span class="detail-value">${institution.classrooms}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Laboratorios:</span>
+                                    <span class="detail-value">${institution.laboratories}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-section">
+                            <h3>🔧 Mantenimiento</h3>
+                            <div class="detail-grid">
+                                <div class="detail-item">
+                                    <span class="detail-label">Último Mantenimiento:</span>
+                                    <span class="detail-value">${institution.lastMaintenance}</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Próximo Mantenimiento:</span>
+                                    <span class="detail-value">${institution.nextMaintenance}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="details-actions">
+                            <button class="btn-close-details">✅ Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Agregar estilos del modal
+            const style = document.createElement('style');
+            style.textContent = `
+                .details-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.7);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                }
+                .details-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 0;
+                    max-width: 700px;
+                    width: 90%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                }
+                .details-header {
+                    background: linear-gradient(135deg, #2ecc71, #27ae60);
+                    color: white;
+                    padding: 1.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .close-details {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: white;
+                    padding: 5px;
+                    border-radius: 50%;
+                    width: 35px;
+                    height: 35px;
+                }
+                .close-details:hover {
+                    background: rgba(255,255,255,0.2);
+                }
+                .details-body {
+                    padding: 2rem;
+                }
+                .detail-section {
+                    margin-bottom: 2rem;
+                }
+                .detail-section h3 {
+                    color: #2c3e50;
+                    margin-bottom: 1rem;
+                    font-size: 1.2rem;
+                }
+                .detail-grid {
+                    display: grid;
+                    gap: 1rem;
+                }
+                .detail-item {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0.75rem;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    border-left: 4px solid #e67e22;
+                }
+                .detail-label {
+                    font-weight: 600;
+                    color: #555;
+                }
+                .detail-value {
+                    color: #333;
+                }
+                .details-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                    margin-top: 2rem;
+                    padding-top: 2rem;
+                    border-top: 2px solid #f0f0f0;
+                }
+                .btn-edit-from-details, .btn-close-details {
+                    padding: 0.75rem 1.5rem;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: background 0.3s;
+                }
+                .btn-edit-from-details {
+                    background: #3498db;
+                    color: white;
+                }
+                .btn-edit-from-details:hover {
+                    background: #2980b9;
+                }
+                .btn-close-details {
+                    background: #95a5a6;
+                    color: white;
+                }
+                .btn-close-details:hover {
+                    background: #7f8c8d;
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(modal);
+            
+            // Event listeners
+            modal.querySelector('.close-details').addEventListener('click', () => {
+                document.body.removeChild(modal);
+                document.head.removeChild(style);
+            });
+            
+            modal.querySelector('.btn-close-details').addEventListener('click', () => {
+                document.body.removeChild(modal);
+                document.head.removeChild(style);
+            });
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    document.body.removeChild(modal);
+                    document.head.removeChild(style);
+                }
+            });
+        }
+        
+        // Función para mostrar modal de agregar infraestructura
+        function showAddInfrastructureModal(institutionName, card) {
+            const modal = document.createElement('div');
+            modal.className = 'infrastructure-modal';
+            modal.innerHTML = `
+                <div class="infrastructure-modal-content">
+                    <div class="infrastructure-header">
+                        <h2>🏗️ Agregar Infraestructura a ${institutionName}</h2>
+                        <button class="close-infrastructure">&times;</button>
+                    </div>
+                    <div class="infrastructure-body">
+                        <div class="infrastructure-info">
+                            <h4>📚 ¿Qué son las facultades?</h4>
+                            <p>Una facultad es una división académica dentro de una institución educativa que agrupa carreras o programas relacionados. Por ejemplo:</p>
+                            <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Facultad de Ingeniería:</strong> Incluye aulas de matemáticas, laboratorios de computación, etc.</li>
+                                <li><strong>Facultad de Medicina:</strong> Incluye laboratorios de anatomía, aulas de teoría, etc.</li>
+                                <li><strong>Facultad de Derecho:</strong> Principalmente aulas de clases y biblioteca.</li>
+                            </ul>
+                            <p><strong>💡 Instrucciones:</strong> Agregue cada facultad con el número de aulas y laboratorios que le pertenecen.</p>
+                        </div>
+                        
+                        <div class="faculty-list" id="facultyList">
+                            <!-- Facultades se agregarán aquí dinámicamente -->
+                        </div>
+                        
+                        <div class="add-faculty-section">
+                            <h3>➕ Agregar Nueva Facultad</h3>
+                            <div class="faculty-form">
+                                <div class="input-group">
+                                    <label for="facultyName">Nombre de la Facultad *</label>
+                                    <input type="text" id="facultyName" placeholder="Ej: Facultad de Ingeniería Civil" class="faculty-input">
+                                    <small>Incluya "Facultad de" en el nombre para mayor claridad</small>
+                                </div>
+                                <div class="input-group">
+                                    <label for="facultyClassrooms">Número de Aulas *</label>
+                                    <input type="number" id="facultyClassrooms" placeholder="Cantidad de aulas" min="1" value="1" class="faculty-input">
+                                    <small>Aulas teóricas, salones de clase, auditorios</small>
+                                </div>
+                                <div class="input-group">
+                                    <label for="facultyLaboratories">Número de Laboratorios</label>
+                                    <input type="number" id="facultyLaboratories" placeholder="Cantidad de labs" min="0" value="0" class="faculty-input">
+                                    <small>Labs de computación, química, física, etc.</small>
+                                </div>
+                                <button class="btn-add-faculty">➕ Agregar Facultad</button>
+                            </div>
+                        </div>
+                        
+                        <div class="infrastructure-actions">
+                            <button class="btn-save-infrastructure">💾 Guardar Infraestructura</button>
+                            <button class="btn-close-infrastructure">❌ Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Agregar estilos del modal
+            const style = document.createElement('style');
+            style.textContent = `
+                .infrastructure-modal {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0,0,0,0.7);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 10000;
+                }
+                .infrastructure-modal-content {
+                    background: white;
+                    border-radius: 12px;
+                    padding: 0;
+                    max-width: 800px;
+                    width: 90%;
+                    max-height: 80vh;
+                    overflow-y: auto;
+                }
+                .infrastructure-header {
+                    background: linear-gradient(135deg, #e67e22, #f39c12);
+                    color: white;
+                    padding: 1.5rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .close-infrastructure {
+                    background: none;
+                    border: none;
+                    font-size: 24px;
+                    cursor: pointer;
+                    color: white;
+                    padding: 5px;
+                    border-radius: 50%;
+                    width: 35px;
+                    height: 35px;
+                }
+                .close-infrastructure:hover {
+                    background: rgba(255,255,255,0.2);
+                }
+                .infrastructure-body {
+                    padding: 2rem;
+                }
+                .infrastructure-info {
+                    background: #e8f5e8;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    margin-bottom: 1.5rem;
+                    border-left: 4px solid #27ae60;
+                }
+                .infrastructure-info h4 {
+                    color: #27ae60;
+                    margin: 0 0 1rem 0;
+                    font-size: 1.1rem;
+                }
+                .infrastructure-info ul {
+                    margin: 0.5rem 0;
+                    padding-left: 1.5rem;
+                    color: #2c3e50;
+                }
+                .infrastructure-info li {
+                    margin-bottom: 0.5rem;
+                }
+                .faculty-form {
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 1.5rem;
+                    margin-top: 1rem;
+                }
+                .input-group {
+                    display: flex;
+                    flex-direction: column;
+                }
+                .input-group label {
+                    font-weight: 600;
+                    color: #2c3e50;
+                    margin-bottom: 0.5rem;
+                    font-size: 0.9rem;
+                }
+                .input-group small {
+                    color: #7f8c8d;
+                    font-size: 0.8rem;
+                    margin-top: 0.3rem;
+                    font-style: italic;
+                }
+                .faculty-input {
+                    padding: 0.75rem;
+                    border: 2px solid #ddd;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    transition: border-color 0.3s ease;
+                }
+                .faculty-input:focus {
+                    outline: none;
+                    border-color: #e67e22;
+                    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+                }
+                .faculty-list {
+                    margin-bottom: 2rem;
+                }
+                .faculty-item {
+                    background: #f8f9fa;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    margin-bottom: 1rem;
+                    border-left: 4px solid #3498db;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .faculty-info h4 {
+                    margin: 0 0 0.5rem 0;
+                    color: #2c3e50;
+                }
+                .faculty-stats {
+                    display: flex;
+                    gap: 1rem;
+                    font-size: 0.9rem;
+                    color: #7f8c8d;
+                }
+                .remove-faculty {
+                    background: #e74c3c;
+                    color: white;
+                    border: none;
+                    padding: 0.5rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-size: 0.8rem;
+                }
+                .add-faculty-section {
+                    background: #fff5f5;
+                    padding: 1.5rem;
+                    border-radius: 8px;
+                    border-left: 4px solid #e67e22;
+                    margin-bottom: 2rem;
+                }
+                .btn-add-faculty {
+                    background: #e67e22;
+                    color: white;
+                    border: none;
+                    padding: 0.75rem 1.5rem;
+                    border-radius: 6px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    margin-top: 1rem;
+                    transition: background 0.3s ease;
+                }
+                .btn-add-faculty:hover {
+                    background: #d35400;
+                    transform: translateY(-1px);
+                }
+                .infrastructure-actions {
+                    display: flex;
+                    gap: 1rem;
+                    justify-content: center;
+                    margin-top: 2rem;
+                    padding-top: 2rem;
+                    border-top: 2px solid #f0f0f0;
+                }
+                .btn-save-infrastructure, .btn-close-infrastructure {
+                    padding: 0.75rem 1.5rem;
+                    border: none;
+                    border-radius: 8px;
+                    font-size: 1rem;
+                    cursor: pointer;
+                    transition: background 0.3s;
+                }
+                .btn-save-infrastructure {
+                    background: #27ae60;
+                    color: white;
+                }
+                .btn-save-infrastructure:hover {
+                    background: #219a52;
+                }
+                .btn-close-infrastructure {
+                    background: #95a5a6;
+                    color: white;
+                }
+                .btn-close-infrastructure:hover {
+                    background: #7f8c8d;
+                }
+                @media (max-width: 768px) {
+                    .faculty-form {
+                        grid-template-columns: 1fr;
+                    }
+                    .infrastructure-info ul {
+                        font-size: 0.9rem;
+                    }
+                    .input-group label {
+                        font-size: 0.8rem;
+                    }
+                    .input-group small {
+                        font-size: 0.7rem;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(modal);
+            
+            // Variables para el manejo de facultades
+            let faculties = [];
+            
+            // Event listeners
+            modal.querySelector('.close-infrastructure').addEventListener('click', () => closeModal());
+            modal.querySelector('.btn-close-infrastructure').addEventListener('click', () => closeModal());
+            
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+            
+            // Agregar facultad
+            modal.querySelector('.btn-add-faculty').addEventListener('click', () => {
+                const name = document.getElementById('facultyName').value.trim();
+                const classrooms = parseInt(document.getElementById('facultyClassrooms').value) || 1;
+                const laboratories = parseInt(document.getElementById('facultyLaboratories').value) || 0;
+                
+                // Validaciones mejoradas
+                if (!name) {
+                    alert('❌ Por favor ingrese el nombre de la facultad');
+                    document.getElementById('facultyName').focus();
+                    return;
+                }
+                
+                if (name.length < 5) {
+                    alert('❌ El nombre de la facultad debe tener al menos 5 caracteres');
+                    document.getElementById('facultyName').focus();
+                    return;
+                }
+                
+                if (classrooms < 1) {
+                    alert('❌ Debe haber al menos 1 aula por facultad');
+                    document.getElementById('facultyClassrooms').focus();
+                    return;
+                }
+                
+                if (laboratories < 0) {
+                    alert('❌ El número de laboratorios no puede ser negativo');
+                    document.getElementById('facultyLaboratories').focus();
+                    return;
+                }
+                
+                // Verificar si ya existe una facultad con el mismo nombre
+                const existingFaculty = faculties.find(f => f.name.toLowerCase() === name.toLowerCase());
+                if (existingFaculty) {
+                    alert('❌ Ya existe una facultad con este nombre. Por favor, use un nombre diferente.');
+                    document.getElementById('facultyName').focus();
+                    return;
+                }
+                
+                const faculty = {
+                    id: Date.now(),
+                    name,
+                    classrooms,
+                    laboratories
+                };
+                
+                faculties.push(faculty);
+                renderFaculties();
+                
+                // Limpiar formulario con confirmación
+                document.getElementById('facultyName').value = '';
+                document.getElementById('facultyClassrooms').value = '1';
+                document.getElementById('facultyLaboratories').value = '0';
+                
+                // Mensaje de confirmación
+                const successMsg = document.createElement('div');
+                successMsg.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #27ae60;
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    box-shadow: 0 4px 12px rgba(39, 174, 96, 0.3);
+                    z-index: 10001;
+                    font-weight: 600;
+                `;
+                successMsg.innerHTML = `✅ ${name} agregada exitosamente`;
+                document.body.appendChild(successMsg);
+                
+                setTimeout(() => {
+                    document.body.removeChild(successMsg);
+                }, 3000);
+                
+                // Enfocar en el campo de nombre para agregar otra facultad
+                document.getElementById('facultyName').focus();
+            });
+            
+            // Guardar infraestructura
+            modal.querySelector('.btn-save-infrastructure').addEventListener('click', () => {
+                if (faculties.length === 0) {
+                    alert('❌ Debe agregar al menos una facultad antes de guardar.\n\nUna institución sin facultades no puede registrar su infraestructura.');
+                    document.getElementById('facultyName').focus();
+                    return;
+                }
+                
+                // Mostrar confirmación antes de guardar
+                const totalClassrooms = faculties.reduce((sum, f) => sum + f.classrooms, 0);
+                const totalLaboratories = faculties.reduce((sum, f) => sum + f.laboratories, 0);
+                
+                const confirmMessage = `¿Confirma que desea guardar esta infraestructura para ${institutionName}?\n\n📊 Resumen:\n• ${faculties.length} ${faculties.length === 1 ? 'facultad' : 'facultades'}\n• ${totalClassrooms} ${totalClassrooms === 1 ? 'aula' : 'aulas'} en total\n• ${totalLaboratories} ${totalLaboratories === 1 ? 'laboratorio' : 'laboratorios'} en total\n\nEsta acción actualizará las estadísticas de la institución.`;
+                
+                if (!confirm(confirmMessage)) {
+                    return;
+                }
+                
+                // Actualizar estadísticas de la institución
+                const statValues = card.querySelectorAll('.stat-value');
+                if (statValues.length >= 3) {
+                    statValues[1].textContent = totalClassrooms;
+                    statValues[2].textContent = totalLaboratories;
+                }
+                
+                // Guardar en localStorage
+                const savedInstitutions = JSON.parse(localStorage.getItem('institutions') || '[]');
+                const institutionIndex = savedInstitutions.findIndex(inst => inst.name === institutionName);
+                
+                if (institutionIndex !== -1) {
+                    savedInstitutions[institutionIndex].infrastructure = faculties;
+                    savedInstitutions[institutionIndex].classrooms = totalClassrooms;
+                    savedInstitutions[institutionIndex].laboratories = totalLaboratories;
+                    localStorage.setItem('institutions', JSON.stringify(savedInstitutions));
+                } else {
+                    // Si no existe en localStorage, crear nueva entrada
+                    const newInstitution = {
+                        name: institutionName,
+                        infrastructure: faculties,
+                        classrooms: totalClassrooms,
+                        laboratories: totalLaboratories,
+                        dateCreated: new Date().toISOString()
+                    };
+                    savedInstitutions.push(newInstitution);
+                    localStorage.setItem('institutions', JSON.stringify(savedInstitutions));
+                }
+                
+                // Efecto visual de éxito
+                card.style.border = '3px solid #27ae60';
+                card.style.boxShadow = '0 8px 24px rgba(39, 174, 96, 0.3)';
+                card.style.transform = 'scale(1.02)';
+                
+                setTimeout(() => {
+                    card.style.border = '';
+                    card.style.boxShadow = '';
+                    card.style.transform = '';
+                }, 2000);
+                
+                alert(`✅ ¡Infraestructura guardada exitosamente!\n\n🏢 ${institutionName}\n📊 Estadísticas actualizadas:\n• ${faculties.length} ${faculties.length === 1 ? 'facultad registrada' : 'facultades registradas'}\n• ${totalClassrooms} ${totalClassrooms === 1 ? 'aula' : 'aulas'} en total\n• ${totalLaboratories} ${totalLaboratories === 1 ? 'laboratorio' : 'laboratorios'} en total\n\n💾 Los datos han sido guardados en el sistema.`);
+                closeModal();
+            });
+            
+            function renderFaculties() {
+                const facultyList = document.getElementById('facultyList');
+                if (faculties.length === 0) {
+                    facultyList.innerHTML = `
+                        <div style="text-align: center; padding: 2rem; color: #7f8c8d; font-style: italic;">
+                            📚 No hay facultades agregadas aún.<br>
+                            Comience agregando la primera facultad usando el formulario de abajo.
+                        </div>
+                    `;
+                } else {
+                    facultyList.innerHTML = faculties.map((faculty, index) => `
+                        <div class="faculty-item">
+                            <div class="faculty-info">
+                                <h4>${index + 1}. ${faculty.name}</h4>
+                                <div class="faculty-stats">
+                                    <span>🏫 ${faculty.classrooms} ${faculty.classrooms === 1 ? 'aula' : 'aulas'}</span>
+                                    <span>🔬 ${faculty.laboratories} ${faculty.laboratories === 1 ? 'laboratorio' : 'laboratorios'}</span>
+                                    <span style="color: #2c3e50; font-weight: 600;">
+                                        Total: ${faculty.classrooms + faculty.laboratories} espacios
+                                    </span>
+                                </div>
+                            </div>
+                            <button class="remove-faculty" onclick="removeFaculty(${faculty.id})" title="Eliminar ${faculty.name}">
+                                🗑️ Eliminar
+                            </button>
+                        </div>
+                    `).join('');
+                }
+                
+                // Actualizar contador de facultades
+                const totalFaculties = faculties.length;
+                const totalClassrooms = faculties.reduce((sum, f) => sum + f.classrooms, 0);
+                const totalLabs = faculties.reduce((sum, f) => sum + f.laboratories, 0);
+                
+                // Mostrar resumen si hay facultades
+                if (totalFaculties > 0) {
+                    const summaryDiv = document.createElement('div');
+                    summaryDiv.style.cssText = `
+                        background: #e8f4f8;
+                        padding: 1rem;
+                        border-radius: 8px;
+                        margin-bottom: 1rem;
+                        border-left: 4px solid #3498db;
+                    `;
+                    summaryDiv.innerHTML = `
+                        <strong>📊 Resumen actual:</strong><br>
+                        ${totalFaculties} ${totalFaculties === 1 ? 'facultad' : 'facultades'} • 
+                        ${totalClassrooms} ${totalClassrooms === 1 ? 'aula' : 'aulas'} • 
+                        ${totalLabs} ${totalLabs === 1 ? 'laboratorio' : 'laboratorios'}
+                    `;
+                    facultyList.insertBefore(summaryDiv, facultyList.firstChild);
+                }
+            }
+            
+            function closeModal() {
+                document.body.removeChild(modal);
+                document.head.removeChild(style);
+            }
+            
+            // Función global para remover facultad
+            window.removeFaculty = function(facultyId) {
+                if (confirm('¿Está seguro de eliminar esta facultad?')) {
+                    faculties = faculties.filter(f => f.id !== facultyId);
+                    renderFaculties();
+                }
+            };
+        }
+    </script>
+    <script src="../javascript/universal-init.js"></script>
+    <script src="../javascript/navigation.js"></script>
+    <script src="../javascript/settings.js"></script>
+    
+    <!-- Script de Búsqueda de Infraestructuras -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInfrastructures');
+            const typeFilter = document.getElementById('typeFilter');
+            const clearBtn = document.getElementById('clearSearch');
+            const searchResultsCount = document.getElementById('searchResultsCount');
+            const institutionCards = document.querySelectorAll('.institution-card');
+            
+            let totalCards = institutionCards.length;
+            let currentSearchTerm = '';
+            let currentFilter = '';
+            
+            // Función de búsqueda y filtrado
+            function performSearch() {
+                let visibleCount = 0;
+                const query = currentSearchTerm.toLowerCase().trim();
+                const typeFilterValue = currentFilter.toLowerCase();
+                
+                institutionCards.forEach(card => {
+                    const institutionName = card.querySelector('.institution-name')?.textContent.toLowerCase() || '';
+                    const institutionLocation = card.querySelector('.institution-location')?.textContent.toLowerCase() || '';
+                    const institutionType = card.querySelector('.institution-type')?.textContent.toLowerCase() || '';
+                    
+                    // Buscar en nombre, ubicación y tipo
+                    const matchesSearch = query === '' || 
+                                        institutionName.includes(query) || 
+                                        institutionLocation.includes(query) || 
+                                        institutionType.includes(query);
+                    
+                    // Filtrar por tipo
+                    const matchesFilter = typeFilterValue === '' || institutionType.includes(typeFilterValue);
+                    
+                    if (matchesSearch && matchesFilter) {
+                        card.classList.remove('hidden');
+                        card.classList.add('search-match');
+                        visibleCount++;
+                        
+                        // Remover animación después de un tiempo
+                        setTimeout(() => {
+                            card.classList.remove('search-match');
+                        }, 300);
+                    } else {
+                        card.classList.add('hidden');
+                        card.classList.remove('search-match');
+                    }
+                });
+                
+                // Actualizar contador de resultados
+                updateSearchResults(query, visibleCount);
+                
+                // Mostrar/ocultar botón de limpiar
+                clearBtn.style.display = (query || typeFilterValue) ? 'flex' : 'none';
+            }
+            
+            // Actualizar contador de resultados
+            function updateSearchResults(query, count) {
+                let message = '';
+                if (query === '' && currentFilter === '') {
+                    message = `Mostrando ${totalCards} infraestructuras`;
+                } else {
+                    const plural = count === 1 ? 'infraestructura' : 'infraestructuras';
+                    let searchInfo = '';
+                    if (query) searchInfo += `"${query}"`;
+                    if (currentFilter) {
+                        if (searchInfo) searchInfo += ' y ';
+                        searchInfo += `tipo "${currentFilter}"`;
+                    }
+                    message = `${count} ${plural} encontradas para ${searchInfo}`;
+                }
+                searchResultsCount.textContent = message;
+            }
+            
+            // Event listeners para búsqueda
+            searchInput.addEventListener('input', function() {
+                currentSearchTerm = this.value;
+                performSearch();
+            });
+            
+            // Event listener para filtro de tipo
+            typeFilter.addEventListener('change', function() {
+                currentFilter = this.value;
+                performSearch();
+            });
+            
+            // Limpiar búsqueda con Enter - Ejecutar búsqueda y luego limpiar campo
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    // Ejecutar búsqueda con el término actual
+                    if (this.value.trim() !== '') {
+                        currentSearchTerm = this.value;
+                        performSearch();
+                        // Limpiar el campo pero mantener los resultados
+                        this.value = '';
+                        this.placeholder = 'Búsqueda ejecutada - Resultados mostrados arriba';
+                        
+                        // Restaurar placeholder después de 3 segundos
+                        setTimeout(() => {
+                            this.placeholder = 'Buscar infraestructuras...';
+                        }, 3000);
+                    }
+                }
+            });
+            
+            // Limpiar búsqueda y filtros
+            clearBtn.addEventListener('click', function() {
+                searchInput.value = '';
+                typeFilter.value = '';
+                currentSearchTerm = '';
+                currentFilter = '';
+                performSearch();
+                searchInput.focus();
+            });
+            
+            // Atajo de teclado Ctrl+K para enfocar la búsqueda
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    searchInput.focus();
+                }
+            });
+            
+            // Inicializar contador
+            updateSearchResults('', totalCards);
+        });
+    </script>
+    
+    <script>
+        // Funcionalidad del calendario
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarLink = document.getElementById('calendarLink');
+            
+            if (calendarLink) {
+                calendarLink.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Verificar si el usuario es administrador (simulación)
+                    const userRole = localStorage.getItem('user_role') || 'guest';
+                    
+                    if (userRole === 'inspector') {
+                        openCalendarModal();
+                    } else {
+                        showAccessDeniedMessage();
+                    }
+                });
+            }
+            
+            function openCalendarModal() {
+                // Crear modal del calendario
+                const modal = document.createElement('div');
+                modal.className = 'calendar-modal';
+                modal.innerHTML = `
+                    <div class="calendar-modal-content">
+                        <div class="calendar-header">
+                            <h2>📅 Calendario de Mantenimiento</h2>
+                            <button class="close-modal">&times;</button>
+                        </div>
+                        <div class="calendar-body">
+                            <div class="calendar-controls">
+                                <button id="prevMonth" class="btn btn-secondary">‹ Anterior</button>
+                                <h3 id="currentMonth">Enero 2025</h3>
+                                <button id="nextMonth" class="btn btn-secondary">Siguiente ›</button>
+                            </div>
+                            <div class="calendar-grid">
+                                <div class="calendar-weekdays">
+                                    <div>Dom</div><div>Lun</div><div>Mar</div><div>Mié</div><div>Jue</div><div>Vie</div><div>Sáb</div>
+                                </div>
+                                <div class="calendar-days" id="calendarDays">
+                                    <!-- Días generados dinámicamente -->
+                                </div>
+                            </div>
+                            <div class="calendar-actions">
+                                <button id="addEventBtn" class="btn btn-primary">➕ Agregar Evento</button>
+                                <button id="viewEventsBtn" class="btn btn-outline">📋 Ver Eventos</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Agregar estilos del modal
+                const style = document.createElement('style');
+                style.textContent = `
+                    .calendar-modal {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0,0,0,0.7);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 10000;
+                    }
+                    .calendar-modal-content {
+                        background: white;
+                        border-radius: 12px;
+                        padding: 24px;
+                        max-width: 600px;
+                        width: 90%;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                    }
+                    .calendar-header {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                        border-bottom: 2px solid #f0f0f0;
+                        padding-bottom: 15px;
+                    }
+                    .close-modal {
+                        background: none;
+                        border: none;
+                        font-size: 24px;
+                        cursor: pointer;
+                        color: #666;
+                        padding: 5px;
+                        border-radius: 50%;
+                        width: 35px;
+                        height: 35px;
+                    }
+                    .close-modal:hover {
+                        background: #f0f0f0;
+                        color: #333;
+                    }
+                    .calendar-controls {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 20px;
+                    }
+                    .calendar-grid {
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        overflow: hidden;
+                    }
+                    .calendar-weekdays {
+                        display: grid;
+                        grid-template-columns: repeat(7, 1fr);
+                        background: #f8f9fa;
+                    }
+                    .calendar-weekdays > div {
+                        padding: 10px;
+                        text-align: center;
+                        font-weight: 600;
+                        border-right: 1px solid #ddd;
+                    }
+                    .calendar-days {
+                        display: grid;
+                        grid-template-columns: repeat(7, 1fr);
+                    }
+                    .calendar-day {
+                        padding: 12px 8px;
+                        border-right: 1px solid #eee;
+                        border-bottom: 1px solid #eee;
+                        min-height: 40px;
+                        cursor: pointer;
+                        transition: background 0.2s;
+                        font-size: 14px;
+                    }
+                    .calendar-day:hover {
+                        background: #f8f9fa;
+                    }
+                    .calendar-day.other-month {
+                        color: #ccc;
+                        background: #fafafa;
+                    }
+                    .calendar-day.today {
+                        background: #e67e22;
+                        color: white;
+                        font-weight: bold;
+                    }
+                    .calendar-day.has-event {
+                        background: #d4edda;
+                        border-left: 4px solid #28a745;
+                    }
+                    .calendar-actions {
+                        margin-top: 20px;
+                        display: flex;
+                        gap: 12px;
+                        justify-content: center;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                document.body.appendChild(modal);
+                
+                // Inicializar calendario
+                initializeCalendar();
+                
+                // Event listeners
+                modal.querySelector('.close-modal').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                    document.head.removeChild(style);
+                });
+                
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                        document.head.removeChild(style);
+                    }
+                });
+                
+                document.getElementById('addEventBtn').addEventListener('click', () => {
+                    alert('Funcionalidad de agregar evento - En desarrollo');
+                });
+                
+                document.getElementById('viewEventsBtn').addEventListener('click', () => {
+                    alert('Lista de eventos programados - En desarrollo');
+                });
+            }
+            
+            function initializeCalendar() {
+                const now = new Date();
+                let currentDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                
+                function updateCalendar() {
+                    const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                                      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+                    
+                    document.getElementById('currentMonth').textContent = 
+                        `${monthNames[currentDate.getMonth()]} ${currentDate.getFullYear()}`;
+                    
+                    const calendarDays = document.getElementById('calendarDays');
+                    calendarDays.innerHTML = '';
+                    
+                    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+                    const lastDay = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+                    const startDate = new Date(firstDay);
+                    startDate.setDate(startDate.getDate() - firstDay.getDay());
+                    
+                    for (let i = 0; i < 42; i++) {
+                        const day = new Date(startDate);
+                        day.setDate(startDate.getDate() + i);
+                        
+                        const dayElement = document.createElement('div');
+                        dayElement.className = 'calendar-day';
+                        dayElement.textContent = day.getDate();
+                        
+                        if (day.getMonth() !== currentDate.getMonth()) {
+                            dayElement.classList.add('other-month');
+                        }
+                        
+                        if (day.toDateString() === now.toDateString()) {
+                            dayElement.classList.add('today');
+                        }
+                        
+                        // Simular algunos eventos
+                        if (day.getDate() % 7 === 0 && day.getMonth() === currentDate.getMonth()) {
+                            dayElement.classList.add('has-event');
+                            dayElement.title = 'Mantenimiento programado';
+                        }
+                        
+                        calendarDays.appendChild(dayElement);
+                    }
+                }
+                
+                document.getElementById('prevMonth').addEventListener('click', () => {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    updateCalendar();
+                });
+                
+                document.getElementById('nextMonth').addEventListener('click', () => {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    updateCalendar();
+                });
+                
+                updateCalendar();
+            }
+            
+            function showAccessDeniedMessage() {
+                alert('❌ Acceso Denegado\n\nSolo el inspector puede acceder al calendario.\n\nContacte al inspector del sistema para obtener permisos.');
+            }
+        });
+    </script>
+    
+    <script>
+        // Initialize settings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof SettingsManager !== 'undefined') {
+                const settingsManager = new SettingsManager();
+                
+                // Los IDs correctos según el header.html
+                const languageToggle = document.getElementById('languageSwitch');
+                const themeToggle = document.getElementById('themeSwitch');
+                const keyboardShortcuts = document.getElementById('keyboardShortcuts');
+                
+                if (languageToggle) {
+                    languageToggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        settingsManager.toggleLanguage();
+                    });
+                }
+                
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        settingsManager.toggleTheme();
+                    });
+                }
+                
+                if (keyboardShortcuts) {
+                    keyboardShortcuts.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        settingsManager.showShortcuts();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

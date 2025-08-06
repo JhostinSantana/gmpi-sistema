@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translate="dashboard_title">
+      GESTOR DE MANTENIMIENTO PREVENTIVO - Infraestructuras Escolares
+    </title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+      <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+          <!-- Logo -->
+          <div class="nav-logo">
+            <a
+              href="dashboard.html"
+              class="logo-link"
+              aria-label="Ir al inicio"
+            >
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle" data-translate="school_maintenance"
+                >Mantenimiento Escolar</span
+              >
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <ul class="nav-menu" role="menubar">
+            <li class="nav-item dropdown" role="none">
+              <a
+                href="#"
+                class="nav-link"
+                role="menuitem"
+                aria-haspopup="true"
+                aria-expanded="false"
+                tabindex="0"
+              >
+                <span class="icon">📊</span>
+                <span data-translate="management">Gestión</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div
+                class="dropdown-content"
+                role="menu"
+                aria-label="Opciones de Gestión"
+              >
+                <a href="infraestructuras.html" role="menuitem" tabindex="-1">
+                  <span class="icon">🏫</span>
+                  <span data-translate="infrastructures">Infraestructuras</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a
+                href="#"
+                class="nav-link"
+                role="menuitem"
+                aria-haspopup="true"
+                aria-expanded="false"
+                tabindex="0"
+              >
+                <span class="icon">📅</span>
+                <span data-translate="planning">Planificación</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div
+                class="dropdown-content"
+                role="menu"
+                aria-label="Opciones de Planificación"
+              >
+                <a href="calendario.html" role="menuitem" tabindex="-1">
+                  <span class="icon">📆</span>
+                  <span data-translate="calendar">Calendario</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a
+                href="#"
+                class="nav-link"
+                role="menuitem"
+                aria-haspopup="true"
+                aria-expanded="false"
+                tabindex="0"
+              >
+                <span class="icon">⚙️</span>
+                <span data-translate="configuration">Configuración</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div
+                class="dropdown-content"
+                role="menu"
+                aria-label="Opciones de Configuración"
+              >
+                <a href="#" role="menuitem" tabindex="-1" id="languageToggle">
+                  <span class="icon">🌐</span>
+                  <span data-translate="language">Idioma</span>
+                  <span class="setting-value" id="currentLanguage"
+                    >Español</span
+                  >
+                </a>
+                <a href="#" role="menuitem" tabindex="-1" id="themeToggle">
+                  <span class="icon">🌓</span>
+                  <span data-translate="theme">Tema</span>
+                  <span class="setting-value" id="currentTheme">Claro</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a
+                href="#"
+                class="nav-link"
+                role="menuitem"
+                aria-haspopup="true"
+                aria-expanded="false"
+                tabindex="0"
+              >
+                <span class="icon">❓</span>
+                <span data-translate="help">Ayuda</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div
+                class="dropdown-content"
+                role="menu"
+                aria-label="Opciones de Ayuda"
+              >
+                <a href="contact.html" role="menuitem" tabindex="-1">
+                  <span class="icon">📧</span>
+                  <span data-translate="contact">Contacto</span>
+                </a>
+                <a
+                  href="#"
+                  role="menuitem"
+                  tabindex="-1"
+                  id="keyboardShortcuts"
+                >
+                  <span class="icon">⌨️</span>
+                  <span data-translate="shortcuts">Atajos de Teclado</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Action Buttons -->
+          <div class="nav-actions">
+            <span class="user-welcome" data-translate="welcome"
+              >Bienvenido, Inspector</span
+            >
+            <a
+              href="index.html"
+              class="btn btn-secondary"
+              data-translate="logout"
+              >Cerrar Sesión</a
+            >
+          </div>
+
+          <!-- Mobile Menu Toggle -->
+          <div class="mobile-menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-container">
+        <div class="hero-content">
+          <h1 class="hero-title" data-translate="hero_title">
+            Mantén tus infraestructuras escolares en perfecto estado
+          </h1>
+          <p class="hero-subtitle" data-translate="hero_subtitle">
+            La plataforma integral para gestionar el mantenimiento preventivo de
+            instalaciones educativas. Desde pequeñas escuelas hasta grandes
+            complejos universitarios.
+          </p>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-image-placeholder">
+            <div class="dashboard-preview">
+              <div class="dashboard-header"></div>
+              <div class="dashboard-content">
+                <div class="dashboard-card"></div>
+                <div class="dashboard-card"></div>
+                <div class="dashboard-card"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Preview -->
+    <section class="features-preview">
+      <div class="container">
+        <h2>Todo lo que necesitas para el mantenimiento escolar</h2>
+        <div class="features-grid">
+          <div
+            class="feature-card"
+            onclick="window.location.href='calendario.html'"
+            style="cursor: pointer"
+          >
+            <div class="feature-icon">📅</div>
+            <h3>Calendario</h3>
+          </div>
+          <div
+            class="feature-card"
+            onclick="window.location.href='infraestructuras.html'"
+            style="cursor: pointer"
+          >
+            <div class="feature-icon">🏫</div>
+            <h3>INFRAESTRUCTURAS</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="../javascript/navigation.js"></script>
+    <script src="../javascript/universal-init.js"></script>
+    <script src="../javascript/settings.js"></script>
+    <script>
+      // Initialize settings on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        if (typeof SettingsManager !== "undefined") {
+          const settingsManager = new SettingsManager();
+          settingsManager.init();
+
+          // Connect navigation menu items to settings
+          const languageToggle = document.getElementById("languageToggle");
+          const themeToggle = document.getElementById("themeToggle");
+          const keyboardShortcuts =
+            document.getElementById("keyboardShortcuts");
+
+          if (languageToggle) {
+            languageToggle.addEventListener("click", function (e) {
+              e.preventDefault();
+              settingsManager.toggleLanguage();
+            });
+          }
+
+          if (themeToggle) {
+            themeToggle.addEventListener("click", function (e) {
+              e.preventDefault();
+              settingsManager.toggleTheme();
+            });
+          }
+
+          if (keyboardShortcuts) {
+            keyboardShortcuts.addEventListener("click", function (e) {
+              e.preventDefault();
+              settingsManager.showShortcuts();
+            });
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

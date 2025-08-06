@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editar Institución - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/infraestructuras.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+    <style>
+      .form-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .form-header {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+      }
+      .form-body {
+        padding: 2rem;
+      }
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+      .form-label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #333;
+      }
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+      .form-input:focus {
+        outline: none;
+        border-color: #3498db;
+      }
+      .form-select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        font-size: 1rem;
+        background: white;
+      }
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      .form-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 2px solid #f0f0f0;
+      }
+      .btn-save {
+        background: #3498db;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .btn-save:hover {
+        background: #2980b9;
+      }
+      .btn-cancel {
+        background: #95a5a6;
+        color: white;
+        padding: 0.75rem 2rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .btn-cancel:hover {
+        background: #7f8c8d;
+      }
+      .institution-not-found {
+        text-align: center;
+        padding: 2rem;
+        color: #e74c3c;
+        font-size: 1.1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+      <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+          <!-- Logo -->
+          <div class="nav-logo">
+            <a
+              href="dashboard.html"
+              class="logo-link"
+              aria-label="Ir al inicio"
+            >
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle">Mantenimiento Escolar</span>
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <ul class="nav-menu" role="menubar">
+            <li class="nav-item">
+              <a href="infraestructuras.html" class="nav-link">
+                <span class="icon">🏢</span>
+                <span>Volver a Infraestructuras</span>
+              </a>
+            </li>
+          </ul>
+
+          <!-- Action Buttons -->
+          <div class="nav-actions">
+            <span class="user-welcome">Bienvenido, Inspector</span>
+            <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <div class="container">
+        <div class="form-container">
+          <div class="form-header">
+            <h1>✏️ Editar Institución</h1>
+            <p>Modifique la información de la institución educativa</p>
+          </div>
+
+          <div class="form-body" id="formContainer">
+            <div
+              class="institution-not-found"
+              id="notFoundMessage"
+              style="display: none"
+            >
+              <h3>⚠️ Institución no encontrada</h3>
+              <p>No se pudo cargar la información de la institución.</p>
+              <button
+                type="button"
+                class="btn-cancel"
+                onclick="window.location.href='infraestructuras.html'"
+              >
+                Volver a Infraestructuras
+              </button>
+            </div>
+
+            <form id="editInstitutionForm" style="display: none">
+              <input type="hidden" id="institutionId" />
+              <input type="hidden" id="originalName" />
+
+              <div class="form-group">
+                <label class="form-label" for="institutionName"
+                  >Nombre de la Institución *</label
+                >
+                <input
+                  type="text"
+                  id="institutionName"
+                  class="form-input"
+                  required
+                  placeholder="Ej: Universidad Técnica de Manabí"
+                />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="institutionType"
+                    >Tipo de Institución *</label
+                  >
+                  <select id="institutionType" class="form-select" required>
+                    <option value="">Seleccionar tipo</option>
+                    <option value="universidad">Universidad</option>
+                    <option value="colegio">Colegio</option>
+                    <option value="escuela">Escuela</option>
+                    <option value="instituto">Instituto</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="institutionAcronym"
+                    >Siglas</label
+                  >
+                  <input
+                    type="text"
+                    id="institutionAcronym"
+                    class="form-input"
+                    placeholder="Ej: UTM"
+                    maxlength="5"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="institutionLocation"
+                  >Ubicación *</label
+                >
+                <input
+                  type="text"
+                  id="institutionLocation"
+                  class="form-input"
+                  required
+                  placeholder="Ej: Portoviejo, Manabí, Ecuador"
+                />
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="buildingsCount"
+                    >Número de Edificios</label
+                  >
+                  <input
+                    type="number"
+                    id="buildingsCount"
+                    class="form-input"
+                    min="1"
+                    value="1"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="classroomsCount"
+                    >Número de Aulas</label
+                  >
+                  <input
+                    type="number"
+                    id="classroomsCount"
+                    class="form-input"
+                    min="1"
+                    value="1"
+                  />
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="laboratoriesCount"
+                    >Número de Laboratorios</label
+                  >
+                  <input
+                    type="number"
+                    id="laboratoriesCount"
+                    class="form-input"
+                    min="0"
+                    value="0"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="lastMaintenance"
+                    >Último Mantenimiento</label
+                  >
+                  <input type="date" id="lastMaintenance" class="form-input" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="nextMaintenance"
+                  >Próximo Mantenimiento</label
+                >
+                <input type="date" id="nextMaintenance" class="form-input" />
+              </div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn-save">
+                  💾 Actualizar Institución
+                </button>
+                <button
+                  type="button"
+                  class="btn-cancel"
+                  onclick="window.location.href='infraestructuras.html'"
+                >
+                  ❌ Cancelar
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("editInstitutionForm");
+        const notFoundMessage = document.getElementById("notFoundMessage");
+        const acronymInput = document.getElementById("institutionAcronym");
+        const nameInput = document.getElementById("institutionName");
+
+        // Obtener parámetros de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const institutionName = urlParams.get("name");
+
+        if (!institutionName) {
+          showNotFound();
+          return;
+        }
+
+        // Cargar datos de la institución
+        loadInstitutionData(institutionName);
+
+        // Auto-generar siglas basadas en el nombre
+        nameInput.addEventListener("input", function () {
+          if (!acronymInput.value) {
+            const words = this.value.split(" ");
+            const acronym = words
+              .map((word) => word.charAt(0))
+              .join("")
+              .toUpperCase()
+              .slice(0, 5);
+            acronymInput.value = acronym;
+          }
+        });
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          updateInstitution();
+        });
+
+        function loadInstitutionData(name) {
+          // Buscar en localStorage
+          const savedInstitutions = JSON.parse(
+            localStorage.getItem("institutions") || "[]"
+          );
+          const institution = savedInstitutions.find(
+            (inst) => inst.name === name
+          );
+
+          if (!institution) {
+            // Buscar en instituciones estáticas (predefinidas)
+            const staticInstitutions = getStaticInstitutions();
+            const staticInstitution = staticInstitutions.find(
+              (inst) => inst.name === name
+            );
+
+            if (staticInstitution) {
+              populateForm(staticInstitution, true);
+            } else {
+              showNotFound();
+            }
+          } else {
+            populateForm(institution, false);
+          }
+        }
+
+        function getStaticInstitutions() {
+          // Instituciones estáticas basadas en el HTML original
+          return [
+            {
+              name: "Universidad Laica Eloy Alfaro de Manabí",
+              type: "universidad",
+              acronym: "ULAEM",
+              location: "Manta, Manabí, Ecuador",
+              buildings: "8",
+              classrooms: "45",
+              laboratories: "12",
+              lastMaintenance: "15 Dic 2024",
+              nextMaintenance: "20 Feb 2025",
+            },
+            {
+              name: "Colegio Amazonas de Quito",
+              type: "colegio",
+              acronym: "CAQ",
+              location: "Quito, Pichincha, Ecuador",
+              buildings: "3",
+              classrooms: "24",
+              laboratories: "6",
+              lastMaintenance: "28 Nov 2024",
+              nextMaintenance: "05 Ene 2025",
+            },
+            {
+              name: "Escuela Primaria Benito Juárez",
+              type: "escuela",
+              acronym: "EPB",
+              location: "Guayaquil, Guayas, Ecuador",
+              buildings: "2",
+              classrooms: "12",
+              laboratories: "1",
+              lastMaintenance: "10 Dic 2024",
+              nextMaintenance: "15 Mar 2025",
+            },
+          ];
+        }
+
+        function populateForm(institution, isStatic = false) {
+          document.getElementById("institutionId").value =
+            institution.id || Date.now();
+          document.getElementById("originalName").value = institution.name;
+          document.getElementById("institutionName").value = institution.name;
+          document.getElementById("institutionType").value = institution.type;
+          document.getElementById("institutionAcronym").value =
+            institution.acronym || "";
+          document.getElementById("institutionLocation").value =
+            institution.location;
+          document.getElementById("buildingsCount").value =
+            institution.buildings;
+          document.getElementById("classroomsCount").value =
+            institution.classrooms;
+          document.getElementById("laboratoriesCount").value =
+            institution.laboratories;
+
+          // Convertir fechas si es necesario
+          if (
+            institution.lastMaintenance &&
+            institution.lastMaintenance !== "Sin registro"
+          ) {
+            const lastDate = convertToDateInput(institution.lastMaintenance);
+            if (lastDate)
+              document.getElementById("lastMaintenance").value = lastDate;
+          }
+
+          if (
+            institution.nextMaintenance &&
+            institution.nextMaintenance !== "Por programar"
+          ) {
+            const nextDate = convertToDateInput(institution.nextMaintenance);
+            if (nextDate)
+              document.getElementById("nextMaintenance").value = nextDate;
+          }
+
+          form.style.display = "block";
+          notFoundMessage.style.display = "none";
+        }
+
+        function convertToDateInput(dateString) {
+          try {
+            // Intentar convertir diferentes formatos de fecha
+            const date = new Date(dateString);
+            if (!isNaN(date.getTime())) {
+              return date.toISOString().split("T")[0];
+            }
+
+            // Manejar formato "DD MMM YYYY"
+            const monthNames = {
+              Ene: "01",
+              Feb: "02",
+              Mar: "03",
+              Abr: "04",
+              May: "05",
+              Jun: "06",
+              Jul: "07",
+              Ago: "08",
+              Sep: "09",
+              Oct: "10",
+              Nov: "11",
+              Dic: "12",
+            };
+
+            const parts = dateString.split(" ");
+            if (parts.length === 3) {
+              const day = parts[0].padStart(2, "0");
+              const month = monthNames[parts[1]];
+              const year = parts[2];
+
+              if (month) {
+                return `${year}-${month}-${day}`;
+              }
+            }
+          } catch (e) {
+            console.warn("No se pudo convertir la fecha:", dateString);
+          }
+          return "";
+        }
+
+        function showNotFound() {
+          form.style.display = "none";
+          notFoundMessage.style.display = "block";
+        }
+
+        function updateInstitution() {
+          // Obtener datos del formulario
+          const originalName = document.getElementById("originalName").value;
+          const formData = {
+            id: document.getElementById("institutionId").value,
+            name: document.getElementById("institutionName").value,
+            type: document.getElementById("institutionType").value,
+            acronym:
+              document.getElementById("institutionAcronym").value || "NI",
+            location: document.getElementById("institutionLocation").value,
+            buildings: document.getElementById("buildingsCount").value || 1,
+            classrooms: document.getElementById("classroomsCount").value || 1,
+            laboratories:
+              document.getElementById("laboratoriesCount").value || 0,
+            lastMaintenance: document.getElementById("lastMaintenance").value,
+            nextMaintenance: document.getElementById("nextMaintenance").value,
+            dateModified: new Date().toISOString(),
+          };
+
+          // Validar campos requeridos
+          if (!formData.name || !formData.type || !formData.location) {
+            alert(
+              "❌ Por favor, complete todos los campos obligatorios marcados con *"
+            );
+            return;
+          }
+
+          // Simular actualización
+          const loadingMsg = document.createElement("div");
+          loadingMsg.style.cssText = `
+                    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+                    background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                    z-index: 10000; text-align: center; font-size: 1.1rem;
+                `;
+          loadingMsg.innerHTML = "⏳ Actualizando institución...";
+          document.body.appendChild(loadingMsg);
+
+          setTimeout(() => {
+            document.body.removeChild(loadingMsg);
+
+            // Función para obtener instituciones estáticas (necesaria para el contexto de actualización)
+            function getStaticInstitutions() {
+              return [
+                {
+                  name: "Universidad Laica Eloy Alfaro de Manabí",
+                  type: "universidad",
+                  acronym: "ULAEM",
+                  location: "Manta, Manabí, Ecuador",
+                },
+                {
+                  name: "Colegio Amazonas de Quito",
+                  type: "colegio",
+                  acronym: "CAQ",
+                  location: "Quito, Pichincha, Ecuador",
+                },
+                {
+                  name: "Escuela Primaria Benito Juárez",
+                  type: "escuela",
+                  acronym: "EPB",
+                  location: "Guayaquil, Guayas, Ecuador",
+                },
+              ];
+            }
+
+            // Actualizar en localStorage
+            const savedInstitutions = JSON.parse(
+              localStorage.getItem("institutions") || "[]"
+            );
+
+            // Buscar si existe en localStorage (institución dinámica)
+            const institutionIndex = savedInstitutions.findIndex(
+              (inst) => inst.name === originalName
+            );
+
+            if (institutionIndex !== -1) {
+              // Actualizar institución existente en localStorage
+              savedInstitutions[institutionIndex] = formData;
+              localStorage.setItem(
+                "institutions",
+                JSON.stringify(savedInstitutions)
+              );
+            } else {
+              // Si no está en localStorage, verificar si es una institución estática
+              const staticInstitutions = getStaticInstitutions();
+              const isStaticInstitution = staticInstitutions.some(
+                (inst) => inst.name === originalName
+              );
+
+              if (isStaticInstitution) {
+                // Para instituciones estáticas, agregamos la versión actualizada y marcamos la original como oculta
+                formData.updatesStatic = originalName; // Marcar que actualiza una estática
+                savedInstitutions.push(formData);
+                localStorage.setItem(
+                  "institutions",
+                  JSON.stringify(savedInstitutions)
+                );
+
+                // También guardamos una lista de instituciones estáticas ocultas
+                const hiddenStatic = JSON.parse(
+                  localStorage.getItem("hiddenStaticInstitutions") || "[]"
+                );
+                if (!hiddenStatic.includes(originalName)) {
+                  hiddenStatic.push(originalName);
+                  localStorage.setItem(
+                    "hiddenStaticInstitutions",
+                    JSON.stringify(hiddenStatic)
+                  );
+                }
+              } else {
+                // Nueva institución completamente
+                savedInstitutions.push(formData);
+                localStorage.setItem(
+                  "institutions",
+                  JSON.stringify(savedInstitutions)
+                );
+              }
+            }
+
+            alert(
+              "✅ ¡Institución actualizada exitosamente!\n\nLos cambios se reflejarán en la lista de infraestructuras."
+            );
+            window.location.href = "infraestructuras.html";
+          }, 1500);
+        }
+      });
+    </script>
+  </body>
+</html>

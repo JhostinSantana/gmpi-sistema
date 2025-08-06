@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infraestructuras - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/infraestructuras.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header" role="banner">
+      <nav class="navbar" role="navigation" aria-label="Navegación principal">
+        <div class="nav-container">
+          <!-- Logo -->
+          <div class="nav-logo">
+            <a
+              href="dashboard.html"
+              class="logo-link"
+              aria-label="Ir al inicio"
+            >
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle">Mantenimiento Escolar</span>
+            </a>
+          </div>
+
+          <!-- Navigation Menu -->
+          <ul class="nav-menu" role="menubar">
+            <li class="nav-item dropdown" role="none">
+              <a href="#" class="nav-link" role="menuitem">
+                <span class="icon">📊</span>
+                <span>Gestión</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content" role="menu">
+                <a href="dashboard.html" role="menuitem">
+                  <span class="icon">🏠</span>
+                  <span>Dashboard</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a href="#" class="nav-link" role="menuitem">
+                <span class="icon">📋</span>
+                <span>Planificación</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content" role="menu">
+                <a href="calendario.html" role="menuitem">
+                  <span class="icon">📅</span>
+                  <span>Calendario</span>
+                </a>
+              </div>
+            </li>
+            <li class="nav-item dropdown" role="none">
+              <a href="#" class="nav-link" role="menuitem">
+                <span class="icon">⚙️</span>
+                <span>Configuración</span>
+                <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-content" role="menu">
+                <a href="#" role="menuitem" id="languageToggle">
+                  <span class="icon">🌐</span>
+                  <span>Idioma</span>
+                </a>
+                <a href="#" role="menuitem" id="themeToggle">
+                  <span class="icon">🌓</span>
+                  <span>Tema</span>
+                </a>
+              </div>
+            </li>
+          </ul>
+
+          <!-- Action Buttons -->
+          <div class="nav-actions">
+            <span class="user-welcome">Bienvenido, Inspector</span>
+            <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <!-- Page Header -->
+      <section class="page-header">
+        <div class="container">
+          <div class="header-content">
+            <h1 class="page-title">Infraestructuras Registradas</h1>
+            <p class="page-subtitle">
+              Gestiona y supervisa todas las instituciones educativas del
+              sistema
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <!-- Institutions Section -->
+        <div class="institutions-section">
+          <div class="section-header">
+            <h2>Instituciones Educativas</h2>
+            <button class="btn btn-primary add-institution-btn">
+              + Agregar Institución
+            </button>
+          </div>
+
+          <div class="institutions-grid">
+            <!-- ULAEM Institution -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo">
+                  <span class="logo-text">ULAEM</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">
+                  Universidad Laica Eloy Alfaro de Manabí
+                </h3>
+                <p class="institution-location">📍 Manta, Manabí, Ecuador</p>
+                <p class="institution-type">🎓 Universidad</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">8</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">45</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">12</span>
+                  <span class="stat-name">Laboratorios</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">15 Dic 2024</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date upcoming">20 Feb 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small add-infrastructure-btn"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button class="btn btn-outline btn-small view-details-btn">
+                  Ver Detalles
+                </button>
+                <button class="btn btn-secondary btn-small edit-btn">
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small delete-btn">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+
+            <!-- Colegio Amazonas Institution -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo secondary">
+                  <span class="logo-text">CAQ</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">Colegio Amazonas de Quito</h3>
+                <p class="institution-location">📍 Quito, Pichincha, Ecuador</p>
+                <p class="institution-type">🏫 Colegio</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">3</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">24</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">6</span>
+                  <span class="stat-name">Laboratorios</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">28 Nov 2024</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date pending">05 Ene 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small add-infrastructure-btn"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button class="btn btn-outline btn-small view-details-btn">
+                  Ver Detalles
+                </button>
+                <button class="btn btn-secondary btn-small edit-btn">
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small delete-btn">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+
+            <!-- Escuela Primaria Example -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo tertiary">
+                  <span class="logo-text">EPB</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">Escuela Primaria Benito Juárez</h3>
+                <p class="institution-location">
+                  📍 Guayaquil, Guayas, Ecuador
+                </p>
+                <p class="institution-type">🏠 Escuela</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">2</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">12</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">1</span>
+                  <span class="stat-name">Laboratorio</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">10 Dic 2024</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date upcoming">15 Mar 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small add-infrastructure-btn"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button class="btn btn-outline btn-small view-details-btn">
+                  Ver Detalles
+                </button>
+                <button class="btn btn-secondary btn-small edit-btn">
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small delete-btn">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- JavaScript unificado y funcional -->
+    <script>
+      // Todas las funciones en un solo DOMContentLoaded
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("✅ Página cargada correctamente");
+
+        // Inicializar botones principales
+        initializeMainButtons();
+
+        // Inicializar botones de instituciones
+        initializeInstitutionButtons();
+
+        // Cargar instituciones dinámicas
+        loadDynamicInstitutions();
+
+        console.log("✅ Inicialización completada");
+      });
+
+      // Función para inicializar botones principales
+      function initializeMainButtons() {
+        const addInstitutionBtn = document.querySelector(
+          ".add-institution-btn"
+        );
+        if (addInstitutionBtn) {
+          addInstitutionBtn.addEventListener("click", function () {
+            window.location.href = "add-institution.html";
+          });
+          console.log('✅ Botón "Agregar Institución" configurado');
+        }
+      }
+
+      // Función para inicializar botones de instituciones
+      function initializeInstitutionButtons() {
+        // Botones de agregar infraestructura
+        const addInfraButtons = document.querySelectorAll(
+          ".add-infrastructure-btn"
+        );
+        addInfraButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            showAddInfrastructureModal(institutionName, card);
+          });
+        });
+
+        // Botones de editar
+        const editButtons = document.querySelectorAll(".edit-btn");
+        editButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            window.location.href = `edit-institution.html?name=${encodeURIComponent(
+              institutionName
+            )}`;
+          });
+        });
+
+        // Botones de ver detalles
+        const detailButtons = document.querySelectorAll(".view-details-btn");
+        detailButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            showInstitutionDetails(card);
+          });
+        });
+
+        // Botones de eliminar
+        const deleteButtons = document.querySelectorAll(".delete-btn");
+        deleteButtons.forEach((btn) => {
+          btn.addEventListener("click", function () {
+            const card = this.closest(".institution-card");
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            deleteInstitution(institutionName, card);
+          });
+        });
+
+        console.log(
+          `✅ ${
+            addInfraButtons.length +
+            editButtons.length +
+            detailButtons.length +
+            deleteButtons.length
+          } botones de instituciones configurados`
+        );
+      }
+
+      // Función para cargar instituciones dinámicas
+      function loadDynamicInstitutions() {
+        const institutionsGrid = document.querySelector(".institutions-grid");
+        const savedInstitutions = JSON.parse(
+          localStorage.getItem("institutions") || "[]"
+        );
+
+        savedInstitutions.forEach((institution) => {
+          const card = createInstitutionCard(institution);
+          institutionsGrid.appendChild(card);
+
+          // Configurar eventos para la nueva tarjeta
+          setupCardEvents(card);
+        });
+
+        console.log(
+          `✅ ${savedInstitutions.length} instituciones dinámicas cargadas`
+        );
+      }
+
+      // Función para crear tarjeta de institución
+      function createInstitutionCard(institution) {
+        const card = document.createElement("div");
+        card.className = "institution-card";
+
+        const typeEmoji = {
+          universidad: "🎓",
+          colegio: "🏫",
+          escuela: "🏠",
+          instituto: "🏢",
+        };
+
+        card.innerHTML = `
+                <div class="institution-header">
+                    <div class="institution-logo ${institution.type}">
+                        <span class="logo-text">${
+                          institution.acronym || "NI"
+                        }</span>
+                    </div>
+                </div>
+                
+                <div class="institution-info">
+                    <h3 class="institution-name">${institution.name}</h3>
+                    <p class="institution-location">📍 ${
+                      institution.location
+                    }</p>
+                    <p class="institution-type">${
+                      typeEmoji[institution.type] || "🏢"
+                    } ${
+          institution.type.charAt(0).toUpperCase() + institution.type.slice(1)
+        }</p>
+                </div>
+
+                <div class="institution-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">${
+                          institution.buildings || 1
+                        }</span>
+                        <span class="stat-name">Edificios</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${
+                          institution.classrooms || 1
+                        }</span>
+                        <span class="stat-name">Aulas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">${
+                          institution.laboratories || 0
+                        }</span>
+                        <span class="stat-name">Laboratorios</span>
+                    </div>
+                </div>
+
+                <div class="institution-maintenance">
+                    <div class="maintenance-item">
+                        <span class="maintenance-label">Último Mantenimiento:</span>
+                        <span class="maintenance-date">${
+                          institution.lastMaintenance || "Sin registro"
+                        }</span>
+                    </div>
+                    <div class="maintenance-item">
+                        <span class="maintenance-label">Próximo Mantenimiento:</span>
+                        <span class="maintenance-date upcoming">${
+                          institution.nextMaintenance || "Por programar"
+                        }</span>
+                    </div>
+                </div>
+
+                <div class="institution-actions">
+                    <button class="btn btn-primary btn-small add-infrastructure-btn">🏗️ Agregar Infraestructura</button>
+                    <button class="btn btn-outline btn-small view-details-btn">Ver Detalles</button>
+                    <button class="btn btn-secondary btn-small edit-btn">✏️ Editar</button>
+                    <button class="btn btn-danger btn-small delete-btn">🗑️ Eliminar</button>
+                </div>
+            `;
+
+        return card;
+      }
+
+      // Función para configurar eventos de tarjeta
+      function setupCardEvents(card) {
+        const addInfraBtn = card.querySelector(".add-infrastructure-btn");
+        const editBtn = card.querySelector(".edit-btn");
+        const detailBtn = card.querySelector(".view-details-btn");
+        const deleteBtn = card.querySelector(".delete-btn");
+
+        if (addInfraBtn) {
+          addInfraBtn.addEventListener("click", function () {
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            showAddInfrastructureModal(institutionName, card);
+          });
+        }
+
+        if (editBtn) {
+          editBtn.addEventListener("click", function () {
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            window.location.href = `edit-institution.html?name=${encodeURIComponent(
+              institutionName
+            )}`;
+          });
+        }
+
+        if (detailBtn) {
+          detailBtn.addEventListener("click", function () {
+            showInstitutionDetails(card);
+          });
+        }
+
+        if (deleteBtn) {
+          deleteBtn.addEventListener("click", function () {
+            const institutionName =
+              card.querySelector(".institution-name").textContent;
+            deleteInstitution(institutionName, card);
+          });
+        }
+      }
+
+      // Función para mostrar modal de agregar infraestructura
+      function showAddInfrastructureModal(institutionName, card) {
+        alert(
+          `🏗️ Función de agregar infraestructura activada para: ${institutionName}\n\nEsta funcionalidad está en desarrollo.`
+        );
+      }
+
+      // Función para mostrar detalles
+      function showInstitutionDetails(card) {
+        const institutionName =
+          card.querySelector(".institution-name").textContent;
+        const location = card.querySelector(
+          ".institution-location"
+        ).textContent;
+        const type = card.querySelector(".institution-type").textContent;
+        const buildings = card.querySelectorAll(".stat-value")[0].textContent;
+        const classrooms = card.querySelectorAll(".stat-value")[1].textContent;
+        const laboratories =
+          card.querySelectorAll(".stat-value")[2].textContent;
+
+        alert(
+          `📋 Detalles de la Institución\n\n` +
+            `🏢 ${institutionName}\n` +
+            `${location}\n` +
+            `${type}\n\n` +
+            `📊 Estadísticas:\n` +
+            `• ${buildings} Edificios\n` +
+            `• ${classrooms} Aulas\n` +
+            `• ${laboratories} Laboratorios`
+        );
+      }
+
+      // Función para eliminar institución
+      function deleteInstitution(institutionName, card) {
+        if (
+          confirm(
+            `❌ ¿Está seguro de que desea eliminar "${institutionName}"?\n\nEsta acción no se puede deshacer.`
+          )
+        ) {
+          // Animar eliminación
+          card.style.transition = "all 0.5s ease";
+          card.style.transform = "scale(0.8)";
+          card.style.opacity = "0.3";
+
+          setTimeout(() => {
+            card.remove();
+
+            // Remover de localStorage si es necesario
+            const savedInstitutions = JSON.parse(
+              localStorage.getItem("institutions") || "[]"
+            );
+            const updatedInstitutions = savedInstitutions.filter(
+              (inst) => inst.name !== institutionName
+            );
+            localStorage.setItem(
+              "institutions",
+              JSON.stringify(updatedInstitutions)
+            );
+
+            alert("✅ Institución eliminada exitosamente");
+          }, 500);
+        }
+      }
+    </script>
+
+    <!-- Scripts adicionales -->
+    <script src="../javascript/universal-init.js"></script>
+    <script src="../javascript/settings.js"></script>
+  </body>
+</html>

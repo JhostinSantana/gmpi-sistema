@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="contact_title">Contacto - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/contact.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+</head>
+<body>
+    <div class="contact-container">
+        <!-- Back Navigation -->
+        <div class="back-navigation">
+            <a href="dashboard.html" class="back-link" aria-label="Regresar al dashboard" data-translate="back_to_dashboard">
+                <span aria-hidden="true">←</span> Regresar al Dashboard
+            </a>
+            <!-- Quick Settings for Contact Page -->
+            <div class="page-settings">
+                <button class="quick-setting-btn" id="quickLanguageToggle" aria-label="Cambiar idioma">
+                    <span class="setting-icon">🌐</span>
+                    <span class="setting-text" id="quickLanguageText">ES</span>
+                </button>
+                <button class="quick-setting-btn" id="quickThemeToggle" aria-label="Cambiar tema">
+                    <span class="setting-icon">🌓</span>
+                    <span class="setting-text" id="quickThemeText">☀️</span>
+                </button>
+                <button class="quick-setting-btn" id="quickShortcuts" aria-label="Atajos de teclado">
+                    <span class="setting-icon">⌨️</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Contact Form Section -->
+        <div class="contact-form-section">
+            <div class="contact-form-wrapper">
+                <!-- Logo -->
+                <div class="contact-logo">
+                    <div class="logo-icon">
+                        <span class="logo-text">GMPI</span>
+                    </div>
+                    <h1 class="system-title" data-translate="system_title">Gestor de Mantenimiento Preventivo</h1>
+                    <p class="system-subtitle" data-translate="contact_form_subtitle">Formulario de Contacto</p>
+                </div>
+
+                <!-- Contact Form -->
+                <form class="contact-form" id="contactForm" novalidate aria-label="Formulario de contacto">
+                    <div class="form-header">
+                        <h2 id="contact-title" data-translate="contact_us">Contáctanos</h2>
+                        <div class="form-instructions">
+                            <p data-translate="contact_instruction_1">Completa este formulario para enviarnos tu consulta, sugerencia o reporte de problema.</p>
+                            <p data-translate="contact_instruction_2">Solo necesitamos la información básica para poder responderte adecuadamente.</p>
+                            <p><strong data-translate="response_time">Tiempo de respuesta:</strong> <span data-translate="response_time_detail">Responderemos en un máximo de 24 horas hábiles.</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Error/Success Messages -->
+                    <div class="message-container" id="messageContainer" role="alert" aria-live="polite" aria-atomic="true">
+                        <!-- Messages will be inserted here -->
+                    </div>
+
+                    <!-- CAMPOS PRINCIPALES -->
+                    <fieldset class="form-section" id="contactSection">
+                        <legend class="section-title" data-translate="main_fields">Información Principal</legend>
+                            <span class="section-icon" aria-hidden="true">📧</span>
+                            Información de Contacto
+                        </legend>
+
+                        <!-- Nombre -->
+                        <div class="input-group">
+                            <label for="fullName" class="input-label" id="fullName-label" data-translate="full_name">
+                                Nombre Completo
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="fullName" 
+                                    name="fullName" 
+                                    class="form-input" 
+                                    data-translate-placeholder="name_placeholder"
+                                    placeholder="Ejemplo: Juan Pérez"
+                                    required
+                                    autocomplete="name"
+                                    aria-labelledby="fullName-label"
+                                    aria-describedby="fullName-error fullName-help"
+                                    aria-invalid="false"
+                                    autofocus
+                                    minlength="2"
+                                    maxlength="100"
+                                >
+                                <span class="input-icon" aria-hidden="true">👤</span>
+                                <span class="input-status" id="fullName-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="fullName-help" data-translate="name_help">Ingresa tu nombre completo para poder identificarte</div>
+                            <div class="field-error" id="fullName-error" role="alert"></div>
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="input-group">
+                            <label for="email" class="input-label" id="email-label" data-translate="email_address">
+                                Correo Electrónico
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="email" 
+                                    id="email" 
+                                    name="email" 
+                                    class="form-input" 
+                                    data-translate-placeholder="email_placeholder"
+                                    placeholder="Ejemplo: usuario@ejemplo.com"
+                                    required
+                                    autocomplete="email"
+                                    aria-labelledby="email-label"
+                                    aria-describedby="email-error email-help"
+                                    aria-invalid="false"
+                                >
+                                <span class="input-icon" aria-hidden="true">📧</span>
+                                <span class="input-status" id="email-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="email-help">Usaremos este correo para responderte</div>
+                            <div class="field-error" id="email-error" role="alert"></div>
+                        </div>
+
+                        <!-- Asunto -->
+                        <div class="input-group">
+                            <label for="subject" class="input-label" id="subject-label">
+                                Asunto
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <select 
+                                    id="subject" 
+                                    name="subject" 
+                                    class="form-input form-select" 
+                                    required
+                                    aria-labelledby="subject-label"
+                                    aria-describedby="subject-error subject-help"
+                                    aria-invalid="false"
+                                >
+                                    <option value="">Selecciona el tipo de consulta</option>
+                                    <option value="soporte-tecnico">Soporte Técnico</option>
+                                    <option value="reporte-problema">Reporte de Problema</option>
+                                    <option value="solicitud-funcionalidad">Solicitud de Nueva Funcionalidad</option>
+                                    <option value="consulta-general">Consulta General</option>
+                                    <option value="capacitacion">Capacitación y Entrenamiento</option>
+                                    <option value="sugerencia">Sugerencia de Mejora</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                                <span class="input-icon" aria-hidden="true">📂</span>
+                                <span class="input-status" id="subject-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="subject-help">Selecciona la categoría que mejor describe tu consulta</div>
+                            <div class="field-error" id="subject-error" role="alert"></div>
+                        </div>
+
+                        <!-- Mensaje -->
+                        <div class="input-group">
+                            <label for="message" class="input-label" id="message-label">
+                                Mensaje
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="input-wrapper">
+                                <textarea 
+                                    id="message" 
+                                    name="message" 
+                                    class="form-textarea" 
+                                    placeholder="Describe tu consulta, problema o sugerencia de manera detallada..."
+                                    required
+                                    aria-labelledby="message-label"
+                                    aria-describedby="message-error message-help message-counter"
+                                    aria-invalid="false"
+                                    minlength="10"
+                                    maxlength="1000"
+                                    rows="6"
+                                ></textarea>
+                                <span class="input-icon textarea-icon" aria-hidden="true">✍️</span>
+                                <span class="input-status" id="message-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="message-help">
+                                Describe tu consulta con el mayor detalle posible. Incluye pasos para reproducir problemas si aplica.
+                            </div>
+                            <div class="character-counter" id="message-counter">
+                                <span id="message-count">0</span> / 1000 caracteres
+                            </div>
+                            <div class="field-error" id="message-error" role="alert"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- INFORMACIÓN ADICIONAL OPCIONAL -->
+                    <fieldset class="form-section" id="additionalSection">
+                        <legend class="section-title">
+                            <span class="section-icon" aria-hidden="true">ℹ️</span>
+                            Información Adicional (Opcional)
+                        </legend>
+
+                        <!-- Institución -->
+                        <div class="input-group">
+                            <label for="institution" class="input-label" id="institution-label">
+                                Institución Educativa
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="text" 
+                                    id="institution" 
+                                    name="institution" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: Colegio San José"
+                                    autocomplete="organization"
+                                    aria-labelledby="institution-label"
+                                    aria-describedby="institution-help"
+                                    maxlength="100"
+                                >
+                                <span class="input-icon" aria-hidden="true">🏫</span>
+                                <span class="input-status" id="institution-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="institution-help">Opcional: Nombre de tu institución educativa</div>
+                        </div>
+
+                        <!-- Teléfono -->
+                        <div class="input-group">
+                            <label for="phone" class="input-label" id="phone-label">
+                                Teléfono de Contacto
+                            </label>
+                            <div class="input-wrapper">
+                                <input 
+                                    type="tel" 
+                                    id="phone" 
+                                    name="phone" 
+                                    class="form-input" 
+                                    placeholder="Ejemplo: 3001234567"
+                                    autocomplete="tel"
+                                    aria-labelledby="phone-label"
+                                    aria-describedby="phone-help"
+                                    minlength="10"
+                                    maxlength="10"
+                                >
+                                <span class="input-icon" aria-hidden="true">📱</span>
+                                <span class="input-status" id="phone-status" aria-hidden="true"></span>
+                            </div>
+                            <div class="field-help" id="phone-help">Opcional: Solo si prefieres que te contactemos por teléfono</div>
+                        </div>
+                    </fieldset>
+
+                    <!-- VERIFICACIÓN ANTISPAM -->
+                    <fieldset class="form-section" id="securitySection">
+                        <legend class="section-title">
+                            <span class="section-icon" aria-hidden="true">🔒</span>
+                            Verificación de Seguridad
+                        </legend>
+
+                        <!-- Captcha -->
+                        <div class="input-group">
+                            <label for="captcha-answer" class="input-label" id="captcha-label">
+                                Verificación Antispam
+                                <span class="required-indicator" aria-hidden="true">*</span>
+                            </label>
+                            <div class="captcha-wrapper">
+                                <div class="captcha-question">
+                                    <span class="captcha-text" id="captchaQuestion">¿Cuánto es 5 + 3?</span>
+                                    <button type="button" class="captcha-refresh" id="captchaRefresh" aria-label="Generar nueva verificación">
+                                        <span aria-hidden="true">🔄</span>
+                                    </button>
+                                </div>
+                                <div class="input-wrapper">
+                                    <input 
+                                        type="text" 
+                                        id="captcha-answer" 
+                                        name="captcha-answer" 
+                                        class="form-input captcha-input" 
+                                        placeholder="Respuesta"
+                                        required
+                                        aria-labelledby="captcha-label"
+                                        aria-describedby="captcha-error captcha-help"
+                                        aria-invalid="false"
+                                        maxlength="3"
+                                    >
+                                    <span class="input-icon" aria-hidden="true">🤖</span>
+                                    <span class="input-status" id="captcha-status" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="field-help" id="captcha-help">Resuelve esta operación matemática para verificar que no eres un robot</div>
+                            <div class="field-error" id="captcha-error" role="alert"></div>
+                        </div>
+
+                        <!-- Checkbox antispam -->
+                        <div class="input-group">
+                            <label class="checkbox-label">
+                                <input 
+                                    type="checkbox" 
+                                    id="notRobot" 
+                                    name="notRobot" 
+                                    required
+                                    aria-describedby="notRobot-error notRobot-help"
+                                    aria-invalid="false"
+                                >
+                                <span class="checkmark" aria-hidden="true"></span>
+                                <span class="checkbox-text">
+                                    Confirmo que no soy un robot y que la información proporcionada es veraz
+                                    <span class="required-indicator" aria-hidden="true">*</span>
+                                </span>
+                            </label>
+                            <div class="field-help" id="notRobot-help">Verificación adicional requerida para enviar el formulario</div>
+                            <div class="field-error" id="notRobot-error" role="alert"></div>
+                        </div>
+                    </fieldset>
+
+                    <!-- BOTONES DE ACCIÓN -->
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-cancel" id="cancelButton" aria-label="Cancelar y limpiar formulario">
+                            <span class="btn-icon" aria-hidden="true">❌</span>
+                            <span class="btn-text">Cancelar</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary" id="sendButton" aria-describedby="send-help">
+                            <span class="btn-icon" aria-hidden="true">📨</span>
+                            <span class="btn-text">Enviar Mensaje</span>
+                            <span class="btn-loader" id="btnLoader" aria-hidden="true">⟳</span>
+                        </button>
+                    </div>
+                    <div class="field-help" id="send-help">
+                        Al enviar, procesaremos tu consulta y te responderemos en un máximo de 24 horas hábiles
+                    </div>
+
+                    <!-- INFORMACIÓN DE RESPUESTA -->
+                    <div class="response-info">
+                        <div class="info-item">
+                            <span class="info-icon" aria-hidden="true">⏰</span>
+                            <span class="info-text">Tiempo de respuesta: Máximo 24 horas hábiles</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon" aria-hidden="true">📧</span>
+                            <span class="info-text">Responderemos al correo electrónico que proporcionaste</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-icon" aria-hidden="true">🔒</span>
+                            <span class="info-text">Tus datos están protegidos y no serán compartidos</span>
+                        </div>
+                    </div>
+
+                    <!-- Accessibility Info -->
+                    <div class="accessibility-info sr-only">
+                        <p>Este formulario es compatible con lectores de pantalla y navegación por teclado.</p>
+                        <p>Los campos marcados con asterisco (*) son obligatorios.</p>
+                        <p>Use Tab para navegar, Enter para enviar, y Space para activar controles.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contact Information Sidebar -->
+        <div class="contact-info-sidebar">
+            <div class="sidebar-content">
+                <h3>Otras formas de contacto</h3>
+                
+                <div class="contact-method">
+                    <div class="method-icon">📞</div>
+                    <div class="method-info">
+                        <h4>Teléfono</h4>
+                        <p>+57 (1) 234-5678</p>
+                        <span class="method-time">Lunes a Viernes: 8:00 AM - 6:00 PM</span>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="method-icon">📧</div>
+                    <div class="method-info">
+                        <h4>Correo Directo</h4>
+                        <p>soporte@gmpi.edu.co</p>
+                        <span class="method-time">Respuesta en 24 horas</span>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="method-icon">💬</div>
+                    <div class="method-info">
+                        <h4>Chat en Línea</h4>
+                        <p>Disponible en el dashboard</p>
+                        <span class="method-time">Lunes a Viernes: 9:00 AM - 5:00 PM</span>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="method-icon">📍</div>
+                    <div class="method-info">
+                        <h4>Oficina Principal</h4>
+                        <p>Calle 123 #45-67<br>Bogotá, Colombia</p>
+                        <span class="method-time">Atención presencial con cita previa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../javascript/contact-validation.js"></script>
+    <script src="../javascript/settings.js"></script>
+    <script>
+        // Initialize settings on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof SettingsManager !== 'undefined') {
+                const settingsManager = new SettingsManager();
+                settingsManager.init();
+                
+                // Connect quick settings buttons
+                const quickLanguageToggle = document.getElementById('quickLanguageToggle');
+                const quickThemeToggle = document.getElementById('quickThemeToggle');
+                const quickShortcuts = document.getElementById('quickShortcuts');
+                
+                if (quickLanguageToggle) {
+                    quickLanguageToggle.addEventListener('click', function() {
+                        settingsManager.toggleLanguage();
+                    });
+                }
+                
+                if (quickThemeToggle) {
+                    quickThemeToggle.addEventListener('click', function() {
+                        settingsManager.toggleTheme();
+                    });
+                }
+                
+                if (quickShortcuts) {
+                    quickShortcuts.addEventListener('click', function() {
+                        settingsManager.showShortcuts();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>

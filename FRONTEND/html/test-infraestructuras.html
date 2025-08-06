@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test - Infraestructuras</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/header.css" />
+    <link rel="stylesheet" href="../css/infraestructuras.css" />
+    <link rel="stylesheet" href="../css/dark-theme.css" />
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header class="main-header">
+      <nav class="navbar">
+        <div class="nav-container">
+          <div class="nav-logo">
+            <a href="dashboard.html" class="logo-link">
+              <span class="logo-text">GMPI</span>
+              <span class="logo-subtitle">Mantenimiento Escolar</span>
+            </a>
+          </div>
+          <div class="nav-actions">
+            <span class="user-welcome">Bienvenido, Inspector</span>
+            <a href="index.html" class="btn btn-secondary">Cerrar Sesión</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="page-header">
+        <div class="container">
+          <div class="header-content">
+            <h1 class="page-title">Infraestructuras Registradas</h1>
+            <p class="page-subtitle">
+              Gestiona y supervisa todas las instituciones educativas
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="container">
+        <div class="institutions-section">
+          <div class="section-header">
+            <h2>Instituciones Educativas</h2>
+            <button
+              class="btn btn-primary add-institution-btn"
+              onclick="testAddInstitution()"
+            >
+              + Agregar Institución
+            </button>
+          </div>
+
+          <div class="institutions-grid">
+            <!-- Test Institution -->
+            <div class="institution-card">
+              <div class="institution-header">
+                <div class="institution-logo">
+                  <span class="logo-text">TEST</span>
+                </div>
+              </div>
+
+              <div class="institution-info">
+                <h3 class="institution-name">Institución de Prueba</h3>
+                <p class="institution-location">📍 Ubicación de Prueba</p>
+                <p class="institution-type">🏫 Universidad</p>
+              </div>
+
+              <div class="institution-stats">
+                <div class="stat-item">
+                  <span class="stat-value">5</span>
+                  <span class="stat-name">Edificios</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">25</span>
+                  <span class="stat-name">Aulas</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-value">10</span>
+                  <span class="stat-name">Laboratorios</span>
+                </div>
+              </div>
+
+              <div class="institution-maintenance">
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Último Mantenimiento:</span>
+                  <span class="maintenance-date">01 Ago 2025</span>
+                </div>
+                <div class="maintenance-item">
+                  <span class="maintenance-label">Próximo Mantenimiento:</span>
+                  <span class="maintenance-date upcoming">01 Nov 2025</span>
+                </div>
+              </div>
+
+              <div class="institution-actions">
+                <button
+                  class="btn btn-primary btn-small"
+                  onclick="testAddInfrastructure()"
+                >
+                  🏗️ Agregar Infraestructura
+                </button>
+                <button
+                  class="btn btn-outline btn-small"
+                  onclick="testViewDetails()"
+                >
+                  Ver Detalles
+                </button>
+                <button
+                  class="btn btn-secondary btn-small"
+                  onclick="testEdit()"
+                >
+                  ✏️ Editar
+                </button>
+                <button class="btn btn-danger btn-small" onclick="testDelete()">
+                  🗑️ Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Funciones de prueba simples
+      function testAddInstitution() {
+        alert('✅ Botón "Agregar Institución" funciona correctamente!');
+        console.log("Add Institution clicked");
+      }
+
+      function testAddInfrastructure() {
+        alert('✅ Botón "Agregar Infraestructura" funciona correctamente!');
+        console.log("Add Infrastructure clicked");
+      }
+
+      function testViewDetails() {
+        alert('✅ Botón "Ver Detalles" funciona correctamente!');
+        console.log("View Details clicked");
+      }
+
+      function testEdit() {
+        alert('✅ Botón "Editar" funciona correctamente!');
+        window.location.href =
+          "edit-institution.html?name=Institución de Prueba";
+      }
+
+      function testDelete() {
+        if (confirm("¿Está seguro de eliminar esta institución de prueba?")) {
+          alert('✅ Botón "Eliminar" funciona correctamente!');
+        }
+      }
+
+      // Verificar si el DOM se carga correctamente
+      document.addEventListener("DOMContentLoaded", function () {
+        console.log("✅ DOM cargado correctamente");
+
+        // Verificar botones
+        const buttons = document.querySelectorAll("button");
+        console.log(`✅ Se encontraron ${buttons.length} botones`);
+
+        // Verificar tarjetas
+        const cards = document.querySelectorAll(".institution-card");
+        console.log(
+          `✅ Se encontraron ${cards.length} tarjetas de instituciones`
+        );
+
+        // Mostrar mensaje de éxito
+        setTimeout(() => {
+          const successDiv = document.createElement("div");
+          successDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: #27ae60;
+                    color: white;
+                    padding: 1rem;
+                    border-radius: 8px;
+                    z-index: 10000;
+                    font-weight: bold;
+                `;
+          successDiv.innerHTML = "✅ Página de prueba cargada correctamente";
+          document.body.appendChild(successDiv);
+
+          setTimeout(() => {
+            document.body.removeChild(successDiv);
+          }, 3000);
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

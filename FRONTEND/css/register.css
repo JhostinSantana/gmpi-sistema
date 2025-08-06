@@ -1,0 +1,889 @@
+/* Formulario de Registro - Estilos Específicos */
+
+/* Contenedor principal del registro */
+.register-container {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f8fffe 0%, #e8f8f5 100%);
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Botón de regreso */
+.back-to-login {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.back-link:hover {
+    color: #e67e22;
+    background: rgba(230, 126, 34, 0.1);
+    transform: translateX(-2px);
+}
+
+/* Sección del formulario */
+.register-form-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 60px 20px 40px;
+}
+
+.register-form-wrapper {
+    width: 100%;
+    max-width: 600px;
+    background: white;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo del registro */
+.register-logo {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.register-logo .logo-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #e67e22, #f39c12);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+}
+
+.register-logo .logo-text {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.register-logo .system-title {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+.register-logo .system-subtitle {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Header del formulario */
+.register-form .form-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.register-form .form-header h2 {
+    font-size: 28px;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.register-form .form-header p {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Indicador de progreso */
+.progress-indicator {
+    margin-bottom: 32px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+}
+
+.progress-bar {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #e67e22, #f39c12);
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 3px;
+}
+
+.progress-text {
+    font-size: 12px;
+    color: #6c757d;
+    font-weight: 500;
+    display: block;
+    text-align: center;
+}
+
+/* Secciones del formulario */
+.form-section {
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+    background: #fdfdfd;
+}
+
+.form-section legend {
+    padding: 0;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 16px;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #e67e22, #f39c12);
+    color: white;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    margin: -8px -8px 16px -8px;
+}
+
+.section-icon {
+    font-size: 18px;
+}
+
+/* Grupos de inputs */
+.input-group {
+    margin-bottom: 24px;
+}
+
+.input-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Labels */
+.input-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 6px;
+}
+
+/* Campos de entrada */
+.form-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    background: white;
+    font-family: inherit;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #e67e22;
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+}
+
+.form-input::placeholder {
+    color: #adb5bd;
+    font-size: 14px;
+}
+
+/* Select específico */
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 12px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+/* Wrapper de inputs con iconos */
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #6c757d;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.input-wrapper .form-input {
+    padding-left: 48px;
+}
+
+.input-wrapper .form-select {
+    padding-left: 48px;
+}
+
+/* Estados de validación */
+.form-input.success {
+    border-color: #28a745;
+    background-color: #f8fff9;
+}
+
+.form-input.warning {
+    border-color: #ffc107;
+    background-color: #fffbf0;
+}
+
+.form-input.error {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+/* Status indicators */
+.input-status {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.input-status.success {
+    color: #28a745;
+}
+
+.input-status.warning {
+    color: #ffc107;
+}
+
+.input-status.error {
+    color: #dc3545;
+}
+
+/* Toggle password */
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+    font-size: 16px;
+    z-index: 3;
+}
+
+.toggle-password:hover {
+    background-color: rgba(230, 126, 34, 0.1);
+}
+
+.toggle-password:focus {
+    outline: 2px solid #e67e22;
+    outline-offset: 1px;
+}
+
+/* Barra de fortaleza de contraseña */
+.password-strength {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #f8f9fa;
+    border-radius: 4px;
+    border: 1px solid #e9ecef;
+}
+
+.strength-label {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+.strength-bar {
+    height: 4px;
+    background: #e9ecef;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-fill.weak {
+    background: #dc3545;
+    width: 25%;
+}
+
+.strength-fill.fair {
+    background: #ffc107;
+    width: 50%;
+}
+
+.strength-fill.good {
+    background: #28a745;
+    width: 75%;
+}
+
+.strength-fill.strong {
+    background: #007bff;
+    width: 100%;
+}
+
+.strength-text {
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.strength-text.weak {
+    color: #dc3545;
+}
+
+.strength-text.fair {
+    color: #ffc107;
+}
+
+.strength-text.good {
+    color: #28a745;
+}
+
+.strength-text.strong {
+    color: #007bff;
+}
+
+/* Mensajes de ayuda */
+.field-help {
+    font-size: 12px;
+    color: #6c757d;
+    margin-top: 4px;
+    display: block;
+}
+
+.field-error {
+    font-size: 12px;
+    color: #dc3545;
+    margin-top: 4px;
+    display: none;
+    font-weight: 500;
+}
+
+.field-error:not(:empty) {
+    display: block;
+}
+
+/* Checkboxes */
+.checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+    line-height: 1.4;
+}
+
+.checkbox-label input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.checkbox-label input:checked + .checkmark {
+    background: #e67e22;
+    border-color: #e67e22;
+    color: white;
+}
+
+.checkbox-label input:checked + .checkmark::after {
+    content: '✓';
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.checkbox-label:hover .checkmark {
+    border-color: #e67e22;
+}
+
+.checkbox-text {
+    flex: 1;
+}
+
+.terms-link,
+.privacy-link {
+    color: #e67e22;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms-link:hover,
+.privacy-link:hover {
+    text-decoration: underline;
+}
+
+/* Botones de acción */
+.form-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 32px;
+    justify-content: center;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+    cursor: pointer;
+    min-width: 140px;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #e67e22, #f39c12);
+    color: white;
+    border-color: #e67e22;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #d35400, #e67e22);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+.btn-loader {
+    display: none;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Mensajes de estado */
+.message-container {
+    margin-bottom: 24px;
+    display: none;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    gap: 8px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+.message-icon {
+    font-size: 16px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register-form-wrapper {
+        padding: 24px;
+        margin: 0 16px;
+    }
+    
+    .form-section {
+        padding: 16px;
+    }
+    
+    .section-title {
+        font-size: 14px;
+        margin: -8px -8px 12px -8px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .back-to-login {
+        position: relative;
+        top: auto;
+        left: auto;
+        text-align: center;
+        padding: 16px;
+    }
+    
+    .register-form-section {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .register-form-wrapper {
+        padding: 16px;
+        border-radius: 8px;
+    }
+    
+    .register-logo .system-title {
+        font-size: 18px;
+    }
+    
+    .register-form .form-header h2 {
+        font-size: 24px;
+    }
+    
+    .form-input {
+        padding: 12px 14px;
+        font-size: 16px;
+    }
+    
+    .input-wrapper .form-input {
+        padding-left: 40px;
+    }
+    
+    .input-wrapper .input-icon {
+        left: 12px;
+    }
+}
+
+/* Accesibilidad */
+@media (prefers-contrast: high) {
+    .form-input {
+        border-width: 2px;
+    }
+    
+    .btn {
+        border-width: 2px;
+    }
+    
+    .form-section {
+        border-width: 2px;
+    }
+    
+    .checkmark {
+        border-width: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn,
+    .form-input,
+    .toggle-password,
+    .strength-fill,
+    .progress-fill {
+        transition: none;
+    }
+    
+    .btn-loader {
+        animation: none;
+    }
+}
+
+/* Estados de focus mejorados */
+.form-input:focus,
+.btn:focus,
+.checkbox-label:focus-within {
+    outline: 2px solid #e67e22;
+    outline-offset: 2px;
+}
+
+/* Clase para elementos screen reader only */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Indicador de campos requeridos */
+.required-indicator {
+    color: #e67e22;
+    margin-left: 4px;
+    font-weight: bold;
+}
+
+/* Estilo para elementos enfocados */
+.focused {
+    outline: 2px solid #e67e22 !important;
+    outline-offset: 2px !important;
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    animation: fadeInUp 0.3s ease;
+}
+
+/* Mejoras para el progreso */
+.progress-indicator[aria-valuenow="100"] .progress-text {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.progress-indicator[aria-valuenow="100"] .progress-text::after {
+    content: ' ✓';
+}
+
+/* Estados hover para mejor UX */
+.form-input:hover:not(:focus) {
+    border-color: #d4d4d8;
+}
+
+.form-section:hover {
+    border-color: #e67e22;
+    box-shadow: 0 2px 8px rgba(230, 126, 34, 0.1);
+}
+
+/* ==========================================
+   NOTIFICATION SYSTEM
+   ========================================== */
+
+.notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    max-width: 400px;
+}
+
+.notification {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease-out;
+    border-left: 4px solid #3498db;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left-color: #2ecc71;
+}
+
+.notification.error {
+    border-left-color: #e74c3c;
+}
+
+.notification.warning {
+    border-left-color: #f39c12;
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 8px;
+}
+
+.notification-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.notification-message {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.notification-close {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #666;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.notification-close:hover {
+    background: #f0f0f0;
+    color: #333;
+}
+
+/* ==========================================
+   FORM STATES
+   ========================================== */
+
+.form-input.focused {
+    border-color: #e67e22;
+    box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+}
+
+.form-input.success {
+    border-color: #2ecc71;
+}
+
+.form-input.error {
+    border-color: #e74c3c;
+}
+
+.form-select.success {
+    border-color: #2ecc71;
+}
+
+.form-select.error {
+    border-color: #e74c3c;
+}
+
+.input-status {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    pointer-events: none;
+}
+
+.input-status.success {
+    color: #2ecc71;
+}
+
+.input-status.error {
+    color: #e74c3c;
+}
+
+.has-changes {
+    border-left: 4px solid #f39c12;
+}
+
+/* ==========================================
+   RESPONSIVE DESIGN
+   ========================================== */
+
+@media (max-width: 768px) {
+    .notification-container {
+        left: 20px;
+        right: 20px;
+        max-width: none;
+    }
+    
+    .notification {
+        margin-bottom: 8px;
+    }
+    
+    .notification-content {
+        padding: 10px 12px;
+    }
+}

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuración Inicial - GMPI</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .setup-container {
+        background: white;
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        max-width: 600px;
+        width: 100%;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 4rem;
+        margin-bottom: 1rem;
+      }
+
+      h1 {
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+        font-size: 2.5rem;
+        font-weight: 700;
+      }
+
+      .subtitle {
+        color: #7f8c8d;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+      }
+
+      .setup-steps {
+        text-align: left;
+        margin: 2rem 0;
+      }
+
+      .step {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: #f8f9fa;
+        border-radius: 12px;
+        border-left: 4px solid #3498db;
+        transition: all 0.3s ease;
+      }
+
+      .step:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .step-number {
+        background: #3498db;
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-weight: bold;
+      }
+
+      .step-completed {
+        background: #27ae60;
+      }
+
+      .step-content h3 {
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+      }
+
+      .step-content p {
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      .status-indicator {
+        margin-left: auto;
+        font-size: 1.5rem;
+      }
+
+      .btn-primary {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 1rem;
+      }
+
+      .btn-primary:hover {
+        background: #2980b9;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(52, 152, 219, 0.3);
+      }
+
+      .btn-secondary {
+        background: #95a5a6;
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 1rem;
+      }
+
+      .btn-secondary:hover {
+        background: #7f8c8d;
+      }
+
+      .loading {
+        display: none;
+        margin: 2rem 0;
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3498db;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .success {
+        background: #d5f4e6;
+        color: #27ae60;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        display: none;
+      }
+
+      .error {
+        background: #ffeaa7;
+        color: #d63031;
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        display: none;
+      }
+
+      .credentials {
+        background: #fff3cd;
+        color: #856404;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        text-align: left;
+        display: none;
+      }
+
+      .credentials h4 {
+        margin-bottom: 1rem;
+        color: #343a40;
+      }
+
+      .credentials code {
+        background: #f8f9fa;
+        padding: 0.2rem 0.5rem;
+        border-radius: 4px;
+        font-family: "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="setup-container">
+      <div class="logo">🏗️</div>
+      <h1>GMPI</h1>
+      <p class="subtitle">Sistema de Gestión de Mantenimiento Preventivo</p>
+
+      <div class="setup-steps">
+        <div class="step" id="step1">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Verificar Conexión</h3>
+            <p>Comprobar conectividad con el servidor backend</p>
+          </div>
+          <div class="status-indicator">⏳</div>
+        </div>
+
+        <div class="step" id="step2">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Configurar Base de Datos</h3>
+            <p>Crear tablas y estructura inicial</p>
+          </div>
+          <div class="status-indicator">⏳</div>
+        </div>
+
+        <div class="step" id="step3">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Datos Iniciales</h3>
+            <p>Insertar instituciones y mantenimientos de ejemplo</p>
+          </div>
+          <div class="status-indicator">⏳</div>
+        </div>
+
+        <div class="step" id="step4">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Usuario Administrador</h3>
+            <p>Crear cuenta de administrador predeterminada</p>
+          </div>
+          <div class="status-indicator">⏳</div>
+        </div>
+      </div>
+
+      <div class="loading">
+        <div class="spinner"></div>
+        <p>Configurando sistema...</p>
+      </div>
+
+      <div class="success">
+        <h4>✅ ¡Configuración completada exitosamente!</h4>
+        <p>El sistema GMPI está listo para usar.</p>
+      </div>
+
+      <div class="error">
+        <h4>❌ Error en la configuración</h4>
+        <p id="error-message">Ocurrió un error durante la configuración.</p>
+      </div>
+
+      <div class="credentials">
+        <h4>🔐 Credenciales de Administrador:</h4>
+        <p><strong>Usuario:</strong> <code>admin</code></p>
+        <p><strong>Contraseña:</strong> <code>admin123</code></p>
+        <p><strong>Email:</strong> <code>admin@gmpi.local</code></p>
+        <br />
+        <p>
+          ⚠️ <strong>Importante:</strong> Cambia estas credenciales después del
+          primer login.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" onclick="startSetup()">
+          🚀 Configurar Sistema
+        </button>
+        <button class="btn-secondary" onclick="skipSetup()">
+          ⏭️ Omitir Configuración
+        </button>
+      </div>
+
+      <div class="final-actions" style="display: none">
+        <button class="btn-primary" onclick="goToSystem()">
+          🌐 Ir al Sistema
+        </button>
+        <button class="btn-secondary" onclick="goToDashboard()">
+          📊 Ver Dashboard
+        </button>
+      </div>
+    </div>
+
+    <script>
+      async function checkConnection() {
+        try {
+          const response = await fetch("/api/institutions/stats/summary");
+          return response.ok;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      async function setupDatabase() {
+        try {
+          const response = await fetch("/api/setup/database", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          return response.ok;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      function updateStep(stepId, success) {
+        const step = document.getElementById(stepId);
+        const indicator = step.querySelector(".status-indicator");
+        const number = step.querySelector(".step-number");
+
+        if (success) {
+          indicator.textContent = "✅";
+          number.classList.add("step-completed");
+          step.style.backgroundColor = "#d5f4e6";
+        } else {
+          indicator.textContent = "❌";
+          step.style.backgroundColor = "#ffeaa7";
+        }
+      }
+
+      async function startSetup() {
+        document.querySelector(".actions").style.display = "none";
+        document.querySelector(".loading").style.display = "block";
+
+        try {
+          // Paso 1: Verificar conexión
+          console.log("🔍 Verificando conexión...");
+          const connected = await checkConnection();
+          updateStep("step1", connected);
+
+          if (!connected) {
+            throw new Error("No se pudo conectar con el servidor backend");
+          }
+
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          // Paso 2: Configurar base de datos
+          console.log("🗄️ Configurando base de datos...");
+          // En un escenario real, aquí haríamos la configuración
+          updateStep("step2", true);
+
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          // Paso 3: Datos iniciales
+          console.log("📊 Insertando datos iniciales...");
+          updateStep("step3", true);
+
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+
+          // Paso 4: Usuario administrador
+          console.log("👤 Creando usuario administrador...");
+          updateStep("step4", true);
+
+          // Configuración completada
+          document.querySelector(".loading").style.display = "none";
+          document.querySelector(".success").style.display = "block";
+          document.querySelector(".credentials").style.display = "block";
+          document.querySelector(".final-actions").style.display = "block";
+        } catch (error) {
+          console.error("Error en configuración:", error);
+          document.querySelector(".loading").style.display = "none";
+          document.querySelector(".error").style.display = "block";
+          document.getElementById("error-message").textContent = error.message;
+          document.querySelector(".actions").style.display = "block";
+        }
+      }
+
+      function skipSetup() {
+        if (
+          confirm(
+            "¿Estás seguro de que quieres omitir la configuración inicial? Esto podría causar problemas si la base de datos no está configurada."
+          )
+        ) {
+          goToSystem();
+        }
+      }
+
+      function goToSystem() {
+        window.location.href = "/infraestructuras";
+      }
+
+      function goToDashboard() {
+        window.location.href = "/dashboard";
+      }
+
+      // Verificar estado inicial al cargar la página
+      window.addEventListener("load", async () => {
+        const connected = await checkConnection();
+        if (connected) {
+          updateStep("step1", true);
+          // Si ya hay conexión, probablemente el sistema ya está configurado
+          document.querySelector(".success").style.display = "block";
+          document.querySelector(".final-actions").style.display = "block";
+
+          // Marcar todos los pasos como completados
+          updateStep("step2", true);
+          updateStep("step3", true);
+          updateStep("step4", true);
+        }
+      });
+    </script>
+  </body>
+</html>

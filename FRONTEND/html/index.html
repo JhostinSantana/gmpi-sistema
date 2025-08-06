@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - GESTOR DE MANTENIMIENTO PREVENTIVO</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/dark-theme.css">
+</head>
+<body>
+    <!-- Quick Settings -->
+    <div class="quick-settings">
+        <button class="quick-setting-btn" id="quickLanguageToggle" aria-label="Cambiar idioma">
+            <span class="setting-icon">🌐</span>
+            <span class="setting-text" id="quickLanguageText">ES</span>
+        </button>
+        <button class="quick-setting-btn" id="quickThemeToggle" aria-label="Cambiar tema">
+            <span class="setting-icon">🌓</span>
+            <span class="setting-text" id="quickThemeText">☀️</span>
+        </button>
+    </div>
+
+    <div class="login-container">
+        <!-- Login Form Section -->
+        <div class="login-form-section">
+            <div class="login-form-wrapper">
+                <!-- Logo -->
+                <div class="login-logo">
+                    <div class="logo-icon">
+                        <span class="logo-text">GMPI</span>
+                    </div>
+                    <h1 class="system-title" data-translate="system_title">Gestor de Mantenimiento Preventivo</h1>
+                    <p class="system-subtitle" data-translate="system_subtitle">Infraestructuras Escolares</p>
+                </div>
+
+                <!-- Login Form -->
+                <form class="login-form" id="loginForm" novalidate aria-label="Formulario de inicio de sesión">
+                    <div class="form-header">
+                        <h2 id="login-title" data-translate="login_title">Iniciar Sesión</h2>
+                        <p data-translate="login_subtitle">Accede a tu panel de administración</p>
+                    </div>
+
+                    <!-- Error/Success Messages -->
+                    <div class="message-container" id="messageContainer" role="alert" aria-live="polite" aria-atomic="true">
+                        <!-- Messages will be inserted here -->
+                    </div>
+
+                    <!-- Email Input -->
+                    <div class="input-group">
+                        <label for="email" class="input-label" id="email-label">
+                            <span data-translate="email_label">Correo Electrónico</span>
+                            <span class="required-indicator" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                placeholder="Ejemplo: admin@colegio.edu"
+                                required
+                                autocomplete="username"
+                                aria-labelledby="email-label"
+                                aria-describedby="email-error email-help"
+                                aria-invalid="false"
+                                autofocus
+                            >
+                            <span class="input-icon" aria-hidden="true">📧</span>
+                            <span class="input-status" id="email-status" aria-hidden="true"></span>
+                        </div>
+                        <div class="field-help" id="email-help" data-translate="email_help">Ingresa tu correo electrónico institucional</div>
+                        <div class="field-error" id="email-error" role="alert"></div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="input-group">
+                        <label for="password" class="input-label" id="password-label">
+                            <span data-translate="password_label">Contraseña</span>
+                            <span class="required-indicator" aria-hidden="true">*</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <input 
+                                type="password" 
+                                id="password" 
+                                name="password" 
+                                class="form-input" 
+                                placeholder="Ingresa tu contraseña"
+                                required
+                                autocomplete="current-password"
+                                aria-labelledby="password-label"
+                                aria-describedby="password-error password-help password-toggle"
+                                aria-invalid="false"
+                                minlength="6"
+                            >
+                            <span class="input-icon" aria-hidden="true">🔒</span>
+                            <button 
+                                type="button" 
+                                class="toggle-password" 
+                                id="togglePassword"
+                                aria-label="Mostrar contraseña"
+                                aria-describedby="password-toggle"
+                                tabindex="0"
+                            >
+                                <span class="toggle-icon" aria-hidden="true">👁️</span>
+                            </button>
+                            <span class="input-status" id="password-status" aria-hidden="true"></span>
+                        </div>
+                        <div class="field-help" id="password-help" data-translate="password_help">Mínimo 6 caracteres</div>
+                        <div class="field-error" id="password-error" role="alert"></div>
+                        <div class="sr-only" id="password-toggle">Presiona para alternar la visibilidad de la contraseña</div>
+                    </div>
+
+                    <!-- Security Features -->
+                    <div class="security-info" id="securityInfo">
+                        <div class="attempts-counter" id="attemptsCounter" style="display: none;">
+                            <span class="attempts-icon" aria-hidden="true">⚠️</span>
+                            <span class="attempts-text"></span>
+                        </div>
+                        <div class="captcha-container" id="captchaContainer" style="display: none;">
+                            <label for="captcha-input">Verificación de seguridad:</label>
+                            <div class="captcha-wrapper">
+                                <span class="captcha-question" id="captchaQuestion"></span>
+                                <input type="text" id="captcha-input" class="captcha-input" placeholder="Respuesta" aria-describedby="captcha-help">
+                                <button type="button" class="captcha-refresh" id="captchaRefresh" aria-label="Generar nueva verificación">🔄</button>
+                            </div>
+                            <div class="field-help" id="captcha-help">Resuelve la operación matemática para continuar</div>
+                        </div>
+                    </div>
+
+                    <!-- Form Options -->
+                    <div class="form-options">
+                        <label class="remember-checkbox">
+                            <input type="checkbox" id="rememberUser" name="rememberUser" aria-describedby="remember-help">
+                            <span class="checkmark" aria-hidden="true"></span>
+                            <span class="checkbox-label" data-translate="remember_me">Recordar usuario</span>
+                        </label>
+                        <a href="#" class="forgot-password" aria-label="Enlace para recuperar contraseña" data-translate="forgot_password">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    <div class="field-help" id="remember-help" data-translate="remember_help">Tu usuario se guardará de forma segura en este dispositivo</div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="login-btn" id="loginButton" aria-describedby="login-help">
+                        <span class="btn-icon" aria-hidden="true">🔐</span>
+                        <span class="btn-text" data-translate="login_button">Iniciar Sesión</span>
+                        <span class="btn-loader" id="btnLoader" aria-hidden="true">⟳</span>
+                    </button>
+                    <div class="field-help" id="login-help" data-translate="login_help">Tiempo promedio de inicio: menos de 5 segundos</div>
+
+                    <!-- Register Button -->
+                    <button type="button" class="login-btn" style="background-color: #27ae60; margin-top: 16px;" onclick="window.location.href='register.html'">
+                        <span class="btn-icon" aria-hidden="true">👤</span>
+                        <span class="btn-text">Crear Nueva Cuenta</span>
+                    </button>
+
+            
+
+                    <!-- Accessibility Info -->
+                    <div class="accessibility-info sr-only">
+                        <p data-translate="accessibility_info">Este formulario es compatible con lectores de pantalla y navegación por teclado.</p>
+                        <p data-translate="accessibility_navigation">Use Tab para navegar, Enter para enviar, y Space para activar controles.</p>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Visual Section -->
+        <div class="login-visual-section">
+            <div class="visual-content">
+                <div class="visual-header">
+                    <h2 data-translate="visual_title">Mantén tus instalaciones educativas en perfecto estado</h2>
+                    <p data-translate="visual_subtitle">Sistema para gestionar preventivamente el mantenimiento escolar</p>
+                </div>
+
+                <!-- Features Preview -->
+                <div class="features-preview">
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h4 data-translate="feature_reports">Soporte</h4>
+                            <p data-translate="feature_reports_desc">Accede a el soporte-tecnico</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <div class="feature-text">
+                            <h4 data-translate="feature_maintenance">Mantenimiento Programado</h4>
+                            <p data-translate="feature_maintenance_desc">Automatiza las tareas de mantenimiento</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🏫</div>
+                        <div class="feature-text">
+                            <h4 data-translate="feature_campus">Infraestructuras</h4>
+                            <p data-translate="feature_campus_desc">Gestiona múltiples sedes desde un solo lugar</p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            <!-- Background Animation -->
+            <div class="background-animation">
+                <div class="floating-element" style="--delay: 0s; --duration: 20s;"></div>
+                <div class="floating-element" style="--delay: 5s; --duration: 25s;"></div>
+                <div class="floating-element" style="--delay: 10s; --duration: 30s;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function() {
+            const passwordInput = document.getElementById('password');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? '👁️' : '👁️‍🗨️';
+        });
+
+        // Handle form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btnLoader = document.getElementById('btnLoader');
+            const btnText = document.querySelector('.btn-text');
+            
+            // Show loading state
+            btnLoader.style.display = 'inline';
+            btnText.textContent = 'Verificando...';
+            
+            // Simulate login process
+            setTimeout(() => {
+                // Check admin credentials
+                if (email === 'admin@colegio.edu' && password === 'admin123') {
+                    // Success - redirect to dashboard
+                    btnText.textContent = 'Redirigiendo...';
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    // Error
+                    btnLoader.style.display = 'none';
+                    btnText.textContent = 'Iniciar Sesión';
+                    alert('Credenciales incorrectas. Email: admin@colegio.edu - Contraseña: admin123');
+                }
+            }, 1500);
+        });
+    </script>
+
+    <!-- Scripts mejorados para validación y accesibilidad -->
+    <script src="../javascript/login-validation.js"></script>
+    <script>
+        // Funciones simples para cambiar idioma y tema
+        let currentLanguage = localStorage.getItem('gmpi-language') || 'es';
+        let currentTheme = localStorage.getItem('gmpi-theme') || 'light';
+        
+        // Aplicar tema al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            applyTheme();
+            applyLanguage();
+            updateUI();
+            
+            // Conectar botones
+            document.getElementById('quickLanguageToggle').addEventListener('click', toggleLanguage);
+            document.getElementById('quickThemeToggle').addEventListener('click', toggleTheme);
+            
+            // Atajos de teclado
+            document.addEventListener('keydown', function(e) {
+                if (e.altKey) {
+                    if (e.key === 'l' || e.key === 'L') {
+                        e.preventDefault();
+                        toggleLanguage();
+                    }
+                    if (e.key === 't' || e.key === 'T') {
+                        e.preventDefault();
+                        toggleTheme();
+                    }
+                }
+            });
+        });
+        
+        function toggleLanguage() {
+            currentLanguage = currentLanguage === 'es' ? 'en' : 'es';
+            localStorage.setItem('gmpi-language', currentLanguage);
+            applyLanguage();
+            updateUI();
+            console.log('Idioma cambiado a:', currentLanguage);
+        }
+        
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            localStorage.setItem('gmpi-theme', currentTheme);
+            applyTheme();
+            updateUI();
+            console.log('Tema cambiado a:', currentTheme);
+        }
+        
+        function applyTheme() {
+            if (currentTheme === 'dark') {
+                document.body.classList.add('dark-theme');
+                document.body.setAttribute('data-theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-theme');
+                document.body.setAttribute('data-theme', 'light');
+            }
+        }
+        
+        function applyLanguage() {
+            const translations = {
+                es: {
+                    system_title: 'Gestor de Mantenimiento Preventivo',
+                    system_subtitle: 'Infraestructuras Escolares',
+                    login_title: 'Iniciar Sesión',
+                    login_subtitle: 'Accede a tu panel de administración',
+                    email_label: 'Correo Electrónico',
+                    password_label: 'Contraseña',
+                    remember_me: 'Recordar usuario',
+                    forgot_password: '¿Olvidaste tu contraseña?',
+                    login_button: 'Iniciar Sesión'
+                },
+                en: {
+                    system_title: 'Preventive Maintenance Manager',
+                    system_subtitle: 'School Infrastructure',
+                    login_title: 'Sign In',
+                    login_subtitle: 'Access your administration panel',
+                    email_label: 'Email',
+                    password_label: 'Password',
+                    remember_me: 'Remember user',
+                    forgot_password: 'Forgot your password?',
+                    login_button: 'Sign In'
+                }
+            };
+            
+            const trans = translations[currentLanguage];
+            document.querySelectorAll('[data-translate]').forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (trans[key]) {
+                    element.textContent = trans[key];
+                }
+            });
+        }
+        
+        function updateUI() {
+            // Actualizar botón de idioma
+            const langText = document.getElementById('quickLanguageText');
+            if (langText) {
+                langText.textContent = currentLanguage.toUpperCase();
+            }
+            
+            // Actualizar botón de tema
+            const themeText = document.getElementById('quickThemeText');
+            if (themeText) {
+                themeText.textContent = currentTheme === 'light' ? '☀️' : '🌙';
+            }
+        }
+    </script>
+</body>
+</html>

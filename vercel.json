@@ -1,0 +1,73 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "BACKEND/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "FRONTEND/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/BACKEND/server.js"
+    },
+    {
+      "src": "/css/(.*)",
+      "dest": "/FRONTEND/css/$1"
+    },
+    {
+      "src": "/js/(.*)",
+      "dest": "/FRONTEND/js/$1"
+    },
+    {
+      "src": "/javascript/(.*)",
+      "dest": "/FRONTEND/javascript/$1"
+    },
+    {
+      "src": "/html/(.*)",
+      "dest": "/FRONTEND/html/$1"
+    },
+    {
+      "src": "/infraestructuras",
+      "dest": "/FRONTEND/html/infraestructuras.html"
+    },
+    {
+      "src": "/edit-institution",
+      "dest": "/FRONTEND/html/edit-institution.html"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/FRONTEND/html/dashboard.html"
+    },
+    {
+      "src": "/contact",
+      "dest": "/FRONTEND/html/contact.html"
+    },
+    {
+      "src": "/register",
+      "dest": "/FRONTEND/html/register.html"
+    },
+    {
+      "src": "/add-institution",
+      "dest": "/FRONTEND/html/add-institution.html"
+    },
+    {
+      "src": "/calendario",
+      "dest": "/FRONTEND/html/calendario.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/FRONTEND/html/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "JWT_SECRET": "@jwt_secret",
+    "ALLOWED_ORIGINS": "https://tu-dominio.vercel.app",
+    "DB_TYPE": "sqlite"
+  }
+}

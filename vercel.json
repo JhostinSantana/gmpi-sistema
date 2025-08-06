@@ -4,10 +4,6 @@
     {
       "src": "BACKEND/server.js",
       "use": "@vercel/node"
-    },
-    {
-      "src": "FRONTEND/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -28,16 +24,8 @@
       "dest": "/FRONTEND/javascript/$1"
     },
     {
-      "src": "/html/(.*)",
-      "dest": "/FRONTEND/html/$1"
-    },
-    {
       "src": "/infraestructuras",
       "dest": "/FRONTEND/html/infraestructuras.html"
-    },
-    {
-      "src": "/edit-institution",
-      "dest": "/FRONTEND/html/edit-institution.html"
     },
     {
       "src": "/dashboard",
@@ -52,6 +40,10 @@
       "dest": "/FRONTEND/html/register.html"
     },
     {
+      "src": "/edit-institution",
+      "dest": "/FRONTEND/html/edit-institution.html"
+    },
+    {
       "src": "/add-institution",
       "dest": "/FRONTEND/html/add-institution.html"
     },
@@ -60,13 +52,14 @@
       "dest": "/FRONTEND/html/calendario.html"
     },
     {
+      "src": "/setup",
+      "dest": "/FRONTEND/html/setup.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/FRONTEND/html/index.html"
     }
   ],
-  "env": {
-    "NODE_ENV": "production"
-  },
   "functions": {
     "BACKEND/server.js": {
       "maxDuration": 30

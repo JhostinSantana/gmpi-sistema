@@ -7,20 +7,17 @@ GMPI es una aplicación web completa para la gestión de mantenimiento preventiv
 ## 🚀 Funcionalidades Principales
 
 ### ✅ Gestión de Instituciones
-
 - ✅ Crear, editar, eliminar y visualizar instituciones
 - ✅ Clasificación por tipo (universidad, colegio, escuela, instituto)
 - ✅ Información detallada: ubicación, contacto, capacidades
 - ✅ Estadísticas de infraestructura
 
 ### ✅ Gestión de Infraestructuras
-
 - ✅ Gestión de facultades y edificios por institución
 - ✅ Control de aulas, laboratorios y espacios
 - ✅ Estado y condiciones de las instalaciones
 
 ### ✅ Sistema de Mantenimiento
-
 - ✅ Programación de mantenimientos preventivos y correctivos
 - ✅ Estados: programado, en progreso, completado, vencido
 - ✅ Prioridades: baja, media, alta, crítica
@@ -28,26 +25,22 @@ GMPI es una aplicación web completa para la gestión de mantenimiento preventiv
 - ✅ Historial completo de mantenimientos
 
 ### ✅ Búsqueda y Filtros Avanzados
-
 - ✅ Búsqueda inteligente con autocompletado
 - ✅ Filtros por tipo, ubicación, estado
 - ✅ Búsqueda en tiempo real
 
 ### ✅ Reportes y Estadísticas
-
 - ✅ Dashboard con métricas principales
 - ✅ Reportes de mantenimientos próximos y vencidos
 - ✅ Análisis de costos por período
 - ✅ Estadísticas por institución
 
 ### ✅ Sistema de Archivos
-
 - ✅ Subida de documentos y fotos
 - ✅ Gestión de archivos adjuntos
 - ✅ Soporte para múltiples formatos
 
 ### ✅ Autenticación y Seguridad
-
 - ✅ Sistema de usuarios con roles
 - ✅ Autenticación JWT
 - ✅ Protección de rutas
@@ -56,15 +49,12 @@ GMPI es una aplicación web completa para la gestión de mantenimiento preventiv
 ## 🛠️ Tecnologías Utilizadas
 
 ### Frontend
-
 - **HTML5, CSS3, JavaScript ES6+**
 - **Responsive Design** con CSS Grid/Flexbox
 - **Modales interactivos** con animaciones
 - **API Client** para comunicación con backend
-- **LocalStorage** para persistencia offline
 
 ### Backend
-
 - **Node.js** con Express.js
 - **SQLite** para desarrollo / **PostgreSQL** para producción
 - **JWT** para autenticación
@@ -74,7 +64,6 @@ GMPI es una aplicación web completa para la gestión de mantenimiento preventiv
 - **Helmet** y **CORS** para seguridad
 
 ### Base de Datos
-
 - **Estructura relacional** con foreign keys
 - **Índices optimizados** para búsquedas rápidas
 - **Soft deletes** para mantener historial
@@ -86,7 +75,7 @@ GMPI es una aplicación web completa para la gestión de mantenimiento preventiv
 INTERFAZ-Infres/
 ├── FRONTEND/                    # Interfaz de usuario
 │   ├── html/                    # Páginas HTML
-│   │   ├── index.html          # Página principal/portal
+│   │   ├── index.html          # Página de login
 │   │   ├── infraestructuras.html # Gestión principal
 │   │   ├── dashboard.html      # Panel de control
 │   │   ├── edit-institution.html # Edición de instituciones
@@ -112,15 +101,167 @@ INTERFAZ-Infres/
 │   │   └── upload.js           # Subida de archivos
 │   ├── database/               # Base de datos SQLite
 │   ├── uploads/                # Archivos subidos
-│   └── package.json            # Dependencias
-├── scripts/                     # Scripts de despliegue
-│   ├── deploy.sh               # Despliegue Linux/Mac
-│   └── deploy.bat              # Despliegue Windows
-├── vercel.json                 # Configuración Vercel
-└── README.md                   # Esta documentación
+│   └── package.json            # Dependencias del backend
+├── package.json                # Configuración del proyecto
+## 🚀 Instalación y Uso
+
+### Requisitos Previos
+- **Node.js** v18 o superior
+- **npm** v9 o superior
+- **Git**
+
+### Instalación
+
+1. **Clonar el repositorio:**
+```bash
+git clone https://github.com/JhostinSantana/gmpi-sistema.git
+cd gmpi-sistema
 ```
 
-## 🌐 Opciones de Despliegue
+2. **Instalar dependencias del backend:**
+```bash
+cd BACKEND
+npm install
+```
+
+3. **Configurar variables de entorno:**
+```bash
+# Copiar el archivo de ejemplo
+cp .env.example .env
+
+# Editar las variables según sea necesario
+# Las variables por defecto funcionan para desarrollo local
+```
+
+4. **Iniciar el servidor:**
+```bash
+npm start
+```
+
+5. **Abrir la aplicación:**
+- Abrir `http://localhost:3000` en el navegador
+- O abrir directamente `FRONTEND/html/index.html`
+
+### Credenciales por Defecto
+- **Usuario:** `admin`
+- **Contraseña:** `admin123`
+- **Email:** `admin@gmpi.local`
+
+⚠️ **Importante:** Cambiar estas credenciales en producción.
+
+## 🔧 Configuración
+
+### Variables de Entorno (.env)
+```env
+NODE_ENV=development
+PORT=3000
+JWT_SECRET=tu_jwt_secret_aqui
+DB_TYPE=sqlite
+DB_PATH=./database/gmpi.db
+ALLOWED_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+```
+
+### Base de Datos
+- **SQLite** se usa por defecto para desarrollo
+- **La base de datos se crea automáticamente** al iniciar el servidor
+- **Datos de ejemplo** se insertan automáticamente
+
+## 📚 Documentación de API
+
+### Endpoints Principales
+
+#### Autenticación
+- `POST /api/auth/login` - Iniciar sesión
+- `POST /api/auth/register` - Registrar usuario
+
+#### Instituciones
+- `GET /api/institutions` - Listar instituciones
+- `POST /api/institutions` - Crear institución
+- `PUT /api/institutions/:id` - Actualizar institución
+- `DELETE /api/institutions/:id` - Eliminar institución
+
+#### Infraestructuras
+- `GET /api/infrastructure` - Listar infraestructuras
+- `POST /api/infrastructure` - Crear infraestructura
+- `PUT /api/infrastructure/:id` - Actualizar infraestructura
+- `DELETE /api/infrastructure/:id` - Eliminar infraestructura
+
+#### Mantenimientos
+- `GET /api/maintenance` - Listar mantenimientos
+- `POST /api/maintenance` - Crear mantenimiento
+- `PUT /api/maintenance/:id` - Actualizar mantenimiento
+- `DELETE /api/maintenance/:id` - Eliminar mantenimiento
+
+#### Reportes
+- `GET /api/reports/dashboard` - Dashboard con estadísticas
+- `GET /api/reports/upcoming` - Mantenimientos próximos
+- `GET /api/reports/overdue` - Mantenimientos vencidos
+
+## 🛡️ Seguridad
+
+### Características Implementadas
+- **Autenticación JWT** con tokens seguros
+- **Hash de contraseñas** con bcrypt
+- **Rate limiting** para prevenir ataques
+- **Validación** de datos en todos los endpoints
+- **CORS** configurado para dominios específicos
+- **Helmet** para headers de seguridad
+
+## 🔍 Resolución de Problemas
+
+### Error: "Cannot find module"
+```bash
+cd BACKEND
+npm install
+```
+
+### Error: "Database connection failed"
+- Verificar que la carpeta `BACKEND/database/` existe
+- El archivo de base de datos se crea automáticamente
+
+### Error: "Port already in use"
+```bash
+# Cambiar el puerto en .env
+PORT=3001
+```
+
+### Error: "CORS blocked"
+- Verificar `ALLOWED_ORIGINS` en `.env`
+- Agregar tu dominio/IP a la lista
+
+## 🎯 Uso del Sistema
+
+### 1. **Gestión de Instituciones**
+- Crear nuevas instituciones educativas
+- Configurar información básica y contacto
+- Gestionar capacidades y ubicaciones
+
+### 2. **Gestión de Infraestructuras**
+- Agregar facultades, edificios, aulas
+- Configurar estados y condiciones
+- Vincular con instituciones
+
+### 3. **Programación de Mantenimientos**
+- Crear mantenimientos preventivos y correctivos
+- Asignar prioridades y fechas
+- Controlar costos y proveedores
+
+### 4. **Reportes y Seguimiento**
+- Ver dashboard con métricas
+- Generar reportes de mantenimientos
+- Analizar costos y tendencias
+
+## 📄 Licencia
+
+MIT License - Ver archivo `LICENSE` para más detalles.
+
+## 👨‍💻 Autor
+
+**JhostinSantana** - [GitHub](https://github.com/JhostinSantana)
+
+---
+
+**¡El sistema GMPI está listo para usar y personalizar según tus necesidades!** 🚀
 
 ### 1. 🎯 **RECOMENDADO: Vercel (Gratis)**
 
